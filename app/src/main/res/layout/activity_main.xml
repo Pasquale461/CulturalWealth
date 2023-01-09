@@ -1,0 +1,422 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/relativeLayout"
+        android:layout_width="782dp"
+        android:layout_height="393dp"
+        android:layout_marginTop="1dp"
+        android:layout_marginBottom="1dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/exa_23"
+            android:layout_width="49dp"
+            android:layout_height="49dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="172dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/_1" />
+
+        <ImageView
+            android:id="@+id/exa_43"
+            android:layout_width="49dp"
+            android:layout_height="49dp"
+            android:layout_marginStart="216dp"
+            android:layout_marginTop="44dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/_1" />
+
+        <ImageView
+            android:id="@+id/exa_13"
+            android:layout_width="33dp"
+            android:layout_height="33dp"
+            android:layout_marginStart="370dp"
+            android:layout_marginTop="50dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/_1" />
+
+        <ImageView
+            android:id="@+id/exa_15"
+            android:layout_width="33dp"
+            android:layout_height="33dp"
+            android:layout_marginStart="395dp"
+            android:layout_marginTop="66dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/_1" />
+
+        <ImageView
+            android:id="@+id/exa_16"
+            android:layout_width="33dp"
+            android:layout_height="33dp"
+            android:layout_marginStart="395dp"
+            android:layout_marginTop="96dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/_1" />
+
+        <ImageView
+            android:id="@+id/exa_17"
+            android:layout_width="33dp"
+            android:layout_height="33dp"
+            android:layout_marginStart="420dp"
+            android:layout_marginTop="112dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/_1" />
+
+        <ImageView
+            android:id="@+id/exa_18"
+            android:layout_width="33dp"
+            android:layout_height="33dp"
+            android:layout_marginStart="420dp"
+            android:layout_marginTop="142dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/_1" />
+
+        <ImageView
+            android:id="@+id/exa_11"
+            android:layout_width="33dp"
+            android:layout_height="33dp"
+            android:layout_marginStart="264dp"
+            android:layout_marginTop="52dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/_1" />
+
+        <ImageView
+            android:id="@+id/exa_10"
+            android:layout_width="33dp"
+            android:layout_height="33dp"
+            android:layout_marginStart="290dp"
+            android:layout_marginTop="36dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/_1" />
+
+        <ImageView
+            android:id="@+id/exa_12"
+            android:layout_width="33dp"
+            android:layout_height="33dp"
+            android:layout_marginStart="344dp"
+            android:layout_marginTop="36dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/_1" />
+
+        <ImageView
+            android:id="@+id/exa_14"
+            android:layout_width="33dp"
+            android:layout_height="33dp"
+            android:layout_marginStart="317dp"
+            android:layout_marginTop="50dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/_1" />
+
+        <ImageView
+            android:id="@+id/exa_20"
+            android:layout_width="33dp"
+            android:layout_height="33dp"
+            android:layout_marginStart="64dp"
+            android:layout_marginTop="100dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/_1" />
+
+        <ImageView
+            android:id="@+id/exa_21"
+            android:layout_width="33dp"
+            android:layout_height="33dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="116dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/_1" />
+
+        <ImageView
+            android:id="@+id/exa_22"
+            android:layout_width="33dp"
+            android:layout_height="33dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="144dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/_1" />
+
+        <ImageView
+            android:id="@+id/exa_24"
+            android:layout_width="33dp"
+            android:layout_height="33dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="218dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/_1" />
+
+        <ImageView
+            android:id="@+id/exa_25"
+            android:layout_width="33dp"
+            android:layout_height="33dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="248dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/_1" />
+
+        <ImageView
+            android:id="@+id/exa_4"
+            android:layout_width="33dp"
+            android:layout_height="33dp"
+            android:layout_marginStart="160dp"
+            android:layout_marginTop="36dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/_1" />
+
+        <ImageView
+            android:id="@+id/exa_2"
+            android:layout_width="33dp"
+            android:layout_height="33dp"
+            android:layout_marginStart="112dp"
+            android:layout_marginTop="36dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/_1" />
+
+        <ImageView
+            android:id="@+id/exa_1"
+            android:layout_width="33dp"
+            android:layout_height="33dp"
+            android:layout_marginStart="88dp"
+            android:layout_marginTop="52dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/_1" />
+
+        <ImageView
+            android:id="@+id/exa_41"
+            android:layout_width="33dp"
+            android:layout_height="33dp"
+            android:layout_marginStart="420dp"
+            android:layout_marginTop="216dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/_1" />
+
+        <ImageView
+            android:id="@+id/exa_27"
+            android:layout_width="33dp"
+            android:layout_height="33dp"
+            android:layout_marginStart="64dp"
+            android:layout_marginTop="264dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/_1" />
+
+        <ImageView
+            android:id="@+id/exa_19"
+            android:layout_width="33dp"
+            android:layout_height="33dp"
+            android:layout_marginStart="64dp"
+            android:layout_marginTop="68dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/_1" />
+
+        <ImageView
+            android:id="@+id/exa_26"
+            android:layout_width="33dp"
+            android:layout_height="33dp"
+            android:layout_marginStart="64dp"
+            android:layout_marginTop="292dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/_1" />
+
+        <ImageView
+            android:id="@+id/exa_28"
+            android:layout_width="33dp"
+            android:layout_height="33dp"
+            android:layout_marginStart="88dp"
+            android:layout_marginTop="308dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/_1" />
+
+        <ImageView
+            android:id="@+id/exa_29"
+            android:layout_width="33dp"
+            android:layout_height="33dp"
+            android:layout_marginStart="112dp"
+            android:layout_marginTop="324dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/_1" />
+
+        <ImageView
+            android:id="@+id/exa_39"
+            android:layout_width="33dp"
+            android:layout_height="33dp"
+            android:layout_marginStart="394dp"
+            android:layout_marginTop="262dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/_1" />
+
+        <ImageView
+            android:id="@+id/exa_30"
+            android:layout_width="33dp"
+            android:layout_height="33dp"
+            android:layout_marginStart="136dp"
+            android:layout_marginTop="308dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/_1" />
+
+        <ImageView
+            android:id="@+id/exa_31"
+            android:layout_width="33dp"
+            android:layout_height="33dp"
+            android:layout_marginStart="160dp"
+            android:layout_marginTop="324dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/_1" />
+
+        <ImageView
+            android:id="@+id/exa_32"
+            android:layout_width="33dp"
+            android:layout_height="33dp"
+            android:layout_marginStart="184dp"
+            android:layout_marginTop="308dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/_1" />
+
+        <ImageView
+            android:id="@+id/exa_33"
+            android:layout_width="33dp"
+            android:layout_height="33dp"
+            android:layout_marginStart="264dp"
+            android:layout_marginTop="308dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/_1" />
+
+        <ImageView
+            android:id="@+id/exa_34"
+            android:layout_width="33dp"
+            android:layout_height="33dp"
+            android:layout_marginStart="288dp"
+            android:layout_marginTop="324dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/_1" />
+
+        <ImageView
+            android:id="@+id/exa_35"
+            android:layout_width="33dp"
+            android:layout_height="33dp"
+            android:layout_marginStart="314dp"
+            android:layout_marginTop="310dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/_1" />
+
+        <ImageView
+            android:id="@+id/exa_36"
+            android:layout_width="33dp"
+            android:layout_height="33dp"
+            android:layout_marginStart="341dp"
+            android:layout_marginTop="324dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/_1" />
+
+        <ImageView
+            android:id="@+id/exa_37"
+            android:layout_width="33dp"
+            android:layout_height="33dp"
+            android:layout_marginStart="368dp"
+            android:layout_marginTop="308dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/_1" />
+
+        <ImageView
+            android:id="@+id/exa_38"
+            android:layout_width="33dp"
+            android:layout_height="33dp"
+            android:layout_marginStart="394dp"
+            android:layout_marginTop="292dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/_1" />
+
+        <ImageView
+            android:id="@+id/exa_44"
+            android:layout_width="49dp"
+            android:layout_height="49dp"
+            android:layout_marginStart="412dp"
+            android:layout_marginTop="172dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/_1" />
+
+        <ImageView
+            android:id="@+id/exa_40"
+            android:layout_width="33dp"
+            android:layout_height="33dp"
+            android:layout_marginStart="420dp"
+            android:layout_marginTop="246dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/_1" />
+
+        <ImageView
+            android:id="@+id/exa_5"
+            android:layout_width="33dp"
+            android:layout_height="33dp"
+            android:layout_marginStart="184dp"
+            android:layout_marginTop="52dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/_1" />
+
+        <ImageView
+            android:id="@+id/exa_42"
+            android:layout_width="49dp"
+            android:layout_height="49dp"
+            android:layout_marginStart="216dp"
+            android:layout_marginTop="300dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/_1" />
+
+        <ImageView
+            android:id="@+id/exa_3"
+            android:layout_width="33dp"
+            android:layout_height="33dp"
+            android:layout_marginStart="136dp"
+            android:layout_marginTop="52dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/_1" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
