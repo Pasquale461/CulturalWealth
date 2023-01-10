@@ -1,5 +1,6 @@
 package it.uniba.dib.sms222316;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
@@ -9,6 +10,12 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.Toast;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -31,27 +38,49 @@ public class MainActivity extends AppCompatActivity {
         Confirm.setOnClickListener(v-> createAccount());
     }
     void createAccount(){
-        String name = Username.getText().toString();
+
         String mail = Mail.getText().toString();
         String pass = Password.getText().toString();
-        boolean isValid = validatedata(name, mail, pass);
+        boolean isValid = validatedata(mail, pass);
         if(!isValid)return;
-        createAccountInFirebase(name, mail, pass);
+        createAccountInFirebase(mail, pass);
     }
 
 
 
-    void createAccountInFirebase(String Name , String Email , String Password_local)
+    void createAccountInFirebase(String Email , String Password_local)
     {
-
+        changeInProgress(true);
+        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+        firebaseAuth.createUserWithEmailAndPassword(Email,Password_local).addOnCompleteListener(MainActivity.this,
+                new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if(task.isSuccessful()){
+                            //acc is done
+                            Toast.makeText(MainActivity.this,"Account creato correttamente",Toast.LENGTH_SHORT).show();
+                            firebaseAuth.getCurrentUser().sendEmailVerification();
+                            firebaseAuth.signOut();
+                            finish();
+                        }else{
+                            //fail
+                            Toast.makeText(MainActivity.this,task.getException().getLocalizedMessage(),Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }
+        );
     }
 
     void changeInProgress(boolean inProgress)
     {
-
+        if(inProgress){
+            Confirm.setVisibility(View.GONE);
+        }else{
+            Confirm.setVisibility(View.VISIBLE);
+        }
     }
 
-    boolean validatedata(String Name , String Email , String Password_local){
+    boolean validatedata(String Email , String Password_local){
         if(!Patterns.EMAIL_ADDRESS.matcher(Email).matches())
         {
             Mail.setError("Email is invalid");

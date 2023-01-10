@@ -39,7 +39,10 @@
             android:inputType="textEmailAddress"
             android:minHeight="48dp"
             app:layout_constraintBottom_toTopOf="@+id/editTextTextPassword"
-            app:layout_constraintStart_toStartOf="@+id/editTextTextPersonName" />
+            app:layout_constraintStart_toStartOf="@+id/editTextTextPersonName"
+            android:hint="email"
+            />
+
 
         <EditText
             android:id="@+id/editTextTextPassword"
@@ -50,7 +53,9 @@
             android:inputType="textPassword"
             android:minHeight="48dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/editTextTextEmailAddress2" />
+            app:layout_constraintStart_toStartOf="@+id/editTextTextEmailAddress2"
+            android:hint="password"
+            />
 
         <EditText
             android:id="@+id/editTextTextPersonName"
@@ -59,7 +64,7 @@
             android:ems="10"
             android:inputType="textPersonName"
             android:minHeight="48dp"
-            android:text="Name"
+            android:hint="name"
             app:layout_constraintBottom_toTopOf="@+id/editTextTextEmailAddress2"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
