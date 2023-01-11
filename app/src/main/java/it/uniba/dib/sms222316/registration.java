@@ -3,6 +3,7 @@ package it.uniba.dib.sms222316;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Patterns;
 import android.view.View;
@@ -33,11 +34,12 @@ public class registration extends AppCompatActivity {
 
         //Registration class
         Username = findViewById(R.id.editTextTextPersonName);
-        Mail = findViewById(R.id.editTextTextEmailAddress2);
+        Mail = findViewById(R.id.editTextTextEmailAddress);
         Password = findViewById(R.id.editTextTextPassword);
         Confirm = findViewById(R.id.confirm);
 
         Confirm.setOnClickListener(v-> createAccount());
+
     }
     void createAccount(){
 
@@ -47,6 +49,8 @@ public class registration extends AppCompatActivity {
         boolean isValid = validateData(mail, pass);
         if(!isValid)return;
         createAccountInFirebase(mail, pass, user);
+        //TODO: setta la schermata di reindirizzamento attualmente impostata su login
+        startActivity(new Intent(registration.this, Login.class));
     }
 
 

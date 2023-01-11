@@ -36,7 +36,7 @@
             android:background="#36EFB425"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/view4"
-            app:layout_constraintHorizontal_bias="0.474"
+            app:layout_constraintHorizontal_bias="0.485"
             app:layout_constraintStart_toStartOf="@+id/view4"
             app:layout_constraintTop_toBottomOf="@+id/containerName"
             app:layout_constraintVertical_bias="1.0" />
