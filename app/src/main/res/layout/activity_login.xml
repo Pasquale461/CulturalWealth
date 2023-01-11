@@ -27,6 +27,7 @@
             android:id="@+id/linearLayout"
             android:layout_width="289dp"
             android:layout_height="354dp"
+            android:background="#5E7C5823"
             android:orientation="horizontal"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -75,10 +76,36 @@
                 android:id="@+id/MandP"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="50dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:layout_marginTop="50dp">
+                app:layout_constraintTop_toTopOf="parent">
+
+                <View
+                    android:id="@+id/containerMail2"
+                    android:layout_width="210dp"
+                    android:layout_height="55dp"
+                    android:layout_marginBottom="116dp"
+                    android:background="#36EFB425"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/view4"
+                    app:layout_constraintHorizontal_bias="0.474"
+                    app:layout_constraintStart_toStartOf="@+id/view4"
+                    app:layout_constraintTop_toBottomOf="@+id/containerName"
+                    app:layout_constraintVertical_bias="1.0" />
+
+                <View
+                    android:id="@+id/containerMail3"
+                    android:layout_width="210dp"
+                    android:layout_height="55dp"
+                    android:layout_marginBottom="32dp"
+                    android:background="#36EFB425"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/view4"
+                    app:layout_constraintHorizontal_bias="0.474"
+                    app:layout_constraintStart_toStartOf="@+id/view4"
+                    app:layout_constraintTop_toBottomOf="@+id/containerName"
+                    app:layout_constraintVertical_bias="1.0" />
 
                 <EditText
                     android:id="@+id/editTextTextEmailAddress"
@@ -90,27 +117,47 @@
                     android:inputType="textEmailAddress"
                     android:minHeight="48dp"
                     android:textColorHint="#546E7A"
-                    app:layout_constraintBottom_toTopOf="@+id/editTextTextPassword3"
+                    app:layout_constraintBottom_toBottomOf="@+id/containerMail2"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintHorizontal_bias="0.555"
+                    app:layout_constraintStart_toStartOf="@+id/containerMail2"
+                    app:layout_constraintTop_toTopOf="@+id/containerMail2"
+                    app:layout_constraintVertical_bias="0.695" />
+
+                <EditText
+                    android:id="@+id/editTextTextEmailAddress2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:autofillHints=""
+                    android:ems="10"
+                    android:hint="Enter email"
+                    android:inputType="textEmailAddress"
+                    android:minHeight="48dp"
+                    android:textColorHint="#546E7A"
+                    app:layout_constraintBottom_toBottomOf="@+id/containerMail2"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.555"
+                    app:layout_constraintStart_toStartOf="@+id/containerMail2"
+                    app:layout_constraintTop_toTopOf="@+id/containerMail2"
+                    app:layout_constraintVertical_bias="0.695" />
 
                 <EditText
                     android:id="@+id/editTextTextPassword3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="35dp"
                     android:ems="10"
                     android:hint="Enter password"
                     android:importantForAutofill="no"
                     android:inputType="textPassword"
                     android:minHeight="48dp"
                     android:textColorHint="#546E7A"
-                    android:layout_marginTop="35dp"
-                    android:layout_marginBottom="35dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintBottom_toBottomOf="@+id/containerMail3"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/editTextTextEmailAddress"/>
+                    app:layout_constraintHorizontal_bias="1.0"
+                    app:layout_constraintStart_toStartOf="@+id/containerMail3"
+                    app:layout_constraintTop_toTopOf="@+id/containerMail3"
+                    app:layout_constraintVertical_bias="0.0" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -118,6 +165,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="289dp"
             android:layout_height="354dp"
+            android:background="#5E7C5823"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/divider2"
             app:layout_constraintStart_toStartOf="parent"
@@ -127,16 +175,17 @@
                 android:id="@+id/Guest"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="50dp"
                 android:text="Guest"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                android:layout_marginBottom="50dp"/>
+                app:layout_constraintStart_toStartOf="parent" />
 
             <TextView
                 android:id="@+id/textView"
                 android:layout_width="248dp"
                 android:layout_height="169dp"
+                android:layout_marginTop="30dp"
                 android:text="Connettendoti come ospite in un gioco potresti perdere alcuni dei seguenti benefici:\n\n
 -Accesso a contenuti esclusivi\n
 -Salvataggio del progresso di gioco\n
@@ -147,8 +196,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.487"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:layout_marginTop="30dp"/>
+                app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

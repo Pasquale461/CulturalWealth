@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Patterns;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -15,6 +14,11 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
+import java.util.Map;
+
 
 public class registration extends AppCompatActivity {
 
@@ -24,12 +28,10 @@ public class registration extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
         setContentView(R.layout.activity_registration);
 
 
-        //Loginclass
+        //Registration class
         Username = findViewById(R.id.editTextTextPersonName);
         Mail = findViewById(R.id.editTextTextEmailAddress2);
         Password = findViewById(R.id.editTextTextPassword);
@@ -41,14 +43,15 @@ public class registration extends AppCompatActivity {
 
         String mail = Mail.getText().toString();
         String pass = Password.getText().toString();
-        boolean isValid = validatedata(mail, pass);
+        String user = Username.getText().toString();
+        boolean isValid = validateData(mail, pass);
         if(!isValid)return;
-        createAccountInFirebase(mail, pass);
+        createAccountInFirebase(mail, pass, user);
     }
 
 
 
-    void createAccountInFirebase(String Email , String Password_local)
+    void createAccountInFirebase(String Email , String Password_local, String name)
     {
         changeInProgress(true);
         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
@@ -58,10 +61,24 @@ public class registration extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
                             //acc is done
-                            Toast.makeText(registration.this,"Account creato correttamente",Toast.LENGTH_SHORT).show();
+
                             firebaseAuth.getCurrentUser().sendEmailVerification();
-                            firebaseAuth.signOut();
-                            finish();
+                            String UID = firebaseAuth.getCurrentUser().getUid();
+
+                            Map<String, Object> Users = new HashMap<>();
+                            Users.put("UID", UID);
+                            Users.put("email", Email);
+                            Users.put("nome", name);
+
+                            FirebaseFirestore.getInstance().collection("Users").document(Email)
+                                    .set(Users).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task) {
+
+                                        }
+
+                                    });
+                            Toast.makeText(registration.this,"Account creato correttamente",Toast.LENGTH_SHORT).show();
                         }else{
                             //fail
                             Toast.makeText(registration.this,task.getException().getLocalizedMessage(),Toast.LENGTH_SHORT).show();
@@ -80,17 +97,18 @@ public class registration extends AppCompatActivity {
         }
     }
 
-    boolean validatedata(String Email , String Password_local){
+    boolean validateData(String Email , String Password_local){
         if(!Patterns.EMAIL_ADDRESS.matcher(Email).matches())
         {
-            Mail.setError("Email is invalid");
+            Mail.setError("Email non valida");
             return false;
         }
         if(Password_local.length()<6)
         {
-            Password.setError("Password length is invalid");
+            Password.setError("Lunghezza della password troppo corta");
             return false;
         }
         return true;
     }
 }
+
