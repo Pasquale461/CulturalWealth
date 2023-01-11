@@ -63,7 +63,7 @@ public class SplashActivity extends AppCompatActivity {
                     if (user == null)
                     startActivity(new Intent(SplashActivity.this, Login.class));
                     //TODO : Sostituire MainActivity con Home una volta creata
-                    else startActivity(new Intent(SplashActivity.this, MainActivity.class));
+                    else startActivity(new Intent(SplashActivity.this, Home.class));
                 } else {
                     redirect();
                 }
