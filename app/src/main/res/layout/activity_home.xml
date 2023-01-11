@@ -87,7 +87,7 @@
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_marginTop="16dp"
-            android:background="@drawable/_63142"
+
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.897"
             app:layout_constraintStart_toStartOf="parent"
@@ -106,7 +106,7 @@
             app:layout_constraintHorizontal_bias="0.024"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/galileogalilei"
+
             tools:ignore="SpeakableTextPresentCheck" />
 
         <TextView
