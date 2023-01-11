@@ -1,5 +1,7 @@
 package it.uniba.dib.sms222316;
 
+import static it.uniba.dib.sms222316.Utility.showToast;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -7,10 +9,12 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Patterns;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -22,7 +26,8 @@ public class Login extends AppCompatActivity {
 
     private long backPressed;
     private static final int TIME_INTERVALL = 2000;
-    Button Register;
+    Button Register, Login;
+    EditText emailEditText, passwordEditText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,12 +35,21 @@ public class Login extends AppCompatActivity {
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
         setContentView(R.layout.activity_login);
+        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+        firebaseAuth.signOut();
 
 
 
     //TODO: Rimando schermata Guest
 
     //TODO: Rimando schermata principale
+        emailEditText = findViewById(R.id.emaillogintext);
+        passwordEditText = findViewById(R.id.passwordlogintext);
+        Login = findViewById(R.id.loginButton);
+        Login.setOnClickListener((v)-> loginUser());
+
+
+
 
 
         //Rimando alla schermata di registrazione
@@ -82,5 +96,65 @@ public class Login extends AppCompatActivity {
             Toast.makeText(getBaseContext(), "Press back again to exit app", Toast.LENGTH_SHORT).show();
         }
         backPressed = System.currentTimeMillis();
+    }
+
+    void loginUser()
+    {
+        String mail = emailEditText.getText().toString();
+        String pass = passwordEditText.getText().toString();
+        boolean isValid = validateData(mail, pass);
+        if(!isValid)return;
+        loginAccountInFirebase(mail, pass);
+    }
+
+    boolean validateData(String Email , String Password_local){
+        if(!Patterns.EMAIL_ADDRESS.matcher(Email).matches())
+        {
+            emailEditText.setError("Email non valida");
+            return false;
+        }
+        if(Password_local.length()<6)
+        {
+            passwordEditText.setError("Lunghezza della password troppo corta");
+            return false;
+        }
+        return true;
+    }
+
+    void loginAccountInFirebase(String mail,String pass)
+    {
+        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+        changeInProgress(true);
+        firebaseAuth.signInWithEmailAndPassword(mail, pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                changeInProgress(false);
+                if (task.isSuccessful())
+                {
+                    if (firebaseAuth.getCurrentUser().isEmailVerified())
+                    {
+                        //TODO : una volta creata impostare la classe Home al posto di MainActivity
+                        startActivity(new Intent(Login.this, SplashActivity.class));
+                    }else
+                    {
+                        showToast(Login.this, "Email non valida");
+                    }
+                }
+                else
+                {
+                    showToast(Login.this, task.getException().getLocalizedMessage());
+                }
+
+            }
+        });
+
+    }
+    void changeInProgress(boolean inProgress)
+    {
+        if(inProgress){
+            Login.setVisibility(View.GONE);
+        }else{
+            Login.setVisibility(View.VISIBLE);
+        }
     }
 }

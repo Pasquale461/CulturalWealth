@@ -1,10 +1,13 @@
 package it.uniba.dib.sms222316;
 
+import static it.uniba.dib.sms222316.Utility.showToast;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.view.WindowManager;
@@ -13,6 +16,8 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -52,7 +57,7 @@ public class registration extends AppCompatActivity {
         boolean isValid = validateData(mail, pass);
         if(!isValid)return;
         createAccountInFirebase(mail, pass, user);
-        //TODO: setta la schermata di reindirizzamento attualmente impostata su login
+        showToast(registration.this, "Successo");
         startActivity(new Intent(registration.this, Login.class));
     }
 
@@ -70,20 +75,27 @@ public class registration extends AppCompatActivity {
                             //acc is done
 
                             firebaseAuth.getCurrentUser().sendEmailVerification();
+                            firebaseAuth.signOut();
                             String UID = firebaseAuth.getCurrentUser().getUid();
-
+                            Log.e("a", "entrato");
                             Map<String, Object> Users = new HashMap<>();
                             Users.put("UID", UID);
                             Users.put("email", Email);
                             Users.put("nome", name);
 
-                            FirebaseFirestore.getInstance().collection("Users").document(Email)
-                                    .set(Users).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            showToast(registration.this, "Successo nome");
+                            FirebaseFirestore.getInstance().collection("Users").document(UID)
+                                    .set(Users).addOnSuccessListener(new OnSuccessListener<Void>() {
                                         @Override
-                                        public void onComplete(@NonNull Task<Void> task) {
-
+                                        public void onSuccess(Void unused) {
+                                            showToast(registration.this, "Successo");
                                         }
-
+                                    })
+                                    .addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            showToast(registration.this, "Fallito");
+                                        }
                                     });
                             Toast.makeText(registration.this,"Account creato correttamente",Toast.LENGTH_SHORT).show();
                         }else{

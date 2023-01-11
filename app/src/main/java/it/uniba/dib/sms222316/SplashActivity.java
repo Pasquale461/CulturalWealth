@@ -9,6 +9,9 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.ProgressBar;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -56,7 +59,11 @@ public class SplashActivity extends AppCompatActivity {
             @Override
             public void run() {
                 if(progressStatus >= 100){
+                    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                    if (user == null)
                     startActivity(new Intent(SplashActivity.this, Login.class));
+                    //TODO : Sostituire MainActivity con Home una volta creata
+                    else startActivity(new Intent(SplashActivity.this, MainActivity.class));
                 } else {
                     redirect();
                 }

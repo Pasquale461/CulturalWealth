@@ -35,7 +35,7 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <Button
-                android:id="@+id/LogIn"
+                android:id="@+id/loginButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Log In"
@@ -108,7 +108,7 @@
                     app:layout_constraintVertical_bias="1.0" />
 
                 <EditText
-                    android:id="@+id/editTextTextEmailAddress"
+                    android:id="@+id/emaillogintext"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:autofillHints=""
@@ -125,24 +125,7 @@
                     app:layout_constraintVertical_bias="0.695" />
 
                 <EditText
-                    android:id="@+id/editTextTextEmailAddress2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:autofillHints=""
-                    android:ems="10"
-                    android:hint="Enter email"
-                    android:inputType="textEmailAddress"
-                    android:minHeight="48dp"
-                    android:textColorHint="#546E7A"
-                    app:layout_constraintBottom_toBottomOf="@+id/containerMail2"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.555"
-                    app:layout_constraintStart_toStartOf="@+id/containerMail2"
-                    app:layout_constraintTop_toTopOf="@+id/containerMail2"
-                    app:layout_constraintVertical_bias="0.695" />
-
-                <EditText
-                    android:id="@+id/editTextTextPassword3"
+                    android:id="@+id/passwordlogintext"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="35dp"
@@ -186,13 +169,12 @@
                 android:layout_width="248dp"
                 android:layout_height="169dp"
                 android:layout_marginTop="30dp"
-                android:scrollbars="vertical"
                 android:text="Connettendoti come ospite in un gioco potresti perdere alcuni dei seguenti benefici:\n\n
 -Accesso a contenuti esclusivi\n
 -Salvataggio del progresso di gioco\n
 -Funzionalità online come il matchmaking con amici e le classifiche\n
 -Meno pubblicità\n
--Opzioni di personalizzazione limitate.\nciao\nsurdgh"
+-Opzioni di personalizzazione limitate."
                 app:layout_constraintBottom_toTopOf="@+id/Guest"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.487"
