@@ -22,8 +22,13 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.PlayGamesAuthProvider;
+
+import java.util.Objects;
 
 public class Login extends AppCompatActivity {
 
@@ -45,26 +50,33 @@ public class Login extends AppCompatActivity {
 
 
 
-    //TODO: Rimando schermata Guest
+        //TODO: Rimando schermata Guest
 
-    //TODO: Rimando schermata principale
+        //TODO: Rimando schermata principale
+
+        //Instanza oggetti visivi
         emailEditText = findViewById(R.id.emaillogintext);
         passwordEditText = findViewById(R.id.passwordlogintext);
         Login = findViewById(R.id.loginButton);
-        Login.setOnClickListener((v)-> loginUser());
-
-
-
-
-        gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+        loginWithGoogle = findViewById(R.id.Google);
+        //Instanza variabili di login
+        gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_GAMES_SIGN_IN)
                 .requestEmail()
                 .build();
         gsc = GoogleSignIn.getClient(this,gso);
-        loginWithGoogle = findViewById(R.id.Google);
+
+        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
+        if(account != null){
+            firebaseAuthWithPlayGames(Objects.requireNonNull(GoogleSignIn.getLastSignedInAccount(this)));
+        }
+
+        //Creazione triggher  onclick
+        Login.setOnClickListener((v)-> loginUser());
         loginWithGoogle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 SignIn();
+
             }
         });
 
@@ -82,27 +94,6 @@ public class Login extends AppCompatActivity {
         });
     }
 
-    /*@Override
-    public void onBackPressed(){
-        new AlertDialog.Builder(this)
-                .setTitle("Exit App")
-                .setMessage("Do you really want to exit?")
-                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        moveTaskToBack(true);
-                        android.os.Process.killProcess(android.os.Process.myPid());
-                        System.exit(1);
-                    }
-                })
-                .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        dialogInterface.dismiss();
-                    }
-                })
-                .show();
-    }*/
 
     //Avviso uscita dall'app
     @Override
@@ -118,6 +109,7 @@ public class Login extends AppCompatActivity {
         backPressed = System.currentTimeMillis();
     }
 
+    //Funzione che gestisce il login classico
     void loginUser()
     {
         String mail = emailEditText.getText().toString();
@@ -127,6 +119,7 @@ public class Login extends AppCompatActivity {
         loginAccountInFirebase(mail, pass);
     }
 
+    //
     boolean validateData(String Email , String Password_local){
         if(!Patterns.EMAIL_ADDRESS.matcher(Email).matches())
         {
@@ -140,7 +133,7 @@ public class Login extends AppCompatActivity {
         }
         return true;
     }
-
+    //Login con firebase
     void loginAccountInFirebase(String mail,String pass)
     {
         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
@@ -151,13 +144,12 @@ public class Login extends AppCompatActivity {
                 changeInProgress(false);
                 if (task.isSuccessful())
                 {
-                    if (firebaseAuth.getCurrentUser().isEmailVerified())
+                    if (firebaseAuth.getCurrentUser().isEmailVerified()) //registrazione avvenuta correrttamente
                     {
-                        //TODO : una volta creata impostare la classe Home al posto di MainActivity
-                        startActivity(new Intent(Login.this, SplashActivity.class));
+                        startActivity(new Intent(Login.this, Home.class));
                     }else
                     {
-                        showToast(Login.this, "Email non valida");
+                        showToast(Login.this, "Email non valida");//registrazione non avvenuta
                     }
                 }
                 else
@@ -177,7 +169,7 @@ public class Login extends AppCompatActivity {
             Login.setVisibility(View.VISIBLE);
         }
     }
-
+    //login con Google API
     private void SignIn()
     {
         Intent intent = gsc.getSignInIntent();
@@ -191,14 +183,40 @@ public class Login extends AppCompatActivity {
         if (requestCode==1000)
         {
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
-            try {
+            try { //Login Work
                 task.getResult(ApiException.class);
-                HomeActivity();
-            } catch (ApiException e) {
+                firebaseAuthWithPlayGames(Objects.requireNonNull(GoogleSignIn.getLastSignedInAccount(this)));
+
+            } catch (ApiException e) {// Login error
                 showToast(this, "error");
             }
         }
     }
+
+    private void firebaseAuthWithPlayGames(GoogleSignInAccount acct) {
+
+
+        final FirebaseAuth auth = FirebaseAuth.getInstance();
+        AuthCredential credential = PlayGamesAuthProvider.getCredential(Objects.requireNonNull(acct.getServerAuthCode()));
+        auth.signInWithCredential(credential)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's informatio
+                            FirebaseUser user = auth.getCurrentUser();
+                            HomeActivity();
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            Toast.makeText(Login.this, "Authentication failed.",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+
+                        // ...
+                    }
+                });
+    }
+
     private void HomeActivity()
     {
         finish();
