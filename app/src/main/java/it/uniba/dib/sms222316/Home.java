@@ -14,7 +14,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 
 public class Home extends AppCompatActivity {
-    Button Option;
+    Button Option, btnGallery;
     GoogleSignInOptions gso;
     GoogleSignInClient gsc;
     private long backPressed;
@@ -31,6 +31,15 @@ public class Home extends AppCompatActivity {
         gsc = GoogleSignIn.getClient(this,gso);
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
 
+        btnGallery = (Button) findViewById(R.id.btnGallery);
+        btnGallery.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(Home.this, Gallery.class);
+                startActivity(i);
+                finish();
+            }
+        });
 
     }
 

@@ -6,5 +6,12 @@
     <string name="login">Accedi</string>
     <string name="signin">Registrati</string>
     <string name="google">Accedi con Google</string>
+    <string name="mail">Inserisci mail</string>
+    <string name="password">Inserisci password</string>
+    <string name="guest">Guest</string>
 
+    <!-- Gallery -->
+    <string name="monuments">Monumenti</string>
+    <string name="paintings">Quadri</string>
+    <string name="characters">Personaggi</string>
 </resources>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Login -->
+    <string name="logo" translatable="false">Logo</string>
+    <string name="game_name" translatable="false">Game Name</string>
+    <string name="wallpaper" translatable="false">Wallpaper</string>
+
+    <!-- Gallery -->
+    <string name="back" translatable="false">Back to Home</string>
+</resources>

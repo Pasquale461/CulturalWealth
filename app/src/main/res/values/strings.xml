@@ -6,4 +6,12 @@
     <string name="login">Log In</string>
     <string name="signin">Sign In</string>
     <string name="google">Login With Google</string>
+    <string name="mail">Enter mail</string>
+    <string name="password">Enter password</string>
+    <string name="guest">Guest</string>
+
+    <!-- Gallery -->
+    <string name="monuments">Monuments</string>
+    <string name="paintings">Paintings</string>
+    <string name="characters">Characters</string>
 </resources>
