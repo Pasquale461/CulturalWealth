@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Cultural Wealth</string>
+
+    <!-- Login -->
+    <string name="login">Accedi</string>
+    <string name="signin">Registrati</string>
+    <string name="google">Accedi con Google</string>
+
+</resources>

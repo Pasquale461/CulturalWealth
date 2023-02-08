@@ -37,7 +37,7 @@
                 android:id="@+id/loginButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Log In"
+                android:text="@string/login"
                 app:layout_constraintBottom_toTopOf="@+id/divider3"
                 app:layout_constraintStart_toStartOf="@+id/MandP"
                 app:layout_constraintTop_toBottomOf="@+id/MandP" />
@@ -46,7 +46,7 @@
                 android:id="@+id/SignIn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Sing In"
+                android:text="@string/signin"
                 app:layout_constraintBottom_toTopOf="@+id/divider3"
                 app:layout_constraintEnd_toEndOf="@+id/MandP"
                 app:layout_constraintTop_toBottomOf="@+id/MandP" />
