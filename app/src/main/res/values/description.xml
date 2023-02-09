@@ -8,4 +8,7 @@
 
     <!-- Gallery -->
     <string name="back" translatable="false">Back to Home</string>
+
+    <!-- CardView -->
+    <string name="heritage" translatable="false">Heritage</string>
 </resources>
