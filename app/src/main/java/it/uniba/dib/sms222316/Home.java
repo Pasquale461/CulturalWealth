@@ -20,11 +20,13 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 public class Home extends AppCompatActivity {
     Button Option, usrbtn;
@@ -33,9 +35,11 @@ public class Home extends AppCompatActivity {
     EditText usrtext;
     private long backPressed;
     private static final int TIME_INTERVALL = 2000;
+    FirebaseAuth auth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
 
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
@@ -49,6 +53,11 @@ public class Home extends AppCompatActivity {
                 .build();
         gsc = GoogleSignIn.getClient(this,gso);
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
+
+
+        String Accountstring;
+        if(account != null) Accountstring = account.getEmail();
+        else Accountstring = FirebaseAuth.getInstance().getCurrentUser().getEmail();
 
         CardView Gallery = findViewById(R.id.Gallery);
         Gallery.setOnClickListener(v -> {
@@ -66,9 +75,9 @@ public class Home extends AppCompatActivity {
 
                 Map Us = new HashMap<>();
                 Us.put("email", account.getEmail());
-                Us.put("nome",usrtext.getText().toString());
+                Us.put("nome",Accountstring);
                 FirebaseFirestore db = FirebaseFirestore.getInstance();
-                db.collection("Users").document("LA").set(Us)
+                db.collection("Users").document(getRandomHexString(10)).set(Us)
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {
@@ -134,4 +143,15 @@ public class Home extends AppCompatActivity {
         }
         backPressed = System.currentTimeMillis();
     }
+
+    private String getRandomHexString(int numchars){
+        Random r = new Random();
+        StringBuffer sb = new StringBuffer();
+        while(sb.length() < numchars){
+            sb.append(Integer.toHexString(r.nextInt()));
+        }
+
+        return sb.toString().substring(0, numchars);
+    }
+
 }
