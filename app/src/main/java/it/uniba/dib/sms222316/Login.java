@@ -60,14 +60,14 @@ public class Login extends AppCompatActivity {
         Login = findViewById(R.id.loginButton);
         loginWithGoogle = findViewById(R.id.Google);
         //Instanza variabili di login
-        gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_GAMES_SIGN_IN)
+        gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
                 .build();
         gsc = GoogleSignIn.getClient(this,gso);
 
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
         if(account != null){
-            firebaseAuthWithPlayGames(Objects.requireNonNull(GoogleSignIn.getLastSignedInAccount(this)));
+
         }
 
         //Creazione triggher  onclick
@@ -173,7 +173,7 @@ public class Login extends AppCompatActivity {
     private void SignIn()
     {
         Intent intent = gsc.getSignInIntent();
-        startActivityForResult(intent,1000);
+        startActivityForResult(intent,100);
     }
 
     @Override
@@ -185,7 +185,7 @@ public class Login extends AppCompatActivity {
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             try { //Login Work
                 task.getResult(ApiException.class);
-                firebaseAuthWithPlayGames(Objects.requireNonNull(GoogleSignIn.getLastSignedInAccount(this)));
+                HomeActivity();
 
             } catch (ApiException e) {// Login error
                 showToast(this, "error");
@@ -193,29 +193,7 @@ public class Login extends AppCompatActivity {
         }
     }
 
-    private void firebaseAuthWithPlayGames(GoogleSignInAccount acct) {
 
-
-        final FirebaseAuth auth = FirebaseAuth.getInstance();
-        AuthCredential credential = PlayGamesAuthProvider.getCredential(Objects.requireNonNull(acct.getServerAuthCode()));
-        auth.signInWithCredential(credential)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's informatio
-                            FirebaseUser user = auth.getCurrentUser();
-                            HomeActivity();
-                        } else {
-                            // If sign in fails, display a message to the user.
-                            Toast.makeText(Login.this, "Authentication failed.",
-                                    Toast.LENGTH_SHORT).show();
-                        }
-
-                        // ...
-                    }
-                });
-    }
 
     private void HomeActivity()
     {
