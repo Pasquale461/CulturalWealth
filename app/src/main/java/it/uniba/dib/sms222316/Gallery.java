@@ -16,8 +16,7 @@ public class Gallery extends AppCompatActivity {
     ImageButton btnBack;
     Button btnMonuments, btnPaintings, btnCharacters;
     enum heritage {
-            Monuments, Paintings, Characters, All
-    };
+            Monuments, Paintings, Characters, All};
 
     heritage pressed = heritage.All;
     @Override
@@ -29,113 +28,101 @@ public class Gallery extends AppCompatActivity {
 
         List<Heritage> data, fullHrg;
 
-        btnBack = (ImageButton) findViewById(R.id.btnBack);
-        btnMonuments = (Button) findViewById(R.id.btnMonuments);
-        btnPaintings = (Button) findViewById(R.id.btnPaintings);
-        btnCharacters = (Button) findViewById(R.id.btnCharacters);
+        btnBack = findViewById(R.id.btnBack);
+        btnMonuments = findViewById(R.id.btnMonuments);
+        btnPaintings = findViewById(R.id.btnPaintings);
+        btnCharacters = findViewById(R.id.btnCharacters);
 
         //Button back
-        btnBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(Gallery.this, Home.class);
-                startActivity(i);
-                finish();
-            }
+        btnBack.setOnClickListener(v -> {
+            Intent i = new Intent(Gallery.this, Home.class);
+            startActivity(i);
+            finish();
         });
 
         fullHrg = new ArrayList<>();
         data = new ArrayList<>();
-        fullHrg.add(new Heritage("Il Colosseo","gsdx","Monumento"));
-        fullHrg.add(new Heritage("La Gioconda","sdxgfc","Quadro"));
-        fullHrg.add(new Heritage("Galileo Galilei","fdgxc","Personaggio"));
+        fullHrg.add(new Heritage("Il Colosseo","gsdx","Monuments"));
+        fullHrg.add(new Heritage("La Gioconda","sdxgfc","Paintings"));
+        fullHrg.add(new Heritage("Galileo Galilei","fdgxc","Characters"));
         data.addAll(fullHrg);
 
-        RecyclerView myrv = (RecyclerView) findViewById(R.id.RecyclerView);
+        RecyclerView myrv = findViewById(R.id.RecyclerView);
         RecyclerViewAdapter myAdapter = new RecyclerViewAdapter(this,data);
         myrv.setLayoutManager(new GridLayoutManager(this,3));
         myrv.setAdapter(myAdapter);
 
 
 
-        btnMonuments.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(pressed != heritage.Monuments){
-                    data.clear();
-                    List<Heritage> hrg;
-                    hrg = new ArrayList<>();
-                    hrg.add(new Heritage("Il Colosseo","gsdx","Monumento"));
-                    data.addAll(hrg);
-                    myAdapter.notifyDataSetChanged();
-                    pressed = heritage.Monuments;
+        btnMonuments.setOnClickListener(v -> {
+            if(pressed != heritage.Monuments){
+                data.clear();
+                List<Heritage> hrg;
+                hrg = new ArrayList<>();
+                hrg.add(new Heritage("Il Colosseo","gsdx","Monuments"));
+                data.addAll(hrg);
+                myAdapter.notifyDataSetChanged();
+                pressed = heritage.Monuments;
 
-                    btnMonuments.setBackgroundResource(R.drawable.pressed);
-                    btnPaintings.setBackgroundResource(R.drawable.defaultbtn);
-                    btnCharacters.setBackgroundResource(R.drawable.defaultbtn);
-                }
-                else{
-                    data.clear();
-                    data.addAll(fullHrg);
-                    myAdapter.notifyDataSetChanged();
-                    pressed = heritage.All;
+                btnMonuments.setBackgroundResource(R.drawable.pressed);
+                btnPaintings.setBackgroundResource(R.drawable.defaultbtn);
+                btnCharacters.setBackgroundResource(R.drawable.defaultbtn);
+            }
+            else{
+                data.clear();
+                data.addAll(fullHrg);
+                myAdapter.notifyDataSetChanged();
+                pressed = heritage.All;
 
-                    btnMonuments.setBackgroundResource(R.drawable.defaultbtn);
-                }
+                btnMonuments.setBackgroundResource(R.drawable.defaultbtn);
             }
         });
 
-        btnPaintings.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(pressed != heritage.Paintings){
-                    data.clear();
-                    List<Heritage> hrg;
-                    hrg = new ArrayList<>();
-                    hrg.add(new Heritage("La Gioconda","fdvf","Quadro"));
-                    data.addAll(hrg);
-                    myAdapter.notifyDataSetChanged();
-                    pressed = heritage.Paintings;
+        btnPaintings.setOnClickListener(v -> {
+            if(pressed != heritage.Paintings){
+                data.clear();
+                List<Heritage> hrg;
+                hrg = new ArrayList<>();
+                hrg.add(new Heritage("La Gioconda","fdvf","Paintings"));
+                data.addAll(hrg);
+                myAdapter.notifyDataSetChanged();
+                pressed = heritage.Paintings;
 
-                    btnPaintings.setBackgroundResource(R.drawable.pressed);
-                    btnMonuments.setBackgroundResource(R.drawable.defaultbtn);
-                    btnCharacters.setBackgroundResource(R.drawable.defaultbtn);
-                }
-                else{
-                    data.clear();
-                    data.addAll(fullHrg);
-                    myAdapter.notifyDataSetChanged();
-                    pressed = heritage.All;
+                btnPaintings.setBackgroundResource(R.drawable.pressed);
+                btnMonuments.setBackgroundResource(R.drawable.defaultbtn);
+                btnCharacters.setBackgroundResource(R.drawable.defaultbtn);
+            }
+            else{
+                data.clear();
+                data.addAll(fullHrg);
+                myAdapter.notifyDataSetChanged();
+                pressed = heritage.All;
 
-                    btnPaintings.setBackgroundResource(R.drawable.defaultbtn);
-                }
+                btnPaintings.setBackgroundResource(R.drawable.defaultbtn);
             }
         });
 
-        btnCharacters.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(pressed != heritage.Characters){
-                    data.clear();
-                    List<Heritage> hrg;
-                    hrg = new ArrayList<>();
-                    hrg.add(new Heritage("Galielo Galieli","vffre","Personaggio"));
-                    data.addAll(hrg);
-                    myAdapter.notifyDataSetChanged();
-                    pressed = heritage.Characters;
+        btnCharacters.setOnClickListener(v -> {
+            if(pressed != heritage.Characters){
+                data.clear();
+                List<Heritage> hrg;
+                hrg = new ArrayList<>();
+                hrg.add(new Heritage("Galielo Galieli","vffre","Characters"));
+                data.addAll(hrg);
+                myAdapter.notifyDataSetChanged();
+                pressed = heritage.Characters;
 
-                    btnCharacters.setBackgroundResource(R.drawable.pressed);
-                    btnMonuments.setBackgroundResource(R.drawable.defaultbtn);
-                    btnPaintings.setBackgroundResource(R.drawable.defaultbtn);
-                }
-                else{
-                    data.clear();
-                    data.addAll(fullHrg);
-                    myAdapter.notifyDataSetChanged();
-                    pressed = heritage.All;
+                btnCharacters.setBackgroundResource(R.drawable.pressed);
+                btnMonuments.setBackgroundResource(R.drawable.defaultbtn);
+                btnPaintings.setBackgroundResource(R.drawable.defaultbtn);
+            }
+            else{
+                data.clear();
+                data.addAll(fullHrg);
+                myAdapter.notifyDataSetChanged();
+                pressed = heritage.All;
 
-                    btnCharacters.setBackgroundResource(R.drawable.defaultbtn);
-                }
+                btnCharacters.setBackgroundResource(R.drawable.defaultbtn);
             }
         });
     }

@@ -1,10 +1,12 @@
 package it.uniba.dib.sms222316;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -14,7 +16,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 
 public class Home extends AppCompatActivity {
-    Button Option, btnGallery;
+    Button Option;
     GoogleSignInOptions gso;
     GoogleSignInClient gsc;
     private long backPressed;
@@ -22,6 +24,8 @@ public class Home extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
         setContentView(R.layout.activity_home);
 
 
@@ -31,14 +35,11 @@ public class Home extends AppCompatActivity {
         gsc = GoogleSignIn.getClient(this,gso);
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
 
-        btnGallery = (Button) findViewById(R.id.btnGallery);
-        btnGallery.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(Home.this, Gallery.class);
-                startActivity(i);
-                finish();
-            }
+        CardView Gallery = findViewById(R.id.Gallery);
+        Gallery.setOnClickListener(v -> {
+            Intent i = new Intent(Home.this, Gallery.class);
+            startActivity(i);
+            finish();
         });
 
     }

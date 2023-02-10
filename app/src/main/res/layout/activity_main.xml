@@ -25,7 +25,7 @@
             android:layout_marginTop="168dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/_1" />
+            app:srcCompat="@drawable/casella" />
 
         <ImageView
             android:id="@+id/exa_1"
@@ -35,7 +35,7 @@
             app:layout_constraintBottom_toBottomOf="@+id/exa_0"
             app:layout_constraintEnd_toEndOf="@+id/exa_0"
             app:layout_constraintStart_toStartOf="@+id/exa_0"
-            app:srcCompat="@drawable/_1" />
+            app:srcCompat="@drawable/casella" />
 
         <ImageView
             android:id="@+id/exa_2"
@@ -44,7 +44,7 @@
             android:layout_marginBottom="31dp"
             app:layout_constraintBottom_toBottomOf="@+id/exa_1"
             app:layout_constraintStart_toStartOf="@+id/exa_1"
-            app:srcCompat="@drawable/_1" />
+            app:srcCompat="@drawable/casella" />
 
         <ImageView
             android:id="@+id/exa_3"
@@ -54,7 +54,7 @@
             android:layout_marginBottom="15dp"
             app:layout_constraintBottom_toBottomOf="@+id/exa_2"
             app:layout_constraintStart_toStartOf="@+id/exa_2"
-            app:srcCompat="@drawable/_1" />
+            app:srcCompat="@drawable/casella" />
 
         <ImageView
             android:id="@+id/exa_4"
@@ -63,7 +63,7 @@
             android:layout_marginBottom="31dp"
             app:layout_constraintBottom_toBottomOf="@+id/exa_3"
             app:layout_constraintStart_toStartOf="@+id/exa_3"
-            app:srcCompat="@drawable/_1" />
+            app:srcCompat="@drawable/casella" />
 
         <ImageView
             android:id="@+id/exa_5"
@@ -73,7 +73,7 @@
             android:layout_marginBottom="15dp"
             app:layout_constraintBottom_toBottomOf="@+id/exa_4"
             app:layout_constraintStart_toStartOf="@+id/exa_4"
-            app:srcCompat="@drawable/_1" />
+            app:srcCompat="@drawable/casella" />
         <ImageView
             android:id="@+id/exa_6"
             android:layout_width="34dp"
@@ -82,7 +82,7 @@
             android:layout_marginBottom="15dp"
             app:layout_constraintBottom_toBottomOf="@+id/exa_5"
             app:layout_constraintStart_toStartOf="@+id/exa_5"
-            app:srcCompat="@drawable/_1" />
+            app:srcCompat="@drawable/casella" />
 
         <ImageView
             android:id="@+id/exa_7"
@@ -92,7 +92,7 @@
             android:layout_marginTop="15dp"
             app:layout_constraintStart_toStartOf="@+id/exa_6"
             app:layout_constraintTop_toTopOf="@+id/exa_6"
-            app:srcCompat="@drawable/_1" />
+            app:srcCompat="@drawable/casella" />
         <ImageView
             android:id="@+id/exa_8"
             android:layout_width="34dp"
@@ -101,7 +101,7 @@
             android:layout_marginBottom="15dp"
             app:layout_constraintBottom_toBottomOf="@+id/exa_7"
             app:layout_constraintStart_toStartOf="@+id/exa_7"
-            app:srcCompat="@drawable/_1" />
+            app:srcCompat="@drawable/casella" />
         <ImageView
             android:id="@+id/exa_9"
             android:layout_width="34dp"
@@ -110,7 +110,7 @@
             android:layout_marginTop="15dp"
             app:layout_constraintStart_toStartOf="@+id/exa_8"
             app:layout_constraintTop_toTopOf="@+id/exa_8"
-            app:srcCompat="@drawable/_1" />
+            app:srcCompat="@drawable/casella" />
 
         <ImageView
             android:id="@+id/exa_10"
@@ -120,7 +120,7 @@
             app:layout_constraintBottom_toBottomOf="@+id/exa_9"
             app:layout_constraintStart_toStartOf="@+id/exa_9"
             app:layout_constraintTop_toTopOf="@+id/exa_9"
-            app:srcCompat="@drawable/_1" />
+            app:srcCompat="@drawable/casella" />
 
         <ImageView
             android:id="@+id/exa_11"
@@ -130,7 +130,7 @@
             app:layout_constraintBottom_toBottomOf="@+id/exa_10"
             app:layout_constraintStart_toStartOf="@+id/exa_10"
             app:layout_constraintTop_toTopOf="@+id/exa_10"
-            app:srcCompat="@drawable/_1" />
+            app:srcCompat="@drawable/casella" />
         <ImageView
             android:id="@+id/exa_12"
             android:layout_width="34dp"
@@ -139,7 +139,7 @@
             android:layout_marginBottom="15dp"
             app:layout_constraintBottom_toBottomOf="@+id/exa_11"
             app:layout_constraintStart_toStartOf="@+id/exa_11"
-            app:srcCompat="@drawable/_1" />
+            app:srcCompat="@drawable/casella" />
         <ImageView
             android:id="@+id/exa_13"
             android:layout_width="34dp"
@@ -148,7 +148,7 @@
             android:layout_marginTop="15dp"
             app:layout_constraintStart_toStartOf="@+id/exa_12"
             app:layout_constraintTop_toTopOf="@+id/exa_12"
-            app:srcCompat="@drawable/_1" />
+            app:srcCompat="@drawable/casella" />
         <ImageView
             android:id="@+id/exa_14"
             android:layout_width="34dp"
@@ -157,7 +157,7 @@
             android:layout_marginBottom="15dp"
             app:layout_constraintBottom_toBottomOf="@+id/exa_13"
             app:layout_constraintStart_toStartOf="@+id/exa_13"
-            app:srcCompat="@drawable/_1" />
+            app:srcCompat="@drawable/casella" />
         <ImageView
             android:id="@+id/exa_15"
             android:layout_width="34dp"
@@ -166,7 +166,7 @@
             android:layout_marginTop="15dp"
             app:layout_constraintStart_toStartOf="@+id/exa_14"
             app:layout_constraintTop_toTopOf="@+id/exa_14"
-            app:srcCompat="@drawable/_1" />
+            app:srcCompat="@drawable/casella" />
         <ImageView
             android:id="@+id/exa_16"
             android:layout_width="34dp"
@@ -175,7 +175,7 @@
             android:layout_marginTop="15dp"
             app:layout_constraintStart_toStartOf="@+id/exa_15"
             app:layout_constraintTop_toTopOf="@+id/exa_15"
-            app:srcCompat="@drawable/_1" />
+            app:srcCompat="@drawable/casella" />
 
         <ImageView
             android:id="@+id/exa_17"
@@ -184,7 +184,7 @@
             android:layout_marginTop="31dp"
             app:layout_constraintStart_toStartOf="@+id/exa_16"
             app:layout_constraintTop_toTopOf="@+id/exa_16"
-            app:srcCompat="@drawable/_1" />
+            app:srcCompat="@drawable/casella" />
         <ImageView
             android:id="@+id/exa_18"
             android:layout_width="34dp"
@@ -193,7 +193,7 @@
             android:layout_marginTop="15dp"
             app:layout_constraintStart_toStartOf="@+id/exa_17"
             app:layout_constraintTop_toTopOf="@+id/exa_17"
-            app:srcCompat="@drawable/_1" />
+            app:srcCompat="@drawable/casella" />
         <ImageView
             android:id="@+id/exa_19"
             android:layout_width="34dp"
@@ -201,7 +201,7 @@
             android:layout_marginTop="31dp"
             app:layout_constraintStart_toStartOf="@+id/exa_18"
             app:layout_constraintTop_toTopOf="@+id/exa_18"
-            app:srcCompat="@drawable/_1" />
+            app:srcCompat="@drawable/casella" />
 
         <ImageView
             android:id="@+id/exa_20"
@@ -211,7 +211,7 @@
             app:layout_constraintEnd_toEndOf="@+id/exa_19"
             app:layout_constraintStart_toStartOf="@+id/exa_19"
             app:layout_constraintTop_toTopOf="@+id/exa_19"
-            app:srcCompat="@drawable/_1" />
+            app:srcCompat="@drawable/casella" />
 
         <ImageView
             android:id="@+id/exa_21"
@@ -221,7 +221,7 @@
             app:layout_constraintEnd_toEndOf="@+id/exa_0"
             app:layout_constraintStart_toStartOf="@+id/exa_0"
             app:layout_constraintTop_toTopOf="@+id/exa_0"
-            app:srcCompat="@drawable/_1" />
+            app:srcCompat="@drawable/casella" />
 
         <ImageView
             android:id="@+id/exa_22"
@@ -230,7 +230,7 @@
             android:layout_marginTop="31dp"
             app:layout_constraintStart_toStartOf="@+id/exa_21"
             app:layout_constraintTop_toTopOf="@+id/exa_21"
-            app:srcCompat="@drawable/_1" />
+            app:srcCompat="@drawable/casella" />
         <ImageView
             android:id="@+id/exa_23"
             android:layout_width="34dp"
@@ -239,7 +239,7 @@
             android:layout_marginTop="15dp"
             app:layout_constraintStart_toStartOf="@+id/exa_22"
             app:layout_constraintTop_toTopOf="@+id/exa_22"
-            app:srcCompat="@drawable/_1" />
+            app:srcCompat="@drawable/casella" />
         <ImageView
             android:id="@+id/exa_24"
             android:layout_width="34dp"
@@ -247,7 +247,7 @@
             android:layout_marginTop="31dp"
             app:layout_constraintStart_toStartOf="@+id/exa_23"
             app:layout_constraintTop_toTopOf="@+id/exa_23"
-            app:srcCompat="@drawable/_1" />
+            app:srcCompat="@drawable/casella" />
         <ImageView
             android:id="@+id/exa_25"
             android:layout_width="34dp"
@@ -256,7 +256,7 @@
             android:layout_marginTop="15dp"
             app:layout_constraintStart_toStartOf="@+id/exa_24"
             app:layout_constraintTop_toTopOf="@+id/exa_24"
-            app:srcCompat="@drawable/_1" />
+            app:srcCompat="@drawable/casella" />
         <ImageView
             android:id="@+id/exa_26"
             android:layout_width="34dp"
@@ -265,7 +265,7 @@
             android:layout_marginTop="15dp"
             app:layout_constraintStart_toStartOf="@+id/exa_25"
             app:layout_constraintTop_toTopOf="@+id/exa_25"
-            app:srcCompat="@drawable/_1" />
+            app:srcCompat="@drawable/casella" />
         <ImageView
             android:id="@+id/exa_27"
             android:layout_width="34dp"
@@ -274,7 +274,7 @@
             android:layout_marginBottom="15dp"
             app:layout_constraintBottom_toBottomOf="@+id/exa_26"
             app:layout_constraintStart_toStartOf="@+id/exa_26"
-            app:srcCompat="@drawable/_1" />
+            app:srcCompat="@drawable/casella" />
         <ImageView
             android:id="@+id/exa_28"
             android:layout_width="34dp"
@@ -283,7 +283,7 @@
             android:layout_marginTop="15dp"
             app:layout_constraintStart_toStartOf="@+id/exa_27"
             app:layout_constraintTop_toTopOf="@+id/exa_27"
-            app:srcCompat="@drawable/_1" />
+            app:srcCompat="@drawable/casella" />
         <ImageView
             android:id="@+id/exa_29"
             android:layout_width="34dp"
@@ -292,7 +292,7 @@
             android:layout_marginBottom="15dp"
             app:layout_constraintBottom_toBottomOf="@+id/exa_28"
             app:layout_constraintStart_toStartOf="@+id/exa_28"
-            app:srcCompat="@drawable/_1" />
+            app:srcCompat="@drawable/casella" />
         <ImageView
             android:id="@+id/exa_30"
             android:layout_width="50dp"
@@ -301,7 +301,7 @@
             app:layout_constraintBottom_toBottomOf="@+id/exa_29"
             app:layout_constraintStart_toStartOf="@+id/exa_29"
             app:layout_constraintTop_toTopOf="@+id/exa_29"
-            app:srcCompat="@drawable/_1" />
+            app:srcCompat="@drawable/casella" />
         <ImageView
             android:id="@+id/exa_31"
             android:layout_width="34dp"
@@ -310,7 +310,7 @@
             app:layout_constraintBottom_toBottomOf="@+id/exa_30"
             app:layout_constraintStart_toStartOf="@+id/exa_30"
             app:layout_constraintTop_toTopOf="@+id/exa_30"
-            app:srcCompat="@drawable/_1" />
+            app:srcCompat="@drawable/casella" />
         <ImageView
             android:id="@+id/exa_32"
             android:layout_width="34dp"
@@ -319,7 +319,7 @@
             android:layout_marginTop="15dp"
             app:layout_constraintStart_toStartOf="@+id/exa_31"
             app:layout_constraintTop_toTopOf="@+id/exa_31"
-            app:srcCompat="@drawable/_1" />
+            app:srcCompat="@drawable/casella" />
         <ImageView
             android:id="@+id/exa_33"
             android:layout_width="34dp"
@@ -328,7 +328,7 @@
             android:layout_marginBottom="15dp"
             app:layout_constraintBottom_toBottomOf="@+id/exa_32"
             app:layout_constraintStart_toStartOf="@+id/exa_32"
-            app:srcCompat="@drawable/_1" />
+            app:srcCompat="@drawable/casella" />
         <ImageView
             android:id="@+id/exa_34"
             android:layout_width="34dp"
@@ -337,7 +337,7 @@
             android:layout_marginTop="15dp"
             app:layout_constraintStart_toStartOf="@+id/exa_33"
             app:layout_constraintTop_toTopOf="@+id/exa_33"
-            app:srcCompat="@drawable/_1" />
+            app:srcCompat="@drawable/casella" />
         <ImageView
             android:id="@+id/exa_35"
             android:layout_width="34dp"
@@ -346,7 +346,7 @@
             android:layout_marginBottom="15dp"
             app:layout_constraintBottom_toBottomOf="@+id/exa_34"
             app:layout_constraintStart_toStartOf="@+id/exa_34"
-            app:srcCompat="@drawable/_1" />
+            app:srcCompat="@drawable/casella" />
         <ImageView
             android:id="@+id/exa_36"
             android:layout_width="34dp"
@@ -355,7 +355,7 @@
             android:layout_marginBottom="15dp"
             app:layout_constraintBottom_toBottomOf="@+id/exa_35"
             app:layout_constraintStart_toStartOf="@+id/exa_35"
-            app:srcCompat="@drawable/_1" />
+            app:srcCompat="@drawable/casella" />
         <ImageView
             android:id="@+id/exa_37"
             android:layout_width="34dp"
@@ -363,7 +363,7 @@
             android:layout_marginBottom="31dp"
             app:layout_constraintBottom_toBottomOf="@+id/exa_36"
             app:layout_constraintStart_toStartOf="@+id/exa_36"
-            app:srcCompat="@drawable/_1" />
+            app:srcCompat="@drawable/casella" />
         <ImageView
             android:id="@+id/exa_38"
             android:layout_width="34dp"
@@ -372,7 +372,7 @@
             android:layout_marginBottom="15dp"
             app:layout_constraintBottom_toBottomOf="@+id/exa_37"
             app:layout_constraintStart_toStartOf="@+id/exa_37"
-            app:srcCompat="@drawable/_1" />
+            app:srcCompat="@drawable/casella" />
         <ImageView
             android:id="@+id/exa_39"
             android:layout_width="34dp"
@@ -380,7 +380,7 @@
             android:layout_marginBottom="31dp"
             app:layout_constraintBottom_toBottomOf="@+id/exa_38"
             app:layout_constraintStart_toStartOf="@+id/exa_38"
-            app:srcCompat="@drawable/_1" />
+            app:srcCompat="@drawable/casella" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
