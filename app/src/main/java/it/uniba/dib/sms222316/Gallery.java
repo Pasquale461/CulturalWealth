@@ -1,11 +1,16 @@
 package it.uniba.dib.sms222316;
 
+import static it.uniba.dib.sms222316.Utility.showToast;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
+import android.view.Display;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -45,11 +50,36 @@ public class Gallery extends AppCompatActivity {
         fullHrg.add(new Heritage("Il Colosseo","gsdx","Monuments"));
         fullHrg.add(new Heritage("La Gioconda","sdxgfc","Paintings"));
         fullHrg.add(new Heritage("Galileo Galilei","fdgxc","Characters"));
+
+        fullHrg.add(new Heritage("Il Colosseo","gsdx","Monuments"));
+        fullHrg.add(new Heritage("La Gioconda","sdxgfc","Paintings"));
+        fullHrg.add(new Heritage("Galileo Galilei","fdgxc","Characters"));
+
+        fullHrg.add(new Heritage("Il Colosseo","gsdx","Monuments"));
+        fullHrg.add(new Heritage("La Gioconda","sdxgfc","Paintings"));
+        fullHrg.add(new Heritage("Galileo Galilei","fdgxc","Characters"));
+
+        fullHrg.add(new Heritage("Il Colosseo","gsdx","Monuments"));
+        fullHrg.add(new Heritage("La Gioconda","sdxgfc","Paintings"));
+        fullHrg.add(new Heritage("Galileo Galilei","fdgxc","Characters"));
+
+        fullHrg.add(new Heritage("Il Colosseo","gsdx","Monuments"));
+        fullHrg.add(new Heritage("La Gioconda","sdxgfc","Paintings"));
+        fullHrg.add(new Heritage("Galileo Galilei","fdgxc","Characters"));
+
+        fullHrg.add(new Heritage("Il Colosseo","gsdx","Monuments"));
+        fullHrg.add(new Heritage("La Gioconda","sdxgfc","Paintings"));
+        fullHrg.add(new Heritage("Galileo Galilei","fdgxc","Characters"));
         data.addAll(fullHrg);
 
         RecyclerView myrv = findViewById(R.id.RecyclerView);
+
+        DisplayMetrics displayMetrics = this.getResources().getDisplayMetrics();
+        float RecyclerWidth = (displayMetrics.widthPixels / displayMetrics.density) - 300; //larghezza sezione bottoni
+        int spanCount = (int) (RecyclerWidth / 100) - 1;
+
         RecyclerViewAdapter myAdapter = new RecyclerViewAdapter(this,data);
-        myrv.setLayoutManager(new GridLayoutManager(this,3));
+        myrv.setLayoutManager(new GridLayoutManager(this,spanCount));
         myrv.setAdapter(myAdapter);
 
 
@@ -107,7 +137,7 @@ public class Gallery extends AppCompatActivity {
                 data.clear();
                 List<Heritage> hrg;
                 hrg = new ArrayList<>();
-                hrg.add(new Heritage("Galielo Galieli","vffre","Characters"));
+                hrg.add(new Heritage("Galileo Galilei","vffre","Characters"));
                 data.addAll(hrg);
                 myAdapter.notifyDataSetChanged();
                 pressed = heritage.Characters;
