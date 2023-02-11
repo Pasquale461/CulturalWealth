@@ -9,17 +9,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
-
-import java.net.URI;
 import java.util.*;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder> {
 
-        private Context mContext;
-        private List<Heritage> mData;
+        Context mContext;
+        List<Heritage> mData;
 
         private enum TypeHeritage {
             Monuments, Paintings, Characters
@@ -63,19 +60,16 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             }
 
 
-            holder.cardView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
+            holder.cardView.setOnClickListener(v -> {
 
-                    Intent intent = new Intent(mContext,MainActivity.class);
+                Intent intent = new Intent(mContext,GalleryHeritage.class);
 
-                    // passing data to the book activity
-                    intent.putExtra("Title",mData.get(position).getTitle());
-                    intent.putExtra("Description",mData.get(position).getDescription());
-                    // start the activity
-                    mContext.startActivity(intent);
+                // passing data to the Gallery Heritage
+                intent.putExtra("Title",mData.get(position).getTitle());
+                intent.putExtra("Description",mData.get(position).getDescription());
+                // start the activity
+                mContext.startActivity(intent);
 
-                }
             });
         }
 
@@ -93,10 +87,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             public MyViewHolder(View itemView) {
                 super(itemView);
 
-                haritageTitle = (TextView) itemView.findViewById(R.id.title) ;
-                cardView = (CardView) itemView.findViewById(R.id.cardview_id);
-                img = (ImageView) itemView.findViewById(R.id.idImg);
-                type = (ImageView) itemView.findViewById(R.id.Type);
+                haritageTitle = itemView.findViewById(R.id.title) ;
+                cardView = itemView.findViewById(R.id.cardview_id);
+                img = itemView.findViewById(R.id.idImg);
+                type = itemView.findViewById(R.id.Type);
             }
         }
 

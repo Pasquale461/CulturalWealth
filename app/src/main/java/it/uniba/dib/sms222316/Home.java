@@ -41,7 +41,6 @@ public class Home extends AppCompatActivity {
     EditText usrtext;
     private long backPressed;
     private static final int TIME_INTERVALL = 2000;
-    FirebaseAuth auth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -7,8 +7,14 @@
     <string name="wallpaper" translatable="false">Wallpaper</string>
 
     <!-- Gallery -->
-    <string name="back" translatable="false">Back to Home</string>
+    <string name="back" translatable="false">Back</string>
 
     <!-- CardView -->
     <string name="heritage" translatable="false">Heritage</string>
+
+    <!-- Gallery Heritage -->
+    <string name="title" translatable="false">Title</string>
+    <string name="description" translatable="false">Description</string>
+    <string name="descImg" translatable="false">Image Heritage</string>
+
 </resources>

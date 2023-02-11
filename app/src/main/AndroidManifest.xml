@@ -17,9 +17,13 @@
         android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"
         tools:targetApi="31">
         <activity
-            android:name=".Gallery"
+            android:name=".GalleryHeritage"
             android:exported="false"
             android:screenOrientation="landscape"/>
+        <activity
+            android:name=".Gallery"
+            android:exported="false"
+            android:screenOrientation="landscape" />
         <activity
             android:name=".Home"
             android:exported="false"
@@ -58,7 +62,6 @@
             android:screenOrientation="landscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
 

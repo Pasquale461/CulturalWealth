@@ -1,6 +1,5 @@
 package it.uniba.dib.sms222316;
 
-import static it.uniba.dib.sms222316.Utility.showToast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -8,9 +7,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
-import android.view.Display;
 import android.view.View;
-import android.view.ViewTreeObserver;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -21,7 +18,7 @@ public class Gallery extends AppCompatActivity {
     ImageButton btnBack;
     Button btnMonuments, btnPaintings, btnCharacters;
     enum heritage {
-            Monuments, Paintings, Characters, All};
+            Monuments, Paintings, Characters, All}
 
     heritage pressed = heritage.All;
     @Override
@@ -46,8 +43,7 @@ public class Gallery extends AppCompatActivity {
         });
 
         fullHrg = new ArrayList<>();
-        data = new ArrayList<>();
-        fullHrg.add(new Heritage("Il Colosseo","gsdx","Monuments"));
+        fullHrg.add(new Heritage("Il Colosseo","Lorem ipsum dolor sit amet, consecteturyjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjmmmffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff adipiscing elit. Sed efficitur, nulla vel vestibulum aliquet, enim urna malesuada enim, vel pharetra tellus ipsum sit amet eros. Donec rutrum fringilla justo, at molestie lectus pretium sed. Morbi accumsan in velit eu sagittis. Fusce pretium non sapien non imperdiet. Duis id ultrices turpis, id blandit odio. Sed vitae libero in nulla volutpat posuere. Curabitur non sodales ex. Curabitur laoreet a odio id bibendum. Duis convallis neque quis felis rhoncus, sed fringilla ex commodo.","Monuments"));
         fullHrg.add(new Heritage("La Gioconda","sdxgfc","Paintings"));
         fullHrg.add(new Heritage("Galileo Galilei","fdgxc","Characters"));
 
@@ -70,7 +66,7 @@ public class Gallery extends AppCompatActivity {
         fullHrg.add(new Heritage("Il Colosseo","gsdx","Monuments"));
         fullHrg.add(new Heritage("La Gioconda","sdxgfc","Paintings"));
         fullHrg.add(new Heritage("Galileo Galilei","fdgxc","Characters"));
-        data.addAll(fullHrg);
+        data = new ArrayList<>(fullHrg);
 
         RecyclerView myrv = findViewById(R.id.RecyclerView);
 
