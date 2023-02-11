@@ -70,7 +70,7 @@ public class Login extends AppCompatActivity {
 
         }
 
-        //Creazione triggher  onclick
+        //Creazione trigger  onclick
         Login.setOnClickListener((v)-> loginUser());
         loginWithGoogle.setOnClickListener(new View.OnClickListener() {
             @Override

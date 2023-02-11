@@ -14,4 +14,13 @@
     <string name="monuments">Monumenti</string>
     <string name="paintings">Quadri</string>
     <string name="characters">Personaggi</string>
+
+
+    <!-- Settings -->
+    <string name="log_out">Disconnetti</string>
+    <string name="settings">Impostazioni</string>
+    <string name="music">Volume Musica</string>
+    <string name="effect">Volume Effetti</string>
+    <string name="language">Lingua</string>
+
 </resources>

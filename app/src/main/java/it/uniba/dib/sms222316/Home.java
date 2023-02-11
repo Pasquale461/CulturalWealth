@@ -4,14 +4,17 @@ import static it.uniba.dib.sms222316.Utility.showToast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SwitchCompat;
 import androidx.cardview.widget.CardView;
 
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -29,7 +32,10 @@ import java.util.Map;
 import java.util.Random;
 
 public class Home extends AppCompatActivity {
-    Button Option, usrbtn;
+    Button Play, usrbtn;
+    ImageButton Settings;
+    MediaPlayer main_ost,effect;
+    SwitchCompat mVolume,eVolume;
     GoogleSignInOptions gso;
     GoogleSignInClient gsc;
     EditText usrtext;
@@ -47,6 +53,7 @@ public class Home extends AppCompatActivity {
         //popup username
         PopupDialog popupDialog = new PopupDialog(Home.this, Home.this);
         popupDialog.setCanceledOnTouchOutside(false);
+        //Todo : bug quando
         //
         gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
@@ -74,8 +81,8 @@ public class Home extends AppCompatActivity {
             public void onClick(View v) {
 
                 Map Us = new HashMap<>();
-                Us.put("email", account.getEmail());
-                Us.put("nome",Accountstring);
+                Us.put("email", Accountstring);
+                Us.put("nome",usrtext.getText().toString());
                 FirebaseFirestore db = FirebaseFirestore.getInstance();
                 db.collection("Users").document(getRandomHexString(10)).set(Us)
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -104,7 +111,7 @@ public class Home extends AppCompatActivity {
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("Users")
-                .whereEqualTo("email", account.getEmail())
+                .whereEqualTo("email", Accountstring)
                 .get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
@@ -129,7 +136,37 @@ public class Home extends AppCompatActivity {
                     }
                 });
 
+        Settings = findViewById(R.id.settings);
+        PopupSettings popupSettings = new PopupSettings(Home.this,Home.this);
 
+        //main ost
+        main_ost = MediaPlayer.create(this, R.raw.electricpistol);
+        effect = MediaPlayer.create(this, R.raw.sound);
+        mVolume=popupSettings.findViewById(R.id.vol_musica);
+        eVolume=popupSettings.findViewById(R.id.vol_effetti);
+
+        if(mVolume.isChecked()){
+            main_ost.start();
+        }
+
+        Play = findViewById(R.id.button);
+        Play.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(eVolume.isChecked()) {
+                    effect.start();
+                }
+            }
+        });
+
+
+        Settings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //APRIRE popup impostazioni
+                popupSettings.show();
+            }
+        });
     }
 
     public void onBackPressed() {

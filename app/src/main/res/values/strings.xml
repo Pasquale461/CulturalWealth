@@ -14,4 +14,11 @@
     <string name="monuments">Monuments</string>
     <string name="paintings">Paintings</string>
     <string name="characters">Characters</string>
+    <!-- Settings -->
+    <string name="log_out">Log Out</string>
+    <string name="settings">Settings</string>
+    <string name="music">Music Volume</string>
+    <string name="effect">Effect Volume</string>
+    <string name="language">Language</string>
+
 </resources>
