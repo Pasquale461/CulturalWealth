@@ -2,9 +2,12 @@ package it.uniba.dib.sms222316;
 
 import static android.content.Context.MODE_PRIVATE;
 
+import static androidx.core.content.ContextCompat.getSystemService;
+
 import android.app.Dialog;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.view.View;
 
@@ -14,11 +17,12 @@ import androidx.appcompat.widget.SwitchCompat;
 public class PopupSettings extends Dialog {
     SwitchCompat eVolume,mVolume;
     boolean effect_boolean,music_boolean;
-MediaPlayer main_ost;
+    Audio audio;
     public PopupSettings(@NonNull Context context, final Home home) {
         super(context);
+
         setContentView(R.layout.options);
-        main_ost = MediaPlayer.create(context, R.raw.electricpistol);
+        audio = Audio.getInstance(context);
 
         eVolume = findViewById(R.id.vol_effetti);
         mVolume = findViewById(R.id.vol_musica);
@@ -44,13 +48,13 @@ MediaPlayer main_ost;
             share.putBoolean("vol_musica",true);
             share.apply();
             mVolume.setChecked(true);
-            main_ost.start();
+            audio.playAudio(R.raw.electricpistol);
         }else{
             SharedPreferences.Editor share = getContext().getSharedPreferences("editor", MODE_PRIVATE).edit();
             share.putBoolean("vol_musica",false);
             share.apply();
             mVolume.setChecked(false);
-            main_ost.pause();
+            audio.pauseAudio();
         }
     }
 
@@ -78,7 +82,5 @@ MediaPlayer main_ost;
         eVolume.setChecked(effect_boolean);
         mVolume.setChecked(music_boolean);
     }
-
-
 
 }

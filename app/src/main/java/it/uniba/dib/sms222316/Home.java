@@ -7,7 +7,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.cardview.widget.CardView;
 
+import android.content.Context;
 import android.content.Intent;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
@@ -38,20 +40,20 @@ import java.util.Random;
 public class Home extends AppCompatActivity {
     Button Play, usrbtn;
     ImageButton Settings;
-    MediaPlayer main_ost,effect;
+    MediaPlayer effect;
     SwitchCompat mVolume,eVolume;
     GoogleSignInOptions gso;
     GoogleSignInClient gsc;
     EditText usrtext;
+    Audio audio;
+    PopupSettings popupSettings;
     TextView profilename;
     private long backPressed;
     private static final int TIME_INTERVALL = 2000;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
-
+        audio = Audio.getInstance(this);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
         setContentView(R.layout.activity_home);
@@ -114,10 +116,9 @@ public class Home extends AppCompatActivity {
 
 
         Settings = findViewById(R.id.settings);
-        PopupSettings popupSettings = new PopupSettings(Home.this,Home.this);
+        popupSettings = new PopupSettings(Home.this,Home.this);
 
         //main ost
-        main_ost = MediaPlayer.create(this, R.raw.electricpistol);
         effect = MediaPlayer.create(this, R.raw.sound);
         mVolume=popupSettings.findViewById(R.id.vol_musica);
         eVolume=popupSettings.findViewById(R.id.vol_effetti);
@@ -158,6 +159,14 @@ public class Home extends AppCompatActivity {
                     }
                 });
 
+        Settings = findViewById(R.id.settings);
+        popupSettings = new PopupSettings(Home.this,Home.this);
+
+        //main ost
+        effect = MediaPlayer.create(this, R.raw.sound);
+        mVolume=popupSettings.findViewById(R.id.vol_musica);
+        eVolume=popupSettings.findViewById(R.id.vol_effetti);
+
 
 
         Play = findViewById(R.id.button);
@@ -180,7 +189,11 @@ public class Home extends AppCompatActivity {
         });
         findusername(Accountstring);
     }
-
+    @Override
+    protected void onPause() {
+        super.onPause();
+        audio.pauseAudio();
+    }
     public void onBackPressed() {
         if(backPressed + TIME_INTERVALL > System.currentTimeMillis()){
             moveTaskToBack(true);
@@ -224,5 +237,12 @@ public class Home extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(mVolume.isChecked()){
+            popupSettings.SoundSwitchM();
+        }
+    }
 }
 
