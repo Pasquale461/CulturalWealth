@@ -70,7 +70,7 @@ MediaPlayer main_ost;
 
     public void load(){
         SharedPreferences getSound = getContext().getSharedPreferences("editor", MODE_PRIVATE);
-        effect_boolean = getSound.getBoolean("vol_effetti",false);
+        effect_boolean = getSound.getBoolean("vol_effetti",true);
         music_boolean = getSound.getBoolean("vol_musica",true);
 
     }

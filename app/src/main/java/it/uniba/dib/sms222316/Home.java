@@ -15,16 +15,20 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.HashMap;
@@ -39,11 +43,13 @@ public class Home extends AppCompatActivity {
     GoogleSignInOptions gso;
     GoogleSignInClient gsc;
     EditText usrtext;
+    TextView profilename;
     private long backPressed;
     private static final int TIME_INTERVALL = 2000;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
 
 
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -72,6 +78,8 @@ public class Home extends AppCompatActivity {
             finish();
         });
 
+        profilename = findViewById(R.id.profile_name);
+
 
         usrtext = popupDialog.findViewById(R.id.username_text);
         usrbtn = popupDialog.findViewById(R.id.submitUserButton);
@@ -82,6 +90,7 @@ public class Home extends AppCompatActivity {
                 Map Us = new HashMap<>();
                 Us.put("email", Accountstring);
                 Us.put("nome",usrtext.getText().toString());
+                Us.put("friend_code",getRandomHexString(5));
                 FirebaseFirestore db = FirebaseFirestore.getInstance();
                 db.collection("Users").document(getRandomHexString(10)).set(Us)
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -89,6 +98,7 @@ public class Home extends AppCompatActivity {
                             public void onSuccess(Void aVoid) {
                                 //aggiunto
                                 showToast(Home.this, "aggiunto");
+                                findusername(Accountstring);
                             }
                         })
                         .addOnFailureListener(new OnFailureListener() {
@@ -102,6 +112,19 @@ public class Home extends AppCompatActivity {
             }
         });
 
+
+        Settings = findViewById(R.id.settings);
+        PopupSettings popupSettings = new PopupSettings(Home.this,Home.this);
+
+        //main ost
+        main_ost = MediaPlayer.create(this, R.raw.electricpistol);
+        effect = MediaPlayer.create(this, R.raw.sound);
+        mVolume=popupSettings.findViewById(R.id.vol_musica);
+        eVolume=popupSettings.findViewById(R.id.vol_effetti);
+
+        if(mVolume.isChecked()){
+            popupSettings.SoundSwitchM();
+        }
 
 
         //ricerca dell'utente
@@ -135,18 +158,7 @@ public class Home extends AppCompatActivity {
                     }
                 });
 
-        Settings = findViewById(R.id.settings);
-        PopupSettings popupSettings = new PopupSettings(Home.this,Home.this);
 
-        //main ost
-        main_ost = MediaPlayer.create(this, R.raw.electricpistol);
-        effect = MediaPlayer.create(this, R.raw.sound);
-        mVolume=popupSettings.findViewById(R.id.vol_musica);
-        eVolume=popupSettings.findViewById(R.id.vol_effetti);
-
-        if(mVolume.isChecked()){
-            main_ost.start();
-        }
 
         Play = findViewById(R.id.button);
         Play.setOnClickListener(new View.OnClickListener() {
@@ -166,6 +178,7 @@ public class Home extends AppCompatActivity {
                 popupSettings.show();
             }
         });
+        findusername(Accountstring);
     }
 
     public void onBackPressed() {
@@ -190,4 +203,26 @@ public class Home extends AppCompatActivity {
         return sb.toString().substring(0, numchars);
     }
 
+    private void findusername(String Accountstring)
+    {
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("Users")
+                .whereEqualTo("email", Accountstring)
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        for (QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
+                            profilename.setText(documentSnapshot.getString("nome")+"#"+documentSnapshot.getString("friend_code"));
+
+                        }
+
+                    }
+                });
+
+
+    }
+
 }
+

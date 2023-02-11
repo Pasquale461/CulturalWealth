@@ -19,23 +19,15 @@
         <activity
             android:name=".GalleryHeritage"
             android:exported="false"
-            android:screenOrientation="landscape"/>
+            android:screenOrientation="sensorLandscape"/>
         <activity
             android:name=".Gallery"
             android:exported="false"
-            android:screenOrientation="landscape" />
+            android:screenOrientation="sensorLandscape"/>
         <activity
             android:name=".Home"
             android:exported="false"
-            android:screenOrientation="landscape">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-        <activity
-            android:name=".MainActivity"
-            android:exported="false"
-            android:screenOrientation="landscape">
+            android:screenOrientation="sensorLandscape">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
@@ -43,7 +35,7 @@
         <activity
             android:name=".registration"
             android:exported="false"
-            android:screenOrientation="landscape">
+            android:screenOrientation="sensorLandscape">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
@@ -51,7 +43,7 @@
         <activity
             android:name=".Login"
             android:exported="false"
-            android:screenOrientation="landscape">
+            android:screenOrientation="sensorLandscape">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
@@ -59,7 +51,7 @@
         <activity
             android:name=".SplashActivity"
             android:exported="true"
-            android:screenOrientation="landscape">
+            android:screenOrientation="sensorLandscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -69,6 +61,10 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
     </application>
 
 </manifest>

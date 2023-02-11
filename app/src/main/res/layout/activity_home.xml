@@ -36,6 +36,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="12dp"
             android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@android:string/untitled"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/Rank"
             app:layout_constraintTop_toTopOf="parent"
@@ -55,6 +56,37 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
+
+        <TextView
+            android:id="@+id/profile_name"
+            style="@style/Widget.AppCompat.TextView"
+            android:layout_width="217dp"
+            android:layout_height="36dp"
+            android:fontFamily="@font/akaya_telivigala"
+            android:textColor="#424242"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/shop"
+            app:layout_constraintHorizontal_bias="0.544"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageButton
+            android:id="@+id/imageButton3"
+            style="@android:style/Widget.Holo.ImageButton"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="#00FFFFFF"
+            android:scaleType="centerCrop"
+            android:scrollbarStyle="outsideInset"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/profile_name"
+            app:layout_constraintHorizontal_bias="0.651"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.4"
+            app:srcCompat="@drawable/galileo_galilei" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -77,6 +109,7 @@
             android:layout_height="100dp"
             android:layout_margin="10dp"
             android:clickable="true"
+            android:contentDescription="@android:string/untitled"
             android:foreground="?android:attr/selectableItemBackground"
             app:cardCornerRadius="15dp"
             app:cardElevation="5dp"

@@ -12,6 +12,8 @@ public class PopupDialog extends Dialog {
 
     private EditText mEditText;
     private Button mButton;
+    private static final int TIME_INTERVALL = 2000;
+    private long backPressed;
 
     public PopupDialog(@NonNull Context context, final Home activity) {
         super(context);
@@ -29,5 +31,14 @@ public class PopupDialog extends Dialog {
                 dismiss();
             }
         });
+    }
+    public void onBackPressed() {
+        if(backPressed + TIME_INTERVALL > System.currentTimeMillis()){
+
+            return;
+        } else {
+
+        }
+        backPressed = System.currentTimeMillis();
     }
 }
