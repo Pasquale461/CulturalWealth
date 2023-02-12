@@ -7,11 +7,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.cardview.widget.CardView;
 
-import android.content.Context;
 import android.content.Intent;
-import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -24,10 +23,8 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -38,7 +35,7 @@ import java.util.Map;
 import java.util.Random;
 
 public class Home extends AppCompatActivity {
-    Button Play, usrbtn;
+    Button Play, usrbtn, rankbutton;
     ImageButton Settings;
     MediaPlayer effect;
     SwitchCompat mVolume,eVolume;
@@ -57,6 +54,8 @@ public class Home extends AppCompatActivity {
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
         setContentView(R.layout.activity_home);
+        //popup classifica
+        ranking_popup ranking_popup = new ranking_popup(Home.this, Home.this);
         //popup username
         PopupDialog popupDialog = new PopupDialog(Home.this, Home.this);
         popupDialog.setCanceledOnTouchOutside(false);
@@ -82,7 +81,7 @@ public class Home extends AppCompatActivity {
 
         profilename = findViewById(R.id.profile_name);
 
-
+        rankbutton = findViewById(R.id.rankbutton);
         usrtext = popupDialog.findViewById(R.id.username_text);
         usrbtn = popupDialog.findViewById(R.id.submitUserButton);
         usrbtn.setOnClickListener(new View.OnClickListener() {
@@ -113,6 +112,18 @@ public class Home extends AppCompatActivity {
                 popupDialog.dismiss();
             }
         });
+
+
+        rankbutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d("TAG", "home1");
+                ranking_popup.show();
+                Log.d("TAG", "Home2");
+            }
+        });
+        Log.d("TAG", "Home3");
+
 
 
         Settings = findViewById(R.id.settings);
