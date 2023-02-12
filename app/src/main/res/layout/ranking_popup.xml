@@ -10,8 +10,8 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/linearLayout5"
-        android:layout_width="362dp"
-        android:layout_height="355dp"
+        android:layout_width="413dp"
+        android:layout_height="321dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -21,84 +21,103 @@
 
         <TextView
             android:id="@+id/textView8"
-            android:layout_width="133dp"
-            android:layout_height="29dp"
+            android:layout_width="120dp"
+            android:layout_height="26dp"
             android:text="Classifica"
+            android:textSize="20sp"
             app:layout_constraintBottom_toTopOf="@+id/recicler_ranking"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.695" />
+
+
+        <Button
+            android:id="@+id/closerankpopup"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:layout_width="27dp"
+            android:layout_height="26dp"
+            android:background="@android:drawable/ic_menu_close_clear_cancel"
+            app:layout_constraintBottom_toTopOf="@+id/recicler_ranking"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.865"
+            app:layout_constraintStart_toEndOf="@+id/textView8"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.714" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recicler_ranking"
-            android:layout_width="0dp"
-            android:layout_height="233dp"
+            android:layout_width="303dp"
+            android:layout_height="173dp"
             android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintHorizontal_bias="0.504"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.318"
+            app:layout_constraintVertical_bias="0.412"
             tools:itemCount="@android:integer/status_bar_notification_info_maxnum" />
 
-        <ImageView
-            android:id="@+id/user_icon"
-            android:layout_width="70dp"
-            android:layout_height="69dp"
-            android:background="#FFFFFF"
-            android:src="@drawable/coin"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/user_name"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/recicler_ranking"
-            app:layout_constraintVertical_bias="0.569" />
-
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/linearLayout2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:baselineAligned="false">
+            android:id="@+id/frameLayout3"
+            android:layout_width="310dp"
+            android:layout_height="53dp"
+            android:layout_marginTop="12dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/recicler_ranking">
+
+            <ImageView
+                android:id="@+id/user_icon"
+                android:layout_width="55dp"
+                android:layout_height="51dp"
+                android:background="#FFFFFF"
+                android:src="@drawable/coin"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/user_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="User Name"
+                android:textSize="20sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.211"
+                app:layout_constraintStart_toEndOf="@+id/user_icon"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.192" />
+
+            <TextView
+                android:id="@+id/position"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="TextView"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.877"
+                app:layout_constraintStart_toEndOf="@+id/user_score"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.534" />
+
+            <TextView
+                android:id="@+id/user_score"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="1000"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.146"
+                app:layout_constraintStart_toEndOf="@+id/user_icon"
+                app:layout_constraintTop_toBottomOf="@+id/user_name"
+                app:layout_constraintVertical_bias="0.0" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-        <TextView
-            android:id="@+id/position"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="TextView"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/recicler_ranking"
-            app:layout_constraintVertical_bias="0.506" />
-
-        <TextView
-            android:id="@+id/user_score"
-            android:layout_width="59dp"
-            android:layout_height="28dp"
-            android:text="1000"
-            android:textSize="16sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.098"
-            app:layout_constraintStart_toEndOf="@+id/user_icon"
-            app:layout_constraintTop_toBottomOf="@+id/user_name"
-            app:layout_constraintVertical_bias="0.487" />
-
-        <TextView
-            android:id="@+id/user_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="User Name"
-            android:textSize="20sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.335"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/recicler_ranking"
-            app:layout_constraintVertical_bias="0.382" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

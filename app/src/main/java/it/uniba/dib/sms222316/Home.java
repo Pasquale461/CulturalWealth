@@ -8,10 +8,14 @@ import androidx.appcompat.widget.SwitchCompat;
 import androidx.cardview.widget.CardView;
 
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -35,7 +39,7 @@ import java.util.Map;
 import java.util.Random;
 
 public class Home extends AppCompatActivity {
-    Button Play, usrbtn, rankbutton;
+    Button Play, usrbtn, rankbutton, closerankpopup;
     ImageButton Settings;
     MediaPlayer effect;
     SwitchCompat mVolume,eVolume;
@@ -56,6 +60,11 @@ public class Home extends AppCompatActivity {
         setContentView(R.layout.activity_home);
         //popup classifica
         ranking_popup ranking_popup = new ranking_popup(Home.this, Home.this);
+        Window window = ranking_popup.getWindow();
+        window.setLayout(WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.WRAP_CONTENT);
+        window.setGravity(Gravity.CENTER);
+
+
         //popup username
         PopupDialog popupDialog = new PopupDialog(Home.this, Home.this);
         popupDialog.setCanceledOnTouchOutside(false);
@@ -123,6 +132,13 @@ public class Home extends AppCompatActivity {
             }
         });
         Log.d("TAG", "Home3");
+        closerankpopup = ranking_popup.findViewById(R.id.closerankpopup);
+        closerankpopup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ranking_popup.hide();
+            }
+        });
 
 
 
