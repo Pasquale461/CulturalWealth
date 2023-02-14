@@ -27,7 +27,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 
-public class registration extends AppCompatActivity {
+public class Registration extends AppCompatActivity {
 
     EditText Username , Password , Mail;
     Button Confirm;
@@ -57,8 +57,8 @@ public class registration extends AppCompatActivity {
         boolean isValid = validateData(mail, pass);
         if(!isValid)return;
         createAccountInFirebase(mail, pass, user);
-        showToast(registration.this, "Successo");
-        startActivity(new Intent(registration.this, Login.class));
+        showToast(Registration.this, "Successo");
+        startActivity(new Intent(Registration.this, Login.class));
     }
 
 
@@ -67,7 +67,7 @@ public class registration extends AppCompatActivity {
     {
         changeInProgress(true);
         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
-        firebaseAuth.createUserWithEmailAndPassword(Email,Password_local).addOnCompleteListener(registration.this,
+        firebaseAuth.createUserWithEmailAndPassword(Email,Password_local).addOnCompleteListener(Registration.this,
                 new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
@@ -83,24 +83,24 @@ public class registration extends AppCompatActivity {
                             Users.put("email", Email);
                             Users.put("nome", name);
 
-                            showToast(registration.this, "Successo nome");
+                            showToast(Registration.this, "Successo nome");
                             FirebaseFirestore.getInstance().collection("Users").document(UID)
                                     .set(Users).addOnSuccessListener(new OnSuccessListener<Void>() {
                                         @Override
                                         public void onSuccess(Void unused) {
-                                            showToast(registration.this, "Successo");
+                                            showToast(Registration.this, "Successo");
                                         }
                                     })
                                     .addOnFailureListener(new OnFailureListener() {
                                         @Override
                                         public void onFailure(@NonNull Exception e) {
-                                            showToast(registration.this, "Fallito");
+                                            showToast(Registration.this, "Fallito");
                                         }
                                     });
-                            Toast.makeText(registration.this,"Account creato correttamente",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(Registration.this,"Account creato correttamente",Toast.LENGTH_SHORT).show();
                         }else{
                             //fail
-                            Toast.makeText(registration.this,task.getException().getLocalizedMessage(),Toast.LENGTH_SHORT).show();
+                            Toast.makeText(Registration.this,task.getException().getLocalizedMessage(),Toast.LENGTH_SHORT).show();
                         }
                     }
                 }

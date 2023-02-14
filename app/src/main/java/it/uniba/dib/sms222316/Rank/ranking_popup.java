@@ -1,21 +1,20 @@
-package it.uniba.dib.sms222316;
+package it.uniba.dib.sms222316.Rank;
 
 
 import android.app.Dialog;
 import android.content.Context;
 import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
-import java.util.List;
+
+import it.uniba.dib.sms222316.R;
+import it.uniba.dib.sms222316.Utente;
 
 public class ranking_popup extends Dialog {
 

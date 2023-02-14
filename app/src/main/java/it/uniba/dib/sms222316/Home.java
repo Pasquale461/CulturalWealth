@@ -33,6 +33,7 @@ import java.util.Map;
 import java.util.Random;
 
 import it.uniba.dib.sms222316.Goals.GoalsPopup;
+import it.uniba.dib.sms222316.Rank.ranking_popup;
 
 public class Home extends AppCompatActivity {
     Button Play, usrbtn, rankbutton, Disconnect;
@@ -61,7 +62,11 @@ public class Home extends AppCompatActivity {
         //popup classifica
         ranking_popup ranking_popup = new ranking_popup(Home.this, Home.this);
         Window window = ranking_popup.getWindow();
-        window.setLayout(WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.WRAP_CONTENT);
+        window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        DisplayMetrics displayMetrics = this.getResources().getDisplayMetrics();
+        int WidthPixelrank = (int)(displayMetrics.widthPixels);
+        int HeightPixelrank = (int)(displayMetrics.heightPixels);
+        window.setLayout((int) (WidthPixelrank * 0.85), (int) (HeightPixelrank * 0.80));
         window.setGravity(Gravity.CENTER);
 
 
@@ -93,7 +98,7 @@ public class Home extends AppCompatActivity {
         Button goalsBtn = findViewById(R.id.goals_btn);
         GoalsPopup goalsPopup = new GoalsPopup(Home.this);
 
-        DisplayMetrics displayMetrics = this.getResources().getDisplayMetrics();
+        displayMetrics = this.getResources().getDisplayMetrics();
         int WidthPixel = (displayMetrics.widthPixels);
         int HeightPixel = (displayMetrics.heightPixels);
         goalsBtn.setOnClickListener(v -> {

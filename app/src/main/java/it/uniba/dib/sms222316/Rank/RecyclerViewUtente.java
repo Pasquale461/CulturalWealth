@@ -1,7 +1,6 @@
-package it.uniba.dib.sms222316;
+package it.uniba.dib.sms222316.Rank;
 
 import android.content.Context;
-import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +11,9 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
+
+import it.uniba.dib.sms222316.R;
+import it.uniba.dib.sms222316.Utente;
 
 public class RecyclerViewUtente extends RecyclerView.Adapter<RecyclerViewUtente.MyViewHolderUser>  {
     Context uContext;
