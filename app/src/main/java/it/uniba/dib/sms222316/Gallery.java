@@ -35,6 +35,7 @@ public class Gallery extends AppCompatActivity {
         btnPaintings = findViewById(R.id.btnPaintings);
         btnCharacters = findViewById(R.id.btnCharacters);
 
+
         //Button back
         btnBack.setOnClickListener(v -> {
             Intent i = new Intent(Gallery.this, Home.class);

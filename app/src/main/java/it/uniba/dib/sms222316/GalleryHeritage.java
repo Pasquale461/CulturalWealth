@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageButton;
@@ -45,6 +46,7 @@ public class GalleryHeritage extends AppCompatActivity {
 
         img.setImageURI(uri);
         title.setText(tl);
+        description.setMovementMethod(new ScrollingMovementMethod());
         description.setText(desc);
 
 

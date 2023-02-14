@@ -8,9 +8,11 @@ import androidx.appcompat.widget.SwitchCompat;
 import androidx.cardview.widget.CardView;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -39,7 +41,7 @@ import java.util.Map;
 import java.util.Random;
 
 public class Home extends AppCompatActivity {
-    Button Play, usrbtn, rankbutton, closerankpopup;
+    Button Play, usrbtn, rankbutton, closer;
     ImageButton Settings;
     MediaPlayer effect;
     SwitchCompat mVolume,eVolume;
@@ -88,6 +90,30 @@ public class Home extends AppCompatActivity {
             finish();
         });
 
+        //Open Popup Goals
+        Button goalsBtn = findViewById(R.id.goals_btn);
+        GoalsPopup goalsPopup = new GoalsPopup(Home.this, Home.this);
+
+        DisplayMetrics displayMetrics = this.getResources().getDisplayMetrics();
+        int WidthPixel = (int)(displayMetrics.widthPixels);
+        int HeightPixel = (int)(displayMetrics.heightPixels);
+        goalsBtn.setOnClickListener(v -> {
+            Window goals = goalsPopup.getWindow();
+            goals.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            goals.setLayout((int) (WidthPixel * 0.85), (int) (HeightPixel * 0.95));
+            goals.setGravity(Gravity.CENTER);
+            goalsPopup.show();
+        });
+
+        //Close Popup Goals
+        Button closer = goalsPopup.findViewById(R.id.closerGoals);
+        closer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                goalsPopup.hide();
+            }
+        });
+
         profilename = findViewById(R.id.profile_name);
 
         rankbutton = findViewById(R.id.rankbutton);
@@ -132,8 +158,8 @@ public class Home extends AppCompatActivity {
             }
         });
         Log.d("TAG", "Home3");
-        closerankpopup = ranking_popup.findViewById(R.id.closerankpopup);
-        closerankpopup.setOnClickListener(new View.OnClickListener() {
+        closer = ranking_popup.findViewById(R.id.closerankpopup);
+        closer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 ranking_popup.hide();

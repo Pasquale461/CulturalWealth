@@ -17,4 +17,7 @@
     <string name="description" translatable="false">Description</string>
     <string name="descImg" translatable="false">Image Heritage</string>
 
+    <!-- Button Closer -->
+    <string name="closer" translatable="false">Closer Popup</string>
+
 </resources>

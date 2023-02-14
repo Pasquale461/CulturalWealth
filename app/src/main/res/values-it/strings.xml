@@ -23,4 +23,8 @@
     <string name="effect">Volume Effetti</string>
     <string name="language">Lingua</string>
 
+    <!-- Popup Goals -->
+    <string name="achievements">Obiettivi</string>
+    <string name="missions">Missioni</string>
+
 </resources>
