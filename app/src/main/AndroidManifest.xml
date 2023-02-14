@@ -33,7 +33,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".registration"
+            android:name=".Registration"
             android:exported="false"
             android:screenOrientation="sensorLandscape">
             <meta-data

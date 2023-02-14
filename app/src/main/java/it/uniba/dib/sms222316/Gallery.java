@@ -2,6 +2,7 @@ package it.uniba.dib.sms222316;
 
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SwitchCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
@@ -17,6 +18,8 @@ import java.util.List;
 public class Gallery extends AppCompatActivity {
     ImageButton btnBack;
     Button btnMonuments, btnPaintings, btnCharacters;
+    PopupSettings popupSettings;
+    SwitchCompat mVolume;
     enum heritage {
             Monuments, Paintings, Characters, All}
 
@@ -29,7 +32,8 @@ public class Gallery extends AppCompatActivity {
         setContentView(R.layout.activity_gallery);
 
         List<Heritage> data, fullHrg;
-
+        popupSettings = new PopupSettings(Gallery.this,Gallery.this);
+        mVolume=popupSettings.findViewById(R.id.vol_musica);
         btnBack = findViewById(R.id.btnBack);
         btnMonuments = findViewById(R.id.btnMonuments);
         btnPaintings = findViewById(R.id.btnPaintings);
@@ -153,6 +157,11 @@ public class Gallery extends AppCompatActivity {
             }
         });
     }
-
+    protected void onResume() {
+        super.onResume();
+        if(mVolume.isChecked()){
+            popupSettings.SoundSwitchM();
+        }
+    }
 
 }

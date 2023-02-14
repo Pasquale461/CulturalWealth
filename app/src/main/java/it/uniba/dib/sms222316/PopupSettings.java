@@ -2,28 +2,33 @@ package it.uniba.dib.sms222316;
 
 import static android.content.Context.MODE_PRIVATE;
 
-import static androidx.core.content.ContextCompat.getSystemService;
-
 import android.app.Dialog;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.media.AudioManager;
-import android.media.MediaPlayer;
+import android.content.res.Configuration;
+import android.content.res.Resources;
+import android.os.Bundle;
 import android.view.View;
+import android.view.WindowManager;
+import android.widget.ImageButton;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.SwitchCompat;
+
+import java.util.Locale;
 
 public class PopupSettings extends Dialog {
     SwitchCompat eVolume,mVolume;
     boolean effect_boolean,music_boolean;
     Audio audio;
-    public PopupSettings(@NonNull Context context, final Home home) {
+
+    ImageButton italianButton,englishButton;
+    public PopupSettings(@NonNull Context context, Context context1) {
         super(context);
-
-        setContentView(R.layout.options);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
+        setContentView(R.layout.settings);
         audio = Audio.getInstance(context);
-
         eVolume = findViewById(R.id.vol_effetti);
         mVolume = findViewById(R.id.vol_musica);
         eVolume.setOnClickListener(new View.OnClickListener() {
@@ -38,8 +43,14 @@ public class PopupSettings extends Dialog {
                 SoundSwitchM();
             }
         });
-        load();
-        updatev();
+
+
+
+        //Cambio lingua in inglese
+
+        Load();
+        Update();
+
     }
 
     public void SoundSwitchM(){
@@ -72,15 +83,13 @@ public class PopupSettings extends Dialog {
         }
     }
 
-    public void load(){
+    public void Load(){
         SharedPreferences getSound = getContext().getSharedPreferences("editor", MODE_PRIVATE);
         effect_boolean = getSound.getBoolean("vol_effetti",true);
         music_boolean = getSound.getBoolean("vol_musica",true);
-
     }
-    public void updatev(){
+    public void Update(){
         eVolume.setChecked(effect_boolean);
         mVolume.setChecked(music_boolean);
     }
-
 }

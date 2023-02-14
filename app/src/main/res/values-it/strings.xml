@@ -15,7 +15,6 @@
     <string name="paintings">Quadri</string>
     <string name="characters">Personaggi</string>
 
-
     <!-- Settings -->
     <string name="log_out">Disconnetti</string>
     <string name="settings">Impostazioni</string>
@@ -26,5 +25,8 @@
     <!-- Popup Goals -->
     <string name="achievements">Obiettivi</string>
     <string name="missions">Missioni</string>
+
+    <!-- Home -->
+    <string name="play">Gioca</string>
 
 </resources>

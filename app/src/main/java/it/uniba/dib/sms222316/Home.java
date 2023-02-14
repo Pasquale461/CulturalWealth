@@ -8,6 +8,7 @@ import androidx.appcompat.widget.SwitchCompat;
 import androidx.cardview.widget.CardView;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.media.MediaPlayer;
@@ -16,7 +17,6 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -41,8 +41,8 @@ import java.util.Map;
 import java.util.Random;
 
 public class Home extends AppCompatActivity {
-    Button Play, usrbtn, rankbutton, closer;
-    ImageButton Settings;
+    Button Play, usrbtn, rankbutton, Disconnect;
+    ImageButton Settings,italianButton,englishButton;
     MediaPlayer effect;
     SwitchCompat mVolume,eVolume;
     GoogleSignInOptions gso;
@@ -52,11 +52,15 @@ public class Home extends AppCompatActivity {
     PopupSettings popupSettings;
     TextView profilename;
     private long backPressed;
+    private SharedPreferences sharedPreferences;
     private static final int TIME_INTERVALL = 2000;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        LanguageManager lang = new LanguageManager(this);
+        lang.ChangeLanguage(lang.GetLang());
         audio = Audio.getInstance(this);
+
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
         setContentView(R.layout.activity_home);
@@ -70,6 +74,7 @@ public class Home extends AppCompatActivity {
         //popup username
         PopupDialog popupDialog = new PopupDialog(Home.this, Home.this);
         popupDialog.setCanceledOnTouchOutside(false);
+
         //Todo : bug quando
         //
         gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -212,17 +217,56 @@ public class Home extends AppCompatActivity {
                     }
                 });
 
+
+        //creo instanza popupsettings
         Settings = findViewById(R.id.settings);
         popupSettings = new PopupSettings(Home.this,Home.this);
 
-        //main ost
+
+        //Cambio lingua in italiano
+        italianButton = popupSettings.findViewById(R.id.lingua_it);
+        italianButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                lang.ChangeLanguage("it");
+                recreate();
+                popupSettings.dismiss();
+
+            }
+        });
+
+        //Cambio lingua in inglese
+        englishButton = popupSettings.findViewById(R.id.lingua_en);
+        englishButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                lang.ChangeLanguage("en");
+                recreate();
+                popupSettings.dismiss();
+
+            }
+        });
+
+        //Bottone Della disconnessione
+        Disconnect = popupSettings.findViewById(R.id.disconnetti);
+        Disconnect.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FirebaseAuth.getInstance().signOut();
+                finish();
+                Intent intent = new Intent(Home.this, Login.class);
+                startActivity(intent);
+            }
+        });
+
+        //Gestione ost del gioco
         effect = MediaPlayer.create(this, R.raw.sound);
         mVolume=popupSettings.findViewById(R.id.vol_musica);
         eVolume=popupSettings.findViewById(R.id.vol_effetti);
 
 
 
-        Play = findViewById(R.id.button);
+        Play = findViewById(R.id.play);
         Play.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
