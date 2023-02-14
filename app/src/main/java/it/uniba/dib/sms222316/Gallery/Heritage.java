@@ -1,4 +1,4 @@
-package it.uniba.dib.sms222316;
+package it.uniba.dib.sms222316.Gallery;
 
 public class Heritage {
 

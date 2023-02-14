@@ -1,4 +1,4 @@
-package it.uniba.dib.sms222316;
+package it.uniba.dib.sms222316.Gallery;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -11,6 +11,8 @@ import android.view.WindowManager;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import it.uniba.dib.sms222316.R;
 
 public class GalleryHeritage extends AppCompatActivity {
 

@@ -4,13 +4,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/rounded_corners_fragment"
-    tools:context=".achievements">
+    tools:context=".Goals.achievements">
 
-    <!-- TODO: Update blank fragment layout -->
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="achievement"
+        android:text="@string/achievements"
         android:textColor="@color/white"
         android:gravity="center"/>
 

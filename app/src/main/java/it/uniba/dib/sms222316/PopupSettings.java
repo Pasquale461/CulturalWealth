@@ -5,24 +5,16 @@ import static android.content.Context.MODE_PRIVATE;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.content.res.Configuration;
-import android.content.res.Resources;
-import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.ImageButton;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.SwitchCompat;
-
-import java.util.Locale;
 
 public class PopupSettings extends Dialog {
     SwitchCompat eVolume,mVolume;
     boolean effect_boolean,music_boolean;
     Audio audio;
 
-    ImageButton italianButton,englishButton;
     public PopupSettings(@NonNull Context context, Context context1) {
         super(context);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -31,22 +23,9 @@ public class PopupSettings extends Dialog {
         audio = Audio.getInstance(context);
         eVolume = findViewById(R.id.vol_effetti);
         mVolume = findViewById(R.id.vol_musica);
-        eVolume.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                SoundSwitchE();
-            }
-        });
-        mVolume.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                SoundSwitchM();
-            }
-        });
 
-
-
-        //Cambio lingua in inglese
+        eVolume.setOnClickListener(v -> SoundSwitchE());
+        mVolume.setOnClickListener(v -> SoundSwitchM());
 
         Load();
         Update();

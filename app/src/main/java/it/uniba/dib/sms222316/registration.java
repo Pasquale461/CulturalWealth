@@ -2,9 +2,7 @@ package it.uniba.dib.sms222316;
 
 import static it.uniba.dib.sms222316.Utility.showToast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,19 +13,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
-
 import java.util.HashMap;
 import java.util.Map;
 
 
-public class registration extends AppCompatActivity {
+public class Registration extends AppCompatActivity {
 
     EditText Username , Password , Mail;
     Button Confirm;
@@ -57,8 +49,8 @@ public class registration extends AppCompatActivity {
         boolean isValid = validateData(mail, pass);
         if(!isValid)return;
         createAccountInFirebase(mail, pass, user);
-        showToast(registration.this, "Successo");
-        startActivity(new Intent(registration.this, Login.class));
+        showToast(Registration.this, "Successo");
+        startActivity(new Intent(Registration.this, Login.class));
     }
 
 
@@ -67,46 +59,32 @@ public class registration extends AppCompatActivity {
     {
         changeInProgress(true);
         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
-        firebaseAuth.createUserWithEmailAndPassword(Email,Password_local).addOnCompleteListener(registration.this,
-                new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if(task.isSuccessful()){
-                            //acc is done
+        firebaseAuth.createUserWithEmailAndPassword(Email,Password_local).addOnCompleteListener(Registration.this,
+                task -> {
+                    if(task.isSuccessful()){
+                        //acc is done
 
-                            firebaseAuth.getCurrentUser().sendEmailVerification();
-                            firebaseAuth.signOut();
-                            String UID = firebaseAuth.getCurrentUser().getUid();
-                            Log.e("a", "entrato");
-                            Map<String, Object> Users = new HashMap<>();
-                            Users.put("UID", UID);
-                            Users.put("email", Email);
-                            Users.put("nome", name);
+                        firebaseAuth.getCurrentUser().sendEmailVerification(); //controllo dell'errore
+                        firebaseAuth.signOut(); //Perché uscire?
+                        String UID = firebaseAuth.getCurrentUser().getUid();
+                        Log.e("a", "entrato");
+                        Map<String, Object> Users = new HashMap<>();
+                        Users.put("UID", UID);
+                        Users.put("email", Email);
+                        Users.put("nome", name);
 
-                            showToast(registration.this, "Successo nome");
-                            FirebaseFirestore.getInstance().collection("Users").document(UID)
-                                    .set(Users).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                        @Override
-                                        public void onSuccess(Void unused) {
-                                            showToast(registration.this, "Successo");
-                                        }
-                                    })
-                                    .addOnFailureListener(new OnFailureListener() {
-                                        @Override
-                                        public void onFailure(@NonNull Exception e) {
-                                            showToast(registration.this, "Fallito");
-                                        }
-                                    });
-                            Toast.makeText(registration.this,"Account creato correttamente",Toast.LENGTH_SHORT).show();
-                        }else{
-                            //fail
-                            Toast.makeText(registration.this,task.getException().getLocalizedMessage(),Toast.LENGTH_SHORT).show();
-                        }
+                        showToast(Registration.this, "Successo nome");
+                        FirebaseFirestore.getInstance().collection("Users").document(UID)
+                                .set(Users).addOnSuccessListener(unused -> showToast(Registration.this, "Successo"))
+                                .addOnFailureListener(e -> showToast(Registration.this, "Fallito"));
+                        Toast.makeText(Registration.this,"Account creato correttamente",Toast.LENGTH_SHORT).show();
+                    }else{
+                        //fail
+                        Toast.makeText(Registration.this,task.getException().getLocalizedMessage(),Toast.LENGTH_SHORT).show(); //controllo errore
                     }
                 }
         );
     }
-
     void changeInProgress(boolean inProgress)
     {
         if(inProgress){

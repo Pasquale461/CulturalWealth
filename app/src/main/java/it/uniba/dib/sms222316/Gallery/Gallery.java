@@ -1,4 +1,4 @@
-package it.uniba.dib.sms222316;
+package it.uniba.dib.sms222316.Gallery;
 
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,10 +15,14 @@ import android.widget.ImageButton;
 import java.util.ArrayList;
 import java.util.List;
 
+import it.uniba.dib.sms222316.Home;
+import it.uniba.dib.sms222316.PopupSettings;
+import it.uniba.dib.sms222316.R;
+
 public class Gallery extends AppCompatActivity {
     ImageButton btnBack;
     Button btnMonuments, btnPaintings, btnCharacters;
-    PopupSettings popupSettings;
+    PopupSettings popupSettings; //Gestione audio
     SwitchCompat mVolume;
     enum heritage {
             Monuments, Paintings, Characters, All}
@@ -47,6 +51,7 @@ public class Gallery extends AppCompatActivity {
             finish();
         });
 
+        //TODO: caricamento heritage
         fullHrg = new ArrayList<>();
         fullHrg.add(new Heritage("Il Colosseo","Lorem ipsum dolor sit amet, consecteturyjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjmmmffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff adipiscing elit. Sed efficitur, nulla vel vestibulum aliquet, enim urna malesuada enim, vel pharetra tellus ipsum sit amet eros. Donec rutrum fringilla justo, at molestie lectus pretium sed. Morbi accumsan in velit eu sagittis. Fusce pretium non sapien non imperdiet. Duis id ultrices turpis, id blandit odio. Sed vitae libero in nulla volutpat posuere. Curabitur non sodales ex. Curabitur laoreet a odio id bibendum. Duis convallis neque quis felis rhoncus, sed fringilla ex commodo.","Monuments"));
         fullHrg.add(new Heritage("La Gioconda","sdxgfc","Paintings"));

@@ -7,13 +7,12 @@ import android.media.MediaPlayer;
 public class Audio {
 
     private static Audio instance;
-    private Context context;
-    private AudioManager audioManager;
+    private final Context context;
     private MediaPlayer mediaPlayer;
 
     private Audio(Context context) {
         this.context = context;
-        audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
+        AudioManager audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
         audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, audioManager.getStreamVolume(AudioManager.STREAM_MUSIC), 0);
     }
 
@@ -38,10 +37,10 @@ public class Audio {
         }
     }
 
-    public void releaseAudio() {
+    /*public void releaseAudio() {
         if (mediaPlayer != null) {
             mediaPlayer.release();
             mediaPlayer = null;
         }
-    }
+    }*/
 }

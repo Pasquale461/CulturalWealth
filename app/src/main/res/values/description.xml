@@ -20,4 +20,22 @@
     <!-- Button Closer -->
     <string name="closer" translatable="false">Closer Popup</string>
 
+    <!-- Button Goals -->
+    <string name="BtnGoals" translatable="false">Button Goals</string>
+
+    <!-- Button Rank -->
+    <string name="BtnRank" translatable="false">Button Rank</string>
+
+    <!-- Avatar-->
+    <string name="Avatar" translatable="false">Avatar Home</string>
+
+    <!-- Home -->
+    <string name="gallery" translatable="false">Gallery</string>
+
+    <!-- Card -->
+    <string name="card" translatable="false">Card</string>
+
+    <!-- Popup Settings -->
+    <string name="flagItalian" translatable="false">Flag Italian</string>
+    <string name="flagEnglish" translatable="false">Flag English</string>
 </resources>

@@ -22,6 +22,7 @@
             android:layout_height="match_parent"
             android:background="#2d2d2d"
             android:scaleType="centerCrop"
+            android:contentDescription="@string/card"
             cardview:layout_constraintBottom_toBottomOf="parent"
             cardview:layout_constraintEnd_toEndOf="parent"
             cardview:layout_constraintStart_toStartOf="parent"

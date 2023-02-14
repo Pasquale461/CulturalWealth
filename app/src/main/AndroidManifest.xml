@@ -17,11 +17,11 @@
         android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"
         tools:targetApi="31">
         <activity
-            android:name=".GalleryHeritage"
+            android:name=".Gallery.GalleryHeritage"
             android:exported="false"
             android:screenOrientation="sensorLandscape" />
         <activity
-            android:name=".Gallery"
+            android:name=".Gallery.Gallery"
             android:exported="false"
             android:screenOrientation="sensorLandscape" />
         <activity

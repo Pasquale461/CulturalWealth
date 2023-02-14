@@ -1,4 +1,4 @@
-package it.uniba.dib.sms222316;
+package it.uniba.dib.sms222316.Gallery;
 
 
 import android.content.Context;
@@ -12,6 +12,8 @@ import android.widget.TextView;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 import java.util.*;
+
+import it.uniba.dib.sms222316.R;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder> {
 
@@ -62,7 +64,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
             holder.cardView.setOnClickListener(v -> {
 
-                Intent intent = new Intent(mContext,GalleryHeritage.class);
+                Intent intent = new Intent(mContext, GalleryHeritage.class);
 
                 // passing data to the Gallery Heritage
                 intent.putExtra("Title",mData.get(position).getTitle());

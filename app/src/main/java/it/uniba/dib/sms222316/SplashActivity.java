@@ -64,8 +64,7 @@ public class SplashActivity extends AppCompatActivity {
                 if(progressStatus >= 100){
                     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                     if (user == null)
-                    startActivity(new Intent(SplashActivity.this, Login.class));
-                    //TODO : Sostituire MainActivity con Home una volta creata
+                        startActivity(new Intent(SplashActivity.this, Login.class));
                     else startActivity(new Intent(SplashActivity.this, Home.class));
                 } else {
                     redirect();

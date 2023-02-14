@@ -1,4 +1,4 @@
-package it.uniba.dib.sms222316;
+package it.uniba.dib.sms222316.Goals;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -9,13 +9,15 @@ import androidx.viewpager2.widget.ViewPager2;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
+import it.uniba.dib.sms222316.R;
+
 public class GoalsPopup extends Dialog {
 
-    private String[] titles = new String[]{getContext().getString(R.string.achievements), getContext().getString(R.string.missions)};
+    private final String[] titles = new String[]{getContext().getString(R.string.achievements), getContext().getString(R.string.missions)};
     ViewPager2 pager;
     TabLayout tabLayout;
     ViewPagerFragmentAdapter adapter;
-    public GoalsPopup(Context context ,Context context1) {
+    public GoalsPopup(Context context) {
         super(context);
 
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);

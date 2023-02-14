@@ -1,11 +1,9 @@
 package it.uniba.dib.sms222316;
 
-import android.app.MediaRouteActionProvider;
-
 public class Utente {
-    private String name;
-    private String email;
-    private String points;
+    private final String name;
+    private final String email;
+    private final String points;
 
 
 

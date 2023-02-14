@@ -28,5 +28,24 @@
 
     <!-- Home -->
     <string name="play">Gioca</string>
+    <string name="shop">Negozio</string>
+
+    <!-- Registration -->
+    <string name="name">Nome</string>
+    <string name="email">Email</string>
+    <string name="passwordR">Password</string>
+    <string name="BtnConfirm">Conferma</string>
+    <string name="msgRegistration">Sei già registrato? effettua il Log-in</string>
+
+    <!-- Popup Dialogs -->
+    <string name="submit">Invia</string>
+    <string name="InsertUser">Inserisci lo username qui</string>
+    <string name="username">Nome Utente</string>
+
+    <!-- Ranking popup -->
+    <string name="RankName">Nome utente</string>
+    <string name="RankPoints">Punteggio</string>
+    <string name="RankPositions">Posiizone</string>
+    <string name="RankTitle">Classifica</string>
 
 </resources>

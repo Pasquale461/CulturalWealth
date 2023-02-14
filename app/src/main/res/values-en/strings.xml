@@ -22,7 +22,30 @@
     <string name="effect">Effect Volume</string>
     <string name="language">Language</string>
 
+    <!-- Popup Goals -->
+    <string name="achievements">Achievements</string>
+    <string name="missions">Missions</string>
+
     <!-- Home -->
     <string name="play">Play</string>
+    <string name="shop">Shop</string>
+
+    <!-- Registration -->
+    <string name="name">Name</string>
+    <string name="email">Email</string>
+    <string name="passwordR">Password</string>
+    <string name="BtnConfirm">Confirm</string>
+    <string name="msgRegistration">Are you already registered? Log in.</string>
+
+    <!-- Popup Dialogs -->
+    <string name="submit">Submit</string>
+    <string name="InsertUser">Enter your username here</string>
+    <string name="username">Username</string>
+
+    <!-- Ranking popup -->
+    <string name="RankName">User Name</string>
+    <string name="RankPoints">Points</string>
+    <string name="RankPositions">Rank</string>
+    <string name="RankTitle">Ranking</string>
 
 </resources>

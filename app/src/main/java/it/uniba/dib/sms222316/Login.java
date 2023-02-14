@@ -11,18 +11,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class Login extends AppCompatActivity {
@@ -40,7 +36,7 @@ public class Login extends AppCompatActivity {
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
         setContentView(R.layout.activity_login);
-        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance(); //va rivisto
 
 
 
@@ -66,13 +62,7 @@ public class Login extends AppCompatActivity {
 
         //Creazione trigger  onclick
         Login.setOnClickListener((v)-> loginUser());
-        loginWithGoogle.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                SignIn();
-
-            }
-        });
+        loginWithGoogle.setOnClickListener(view -> SignIn());
 
 
 
@@ -80,12 +70,7 @@ public class Login extends AppCompatActivity {
 
         //Rimando alla schermata di registrazione
         Register = findViewById(R.id.SignIn);
-        Register.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(Login.this, registration.class));
-            }
-        });
+        Register.setOnClickListener(v -> startActivity(new Intent(Login.this, Registration.class)));
     }
 
 
@@ -132,26 +117,23 @@ public class Login extends AppCompatActivity {
     {
         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
         changeInProgress(true);
-        firebaseAuth.signInWithEmailAndPassword(mail, pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                changeInProgress(false);
-                if (task.isSuccessful())
+        firebaseAuth.signInWithEmailAndPassword(mail, pass).addOnCompleteListener(task -> {
+            changeInProgress(false);
+            if (task.isSuccessful())
+            {
+                if (firebaseAuth.getCurrentUser().isEmailVerified()) //registrazione avvenuta correrttamente (controllo errore)
                 {
-                    if (firebaseAuth.getCurrentUser().isEmailVerified()) //registrazione avvenuta correrttamente
-                    {
-                        startActivity(new Intent(Login.this, Home.class));
-                    }else
-                    {
-                        showToast(Login.this, "Email non valida");//registrazione non avvenuta
-                    }
-                }
-                else
+                    startActivity(new Intent(Login.this, Home.class));
+                }else
                 {
-                    showToast(Login.this, task.getException().getLocalizedMessage());
+                    showToast(Login.this, "Email non valida");//registrazione non avvenuta
                 }
-
             }
+            else
+            {
+                showToast(Login.this, task.getException().getLocalizedMessage());//controllo dell'errore
+            }
+
         });
 
     }

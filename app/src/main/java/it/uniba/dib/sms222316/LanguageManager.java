@@ -9,7 +9,7 @@ import android.content.res.Resources;
 import java.util.Locale;
 
 public class LanguageManager {
-    private Context ct;
+    private final Context ct;
     SharedPreferences sharedPreferences;
     public LanguageManager(Context ctx){
         ct=ctx;

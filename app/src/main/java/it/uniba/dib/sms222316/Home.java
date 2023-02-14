@@ -2,13 +2,10 @@ package it.uniba.dib.sms222316;
 
 import static it.uniba.dib.sms222316.Utility.showToast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.cardview.widget.CardView;
-
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.media.MediaPlayer;
@@ -24,21 +21,18 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
+
+import it.uniba.dib.sms222316.Goals.GoalsPopup;
 
 public class Home extends AppCompatActivity {
     Button Play, usrbtn, rankbutton, Disconnect;
@@ -52,7 +46,6 @@ public class Home extends AppCompatActivity {
     PopupSettings popupSettings;
     TextView profilename;
     private long backPressed;
-    private SharedPreferences sharedPreferences;
     private static final int TIME_INTERVALL = 2000;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +57,7 @@ public class Home extends AppCompatActivity {
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
         setContentView(R.layout.activity_home);
+
         //popup classifica
         ranking_popup ranking_popup = new ranking_popup(Home.this, Home.this);
         Window window = ranking_popup.getWindow();
@@ -86,22 +80,22 @@ public class Home extends AppCompatActivity {
 
         String Accountstring;
         if(account != null) Accountstring = account.getEmail();
-        else Accountstring = FirebaseAuth.getInstance().getCurrentUser().getEmail();
+        else Accountstring = FirebaseAuth.getInstance().getCurrentUser().getEmail(); //Controllo dell'errore
 
         CardView Gallery = findViewById(R.id.Gallery);
         Gallery.setOnClickListener(v -> {
-            Intent i = new Intent(Home.this, Gallery.class);
+            Intent i = new Intent(Home.this, it.uniba.dib.sms222316.Gallery.Gallery.class);
             startActivity(i);
             finish();
         });
 
         //Open Popup Goals
         Button goalsBtn = findViewById(R.id.goals_btn);
-        GoalsPopup goalsPopup = new GoalsPopup(Home.this, Home.this);
+        GoalsPopup goalsPopup = new GoalsPopup(Home.this);
 
         DisplayMetrics displayMetrics = this.getResources().getDisplayMetrics();
-        int WidthPixel = (int)(displayMetrics.widthPixels);
-        int HeightPixel = (int)(displayMetrics.heightPixels);
+        int WidthPixel = (displayMetrics.widthPixels);
+        int HeightPixel = (displayMetrics.heightPixels);
         goalsBtn.setOnClickListener(v -> {
             Window goals = goalsPopup.getWindow();
             goals.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -112,64 +106,42 @@ public class Home extends AppCompatActivity {
 
         //Close Popup Goals
         Button closer = goalsPopup.findViewById(R.id.closerGoals);
-        closer.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                goalsPopup.hide();
-            }
-        });
+        closer.setOnClickListener(view -> goalsPopup.hide());
 
         profilename = findViewById(R.id.profile_name);
 
         rankbutton = findViewById(R.id.rankbutton);
         usrtext = popupDialog.findViewById(R.id.username_text);
         usrbtn = popupDialog.findViewById(R.id.submitUserButton);
-        usrbtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-                Map Us = new HashMap<>();
-                Us.put("email", Accountstring);
-                Us.put("nome",usrtext.getText().toString());
-                Us.put("friend_code",getRandomHexString(5));
-                FirebaseFirestore db = FirebaseFirestore.getInstance();
-                db.collection("Users").document(getRandomHexString(10)).set(Us)
-                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void aVoid) {
-                                //aggiunto
-                                showToast(Home.this, "aggiunto");
-                                findusername(Accountstring);
-                            }
-                        })
-                        .addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                showToast(Home.this, "non aggiunto");
+        usrbtn.setOnClickListener(v -> {
 
-                            }
-                        });
-                popupDialog.dismiss();
-            }
+            Map Us = new HashMap<>();
+            Us.put("email", Accountstring);
+            Us.put("nome",usrtext.getText().toString());
+            Us.put("friend_code",getRandomHexString(5));
+            FirebaseFirestore db = FirebaseFirestore.getInstance();
+            db.collection("Users").document(getRandomHexString(10)).set(Us)
+
+                    .addOnSuccessListener(aVoid -> {
+                        //aggiunto
+                        showToast(Home.this, "aggiunto");
+                        findusername(Accountstring);
+                    })
+                    .addOnFailureListener(e ->
+                            showToast(Home.this, "non aggiunto"));
+                    popupDialog.dismiss();
         });
 
 
-        rankbutton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.d("TAG", "home1");
-                ranking_popup.show();
-                Log.d("TAG", "Home2");
-            }
+        rankbutton.setOnClickListener(view -> {
+            Log.d("TAG", "home1");
+            ranking_popup.show();
+            Log.d("TAG", "Home2");
         });
         Log.d("TAG", "Home3");
         closer = ranking_popup.findViewById(R.id.closerankpopup);
-        closer.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ranking_popup.hide();
-            }
-        });
+        closer.setOnClickListener(view -> ranking_popup.hide());
 
 
 
@@ -194,28 +166,16 @@ public class Home extends AppCompatActivity {
         db.collection("Users")
                 .whereEqualTo("email", Accountstring)
                 .get()
-                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                    @Override
-                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                        if (!queryDocumentSnapshots.isEmpty()) {
-                            showToast(Home.this , "trovato");
-                        } else {
-                            showToast(Home.this , "Non trovato");
-                            //APRIRE popup
-
-                            popupDialog.show();
-
-
-
-                        }
+                .addOnSuccessListener(queryDocumentSnapshots -> {
+                    if (!queryDocumentSnapshots.isEmpty()) {
+                        showToast(Home.this , "trovato");
+                    } else {
+                        showToast(Home.this , "Non trovato");
+                        //APRIRE popup
+                        popupDialog.show();
                     }
                 })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        showToast(Home.this , "errore db");
-                    }
-                });
+                .addOnFailureListener(e -> showToast(Home.this , "errore db"));
 
 
         //creo instanza popupsettings
@@ -225,38 +185,29 @@ public class Home extends AppCompatActivity {
 
         //Cambio lingua in italiano
         italianButton = popupSettings.findViewById(R.id.lingua_it);
-        italianButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                lang.ChangeLanguage("it");
-                recreate();
-                popupSettings.dismiss();
+        italianButton.setOnClickListener(view -> {
+            lang.ChangeLanguage("it");
+            recreate();
+            popupSettings.dismiss();
 
-            }
         });
 
         //Cambio lingua in inglese
         englishButton = popupSettings.findViewById(R.id.lingua_en);
-        englishButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                lang.ChangeLanguage("en");
-                recreate();
-                popupSettings.dismiss();
+        englishButton.setOnClickListener(view -> {
+            lang.ChangeLanguage("en");
+            recreate();
+            popupSettings.dismiss();
 
-            }
         });
 
         //Bottone Della disconnessione
         Disconnect = popupSettings.findViewById(R.id.disconnetti);
-        Disconnect.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FirebaseAuth.getInstance().signOut();
-                finish();
-                Intent intent = new Intent(Home.this, Login.class);
-                startActivity(intent);
-            }
+        Disconnect.setOnClickListener(v -> {
+            FirebaseAuth.getInstance().signOut();
+            finish();
+            Intent intent = new Intent(Home.this, Login.class);
+            startActivity(intent);
         });
 
         //Gestione ost del gioco
@@ -267,22 +218,16 @@ public class Home extends AppCompatActivity {
 
 
         Play = findViewById(R.id.play);
-        Play.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(eVolume.isChecked()) {
-                    effect.start();
-                }
+        Play.setOnClickListener(v -> {
+            if(eVolume.isChecked()) {
+                effect.start();
             }
         });
 
 
-        Settings.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //APRIRE popup impostazioni
-                popupSettings.show();
-            }
+        Settings.setOnClickListener(v -> {
+            //APRIRE popup impostazioni
+            popupSettings.show();
         });
         findusername(Accountstring);
     }
@@ -320,15 +265,12 @@ public class Home extends AppCompatActivity {
         db.collection("Users")
                 .whereEqualTo("email", Accountstring)
                 .get()
-                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                    @Override
-                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                        for (QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
-                            profilename.setText(documentSnapshot.getString("nome")+"#"+documentSnapshot.getString("friend_code"));
-
-                        }
+                .addOnSuccessListener(queryDocumentSnapshots -> {
+                    for (QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
+                        profilename.setText(documentSnapshot.getString("nome")+"#"+documentSnapshot.getString("friend_code"));
 
                     }
+
                 });
 
 
