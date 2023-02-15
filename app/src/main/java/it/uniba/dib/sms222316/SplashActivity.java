@@ -1,11 +1,8 @@
 package it.uniba.dib.sms222316;
 
 import androidx.appcompat.app.AppCompatActivity;
-
-import android.content.Context;
+import androidx.lifecycle.Lifecycle;
 import android.content.Intent;
-import android.media.AudioManager;
-import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -19,7 +16,7 @@ import com.google.firebase.auth.FirebaseUser;
 public class SplashActivity extends AppCompatActivity {
 
     private int progressStatus = 0;
-    private Handler handler = new Handler();
+    private final Handler handler = new Handler();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,23 +29,17 @@ public class SplashActivity extends AppCompatActivity {
 
 
         // Start long running operation in a background thread
-        Thread loading = new Thread(new Runnable() {
-            public void run() {
-                while (progressStatus < 100) {
-                    progressStatus += 5;
-                    // Update the progress bar and display the
-                    //current value in the text view
-                    handler.post(new Runnable() {
-                        public void run() {
-                            simpleProgressBar.setProgress(progressStatus);
-                        }
-                    });
-                    try {
-                        // Sleep for 200 milliseconds.
-                        Thread.sleep(200);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
+        Thread loading = new Thread(() -> {
+            while (progressStatus < 100) {
+                progressStatus += 5;
+                // Update the progress bar and display the
+                //current value in the text view
+                handler.post(() -> simpleProgressBar.setProgress(progressStatus));
+                try {
+                    // Sleep for 200 milliseconds.
+                    Thread.sleep(200);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
                 }
             }
         });
@@ -58,17 +49,19 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     private void redirect(){
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                if(progressStatus >= 100){
-                    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                    if (user == null)
-                        startActivity(new Intent(SplashActivity.this, Login.class));
-                    else startActivity(new Intent(SplashActivity.this, Home.class));
-                } else {
-                    redirect();
+        new Handler().postDelayed(() -> {
+            if(progressStatus >= 100 && getLifecycle().getCurrentState().isAtLeast(Lifecycle.State.RESUMED)){
+                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                if (user == null) {
+                    startActivity(new Intent(SplashActivity.this, Login.class));
+                    finish();
                 }
+                else {
+                    startActivity(new Intent(SplashActivity.this, Home.class));
+                    finish();
+                }
+            } else {
+                redirect();
             }
         },1000);
     }
