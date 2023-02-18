@@ -10,6 +10,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
@@ -54,7 +55,8 @@ public class Home extends AppCompatActivity {
         LanguageManager lang = new LanguageManager(this);
         lang.ChangeLanguage(lang.GetLang());
         audio = Audio.getInstance(this);
-
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
         setContentView(R.layout.activity_home);
@@ -64,8 +66,8 @@ public class Home extends AppCompatActivity {
         Window window = ranking_popup.getWindow();
         window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         DisplayMetrics displayMetrics = this.getResources().getDisplayMetrics();
-        int WidthPixelrank = (int)(displayMetrics.widthPixels);
-        int HeightPixelrank = (int)(displayMetrics.heightPixels);
+        int WidthPixelrank = (displayMetrics.widthPixels);
+        int HeightPixelrank = (displayMetrics.heightPixels);
         window.setLayout((int) (WidthPixelrank * 0.85), (int) (HeightPixelrank * 0.80));
         window.setGravity(Gravity.CENTER);
 
@@ -126,7 +128,7 @@ public class Home extends AppCompatActivity {
             Us.put("nome",usrtext.getText().toString());
             Us.put("friend_code",getRandomHexString(5));
             FirebaseFirestore db = FirebaseFirestore.getInstance();
-            db.collection("Users").document(getRandomHexString(10)).set(Us)
+            db.collection("Users").document(FirebaseAuth.getInstance().getCurrentUser().getUid()).set(Us) //NULL POINTER
 
                     .addOnSuccessListener(aVoid -> {
                         //aggiunto
@@ -275,7 +277,6 @@ public class Home extends AppCompatActivity {
                         profilename.setText(documentSnapshot.getString("nome")+"#"+documentSnapshot.getString("friend_code"));
 
                     }
-
                 });
 
 
