@@ -1,6 +1,8 @@
 package it.uniba.dib.sms222316.Rank;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.io.File;
 import java.util.List;
 
 import it.uniba.dib.sms222316.R;
@@ -46,9 +49,11 @@ public class RecyclerViewUtente extends RecyclerView.Adapter<RecyclerViewUtente.
 
         //Uri uri = Uri.parse("android.resource://it.uniba.dib.sms222316/drawable/"+uData.get(position).getName().replaceAll("\\s+", "_").toLowerCase());
 
+        File file = new File(uContext.getFilesDir() ,"CulturalWealth/ProfilesPictures/" + uData.get(position).getProfilePic());
         holder.User_name.setText(uData.get(position).getName());
-        holder.img.setImageURI(uData.get(position).getProfileUri());
-        Log.d("image", uData.get(position).getProfileUri().toString());
+        Bitmap bitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
+        holder.img.setImageBitmap(bitmap);
+        Log.d("image", uData.get(position).getProfilePic());
         holder.points.setText(uData.get(position).getScore());
 
     }

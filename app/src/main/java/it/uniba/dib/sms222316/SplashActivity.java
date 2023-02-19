@@ -2,10 +2,14 @@ package it.uniba.dib.sms222316;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.lifecycle.Lifecycle;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
@@ -31,6 +35,8 @@ import java.io.IOException;
 
 public class SplashActivity extends AppCompatActivity {
 
+    private static final int MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE = 1;
+    private static final int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 2;
     private int progressStatus = 0;
     private Handler handler = new Handler();
 
@@ -41,59 +47,64 @@ public class SplashActivity extends AppCompatActivity {
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
         setContentView(R.layout.activity_splash);
 
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE);
+        }
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE);
+        }
         ProgressBar simpleProgressBar=(ProgressBar)findViewById(R.id.simpleProgressBar); // initiate the progress bar
 
 
         // Start long running operation in a background thread
         Thread loading = new Thread(new Runnable() {
             public void run() {
+
+
+                FirebaseStorage storage = FirebaseStorage.getInstance();
+                StorageReference storageRef = storage.getReference();
+                StorageReference Profile = storageRef.child("ProfilesPictures/");
+                StorageReference  Monuments = storageRef.child("Monuments/");
+                StorageReference  Museums = storageRef.child("Museums/");
+                File ProfilePic = new File(getFilesDir(), "CulturalWealth/ProfilesPictures");
+                File MonumentsPic = new File(getFilesDir(), "CulturalWealth/Monuments");
+                File MuseumPic = new File(getFilesDir(), "CulturalWealth/Museums");
+
+                File directory = new File(getFilesDir(), "CulturalWealth/");
+                if(ContextCompat.checkSelfPermission(SplashActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(SplashActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+                    if (!directory.exists()) {
+                        directory.mkdirs();
+
+
+                    } else {
+                        if (!ProfilePic.exists()) {
+
+                            ProfilePic.mkdirs();
+                            GetimageFromStorage(Profile, ProfilePic);
+                        }
+                        if (!MonumentsPic.exists()) {
+
+                            MonumentsPic.mkdirs();
+                            GetimageFromStorage(Monuments, MonumentsPic);
+                        }
+                        if (!MuseumPic.exists()) {
+
+                            MuseumPic.mkdirs();
+                            GetimageFromStorage(Museums, MuseumPic);
+                        }
+                    }
+                }
+
+
+
+
+
+                // ottieni la directory di download predefinita dell'applicazione
+
+
+
                 while (progressStatus < 100) {
-                    progressStatus += 5;
-
-
-
-                    FirebaseStorage storage = FirebaseStorage.getInstance();
-                    StorageReference storageRef = storage.getReference();
-                    StorageReference folderRef = storageRef.child("ProfilePictures/");
-
-
-                    // ottieni la directory di download predefinita dell'applicazione
-                    File downloadDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
-                    Log.d("location" , Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).toString());
-
-                    folderRef.listAll().addOnSuccessListener(new OnSuccessListener<ListResult>() {
-                        @Override
-                        public void onSuccess(ListResult listResult) {
-                            for (StorageReference fileRef : listResult.getItems()) {
-                                // crea un file locale per il download
-                                File localFile = new File(downloadDir, fileRef.getName());
-                                Log.d("for" , fileRef.getName());
-
-                                // scarica il file nella directory di download
-                                fileRef.getFile(localFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
-                                    @Override
-                                    public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
-                                        // file scaricato con successo
-                                        Log.d("Successo" , "Successo");
-                                    }
-                                }).addOnFailureListener(new OnFailureListener() {
-                                    @Override
-                                    public void onFailure(@NonNull Exception e) {
-                                        // gestisci eventuali errori di download
-                                        Log.d("Errore download" , "Errore download");
-                                    }
-                                });
-                            }
-                        }
-                    }).addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            // gestisci eventuali errori nell'elencare i file nella cartella
-                            Log.d("errori nell'elencare i file nella cartella" , "errori nell'elencare i file nella cartella");
-                        }
-                    });
-
-
+                    progressStatus += 3;
 
                     // Update the progress bar and display the
                     //current value in the text view
@@ -133,4 +144,42 @@ public class SplashActivity extends AppCompatActivity {
             }
         },1000);
     }
+
+    void GetimageFromStorage(StorageReference Subject , File foldertodownload)
+    {
+
+        Subject.listAll().addOnSuccessListener(new OnSuccessListener<ListResult>() {
+            @Override
+            public void onSuccess(ListResult listResult) {
+                for (StorageReference fileRef : listResult.getItems()) {
+                    // crea un file locale per il download
+                    File localFile = new File(foldertodownload, fileRef.getName());
+                    Log.d("for" , fileRef.getName());
+
+                    // scarica il file nella directory di download
+                    fileRef.getFile(localFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+                            // file scaricato con successo
+                            Log.d("Successo" , "Successo");
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            // gestisci eventuali errori di download
+                            Log.d("Errore download" , "Errore download");
+                        }
+                    });
+                }
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                // gestisci eventuali errori nell'elencare i file nella cartella
+                Log.d("errori nell'elencare i file nella cartella" , "errori nell'elencare i file nella cartella");
+            }
+        });
+    }
 }
+
+

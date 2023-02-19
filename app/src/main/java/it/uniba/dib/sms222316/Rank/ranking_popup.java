@@ -18,6 +18,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
@@ -29,6 +30,7 @@ import com.google.firebase.storage.StorageReference;
 import java.util.ArrayList;
 import java.util.concurrent.Executor;
 
+import it.uniba.dib.sms222316.Gallery.Heritage;
 import it.uniba.dib.sms222316.R;
 import it.uniba.dib.sms222316.Utente;
 
@@ -51,38 +53,69 @@ public class ranking_popup extends Dialog {
 
 
 
-        Uri empty = Uri.parse("https://firebasestorage.googleapis.com/v0/b/cultural-wealth.appspot.com/o/ProfilesPictures%2FCristoforo%20colombo.png?alt=media&token=3ebfb3ce-f70e-4a74-b2ce-1784e71feae1");
+        String empty = "AdaLovelace.png";
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         CollectionReference reference = db.collection("Users");
         Query query = reference.orderBy("email", Query.Direction.ASCENDING);
         query.get().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 for (QueryDocumentSnapshot document : task.getResult()) {
+                    if(document.get("ProfilePic") == null)
+                    {
+                        fullHrg.add(new Utente(document.getString("nome"), "" , "1000", empty));
+                    }
+                    else {
+                        Log.d("documento" , document.getDocumentReference("ProfilePic").getPath());
+                        DocumentReference userRef = db.document(document.getDocumentReference("ProfilePic").getPath());
 
 
-                    fullHrg.add(new Utente(document.getString("nome"), "" , "1000", empty));
+                        // Utilizziamo la reference per prendere il nome dell'utente
+                        userRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                            @Override
+                            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                fullHrg.add(new Utente(document.getString("nome"), "" , "1000", documentSnapshot.getString("Image")));
+                                Log.d("documento" , documentSnapshot.getString("Image"));
+                                for (Utente element : fullHrg) {
+                                    Log.d("documento" , element.getName()+"  "+element.getProfilePic());
+
+                                }
+                                data = new ArrayList<>(fullHrg);
+
+                                RecyclerView myrv = findViewById(R.id.recicler_ranking);
+
+
+                                DisplayMetrics displayMetrics = new DisplayMetrics();
+                                getContext().getResources().getDisplayMetrics();
+                                float RecyclerWidth = (displayMetrics.widthPixels / displayMetrics.density) - 300; //larghezza sezione bottoni
+                                int spanCount = (int) (RecyclerWidth / 100) - 1;
+
+
+                                RecyclerViewUtente myAdapter = new RecyclerViewUtente(context, data);
+
+                                myrv.setLayoutManager(new LinearLayoutManager(context));
+
+                                myrv.setAdapter(myAdapter);
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Log.d("documento" , "AAAAA");
+                            }
+                        });
+                    }
+                    for (Utente element : fullHrg) {
+                        Log.d("documentos" , element.getName()+"  "+element.getProfilePic());
+                    }
+
+
+
 
                 }
             } else {
                 Log.e("Query-ranking", "Not found query");
 
             }
-            data = new ArrayList<>(fullHrg);
 
-            RecyclerView myrv = findViewById(R.id.recicler_ranking);
-
-
-            DisplayMetrics displayMetrics = new DisplayMetrics();
-            getContext().getResources().getDisplayMetrics();
-            float RecyclerWidth = (displayMetrics.widthPixels / displayMetrics.density) - 300; //larghezza sezione bottoni
-            int spanCount = (int) (RecyclerWidth / 100) - 1;
-
-
-            RecyclerViewUtente myAdapter = new RecyclerViewUtente(context, data);
-
-            myrv.setLayoutManager(new LinearLayoutManager(context));
-
-            myrv.setAdapter(myAdapter);
 
         });
 
