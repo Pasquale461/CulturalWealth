@@ -93,7 +93,6 @@ public class Home extends AppCompatActivity {
         Gallery.setOnClickListener(v -> {
             Intent i = new Intent(Home.this, it.uniba.dib.sms222316.Gallery.Gallery.class);
             startActivity(i);
-            finish();
         });
 
         //Open Popup Goals

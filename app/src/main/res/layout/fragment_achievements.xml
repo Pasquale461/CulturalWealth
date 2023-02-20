@@ -4,13 +4,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/rounded_corners_fragment"
-    tools:context=".Goals.achievements">
+    tools:context=".Goals.FragmentAchievements">
 
-    <TextView
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/CategoryRecycler"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/achievements"
-        android:textColor="@color/white"
-        android:gravity="center"/>
+        android:layout_height="match_parent"/>
 
 </FrameLayout>

@@ -25,6 +25,8 @@ public class GoalsPopup extends Dialog {
         setContentView(R.layout.goals_popup);
 
         pager = findViewById(R.id.viewpager);
+        pager.setUserInputEnabled(false);
+        pager.setClipToOutline(true);
         tabLayout = findViewById(R.id.tabLayout);
 
         adapter = new ViewPagerFragmentAdapter((FragmentActivity) context, titles);
