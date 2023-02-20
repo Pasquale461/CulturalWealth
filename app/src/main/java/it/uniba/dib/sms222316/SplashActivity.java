@@ -1,6 +1,7 @@
 package it.uniba.dib.sms222316;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -8,10 +9,13 @@ import androidx.lifecycle.Lifecycle;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
@@ -39,6 +43,8 @@ public class SplashActivity extends AppCompatActivity {
     private static final int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 2;
     private int progressStatus = 0;
     private Handler handler = new Handler();
+    Thread loading;
+    boolean conn = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,43 +63,11 @@ public class SplashActivity extends AppCompatActivity {
 
 
         // Start long running operation in a background thread
-        Thread loading = new Thread(new Runnable() {
+       loading = new Thread(new Runnable() {
             public void run() {
 
 
-                FirebaseStorage storage = FirebaseStorage.getInstance();
-                StorageReference storageRef = storage.getReference();
-                StorageReference Profile = storageRef.child("ProfilesPictures/");
-                StorageReference  Monuments = storageRef.child("Monuments/");
-                StorageReference  Museums = storageRef.child("Museums/");
-                File ProfilePic = new File(getFilesDir(), "CulturalWealth/ProfilesPictures");
-                File MonumentsPic = new File(getFilesDir(), "CulturalWealth/Monuments");
-                File MuseumPic = new File(getFilesDir(), "CulturalWealth/Museums");
 
-                File directory = new File(getFilesDir(), "CulturalWealth/");
-                if(ContextCompat.checkSelfPermission(SplashActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(SplashActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
-                    if (!directory.exists()) {
-                        directory.mkdirs();
-
-
-                    } else {
-                        if (!ProfilePic.exists()) {
-
-                            ProfilePic.mkdirs();
-                            GetimageFromStorage(Profile, ProfilePic);
-                        }
-                        if (!MonumentsPic.exists()) {
-
-                            MonumentsPic.mkdirs();
-                            GetimageFromStorage(Monuments, MonumentsPic);
-                        }
-                        if (!MuseumPic.exists()) {
-
-                            MuseumPic.mkdirs();
-                            GetimageFromStorage(Museums, MuseumPic);
-                        }
-                    }
-                }
 
 
 
@@ -122,9 +96,10 @@ public class SplashActivity extends AppCompatActivity {
                 }
             }
         });
-        loading.start();
 
-       redirect();
+        Backgroundloadscreen();
+
+        if (conn) redirect();
     }
 
     private void redirect(){
@@ -180,6 +155,85 @@ public class SplashActivity extends AppCompatActivity {
             }
         });
     }
+    void Backgroundloadscreen()
+    {
+        if (connection()) {
+            loading.start();
+            AssetsLoad();
+
+        }
+        else
+        {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("Attenzione");
+            builder.setMessage("La connessione a Internet non è disponibile.");
+            builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                    // Azioni da eseguire quando l'utente fa clic sul pulsante OK
+                    Intent intent = getIntent();
+                    finish();
+                    startActivity(intent);
+                }
+            });
+            AlertDialog dialog = builder.create();
+            dialog.show();
+        }
+    }
+
+    void AssetsLoad()
+    {
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        StorageReference storageRef = storage.getReference();
+        StorageReference Profile = storageRef.child("ProfilesPictures/");
+        StorageReference  Monuments = storageRef.child("Monuments/");
+        StorageReference  Museums = storageRef.child("Museums/");
+        File ProfilePic = new File(getFilesDir(), "CulturalWealth/ProfilesPictures");
+        File MonumentsPic = new File(getFilesDir(), "CulturalWealth/Monuments");
+        File MuseumPic = new File(getFilesDir(), "CulturalWealth/Museums");
+
+        File directory = new File(getFilesDir(), "CulturalWealth/");
+        if(ContextCompat.checkSelfPermission(SplashActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(SplashActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+            if (!directory.exists()) {
+                directory.mkdirs();
+
+
+            } else {
+                if (!ProfilePic.exists()) {
+
+                    ProfilePic.mkdirs();
+                    GetimageFromStorage(Profile, ProfilePic);
+                }
+                if (!MonumentsPic.exists()) {
+
+                    MonumentsPic.mkdirs();
+                    GetimageFromStorage(Monuments, MonumentsPic);
+                }
+                if (!MuseumPic.exists()) {
+
+                    MuseumPic.mkdirs();
+                    GetimageFromStorage(Museums, MuseumPic);
+                }
+                redirect();
+            }
+        }
+    }
+
+    boolean connection()
+        {
+            ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+            NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+
+            if (networkInfo != null && networkInfo.isConnected()) {
+                // il dispositivo ha una connessione a Internet attiva
+                return true;
+            } else {
+                // il dispositivo non ha una connessione a Internet attiva
+                conn = false;
+                return false;
+            }
+        }
+
 }
+
 
 

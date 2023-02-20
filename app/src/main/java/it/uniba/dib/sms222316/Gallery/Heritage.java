@@ -2,17 +2,21 @@ package it.uniba.dib.sms222316.Gallery;
 
 public class Heritage {
 
-    private String Title, Description, Type;
+    private String Title, Description, Type, Pic;
 
     public Heritage() {
     }
 
-    public Heritage(String title, String description, String type) {
+    public Heritage(String title, String description, String type, String pic) {
         Title = title;
         Description = description;
         Type = type;
+        Pic = pic;
     }
 
+    public String getPic() {
+        return Pic;
+    }
 
     public String getTitle() {
         return Title;

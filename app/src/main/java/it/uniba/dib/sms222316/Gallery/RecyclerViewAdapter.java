@@ -3,6 +3,8 @@ package it.uniba.dib.sms222316.Gallery;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +13,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
+
+import java.io.File;
 import java.util.*;
 
 import it.uniba.dib.sms222316.R;
@@ -41,10 +45,12 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         @Override
         public void onBindViewHolder(MyViewHolder holder, final int position) {
 
-            Uri uri = Uri.parse("android.resource://it.uniba.dib.sms222316/drawable/"+mData.get(position).getTitle().replaceAll("\\s+", "_").toLowerCase());
+
 
             holder.haritageTitle.setText(mData.get(position).getTitle());
-            holder.img.setImageURI(uri);
+
+            File file;
+            Bitmap bitmap;
             holder.type.setContentDescription(mData.get(position).getType());
 
             TypeHeritage control = TypeHeritage.valueOf(mData.get(position).getType());
@@ -52,12 +58,21 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             switch (control){
                 case Monuments:
                     holder.type.setBackgroundResource(R.drawable.monument);
+                     file = new File(mContext.getFilesDir() ,"CulturalWealth/Monuments/" + mData.get(position).getPic());
+                     bitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
+                    holder.img.setImageBitmap(bitmap);
                     break;
                 case Paintings:
                     holder.type.setBackgroundResource(R.drawable.painting);
+                    file = new File(mContext.getFilesDir() ,"CulturalWealth/Paintings/" + mData.get(position).getPic());
+                    bitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
+                    holder.img.setImageBitmap(bitmap);
                     break;
                 case Characters:
                     holder.type.setBackgroundResource(R.drawable.character);
+                    file = new File(mContext.getFilesDir() ,"CulturalWealth/ProfilesPictures/" + mData.get(position).getPic());
+                    bitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
+                    holder.img.setImageBitmap(bitmap);
                     break;
             }
 
@@ -69,6 +84,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 // passing data to the Gallery Heritage
                 intent.putExtra("Title",mData.get(position).getTitle());
                 intent.putExtra("Description",mData.get(position).getDescription());
+                intent.putExtra("Type",mData.get(position).getType());
+                intent.putExtra("Image",mData.get(position).getPic());
+
                 // start the activity
                 mContext.startActivity(intent);
 

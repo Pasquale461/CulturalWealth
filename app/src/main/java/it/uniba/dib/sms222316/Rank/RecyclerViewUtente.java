@@ -47,8 +47,6 @@ public class RecyclerViewUtente extends RecyclerView.Adapter<RecyclerViewUtente.
 
     public void onBindViewHolder(MyViewHolderUser holder, final int position) {
 
-        //Uri uri = Uri.parse("android.resource://it.uniba.dib.sms222316/drawable/"+uData.get(position).getName().replaceAll("\\s+", "_").toLowerCase());
-
         File file = new File(uContext.getFilesDir() ,"CulturalWealth/ProfilesPictures/" + uData.get(position).getProfilePic());
         holder.User_name.setText(uData.get(position).getName());
         Bitmap bitmap = BitmapFactory.decodeFile(file.getAbsolutePath());

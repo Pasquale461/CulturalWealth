@@ -3,14 +3,19 @@ package it.uniba.dib.sms222316.Gallery;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import java.io.File;
 
 import it.uniba.dib.sms222316.R;
 
@@ -37,7 +42,7 @@ public class GalleryHeritage extends AppCompatActivity {
             finish();
         });
 
-        Uri uri = Uri.parse("android.resource://it.uniba.dib.sms222316/drawable/"+getIntent().getExtras().getString("Title").replaceAll("\\s+", "_").toLowerCase());
+
 
         img = findViewById(R.id.imgHeritage);
         title = findViewById(R.id.title);
@@ -46,7 +51,25 @@ public class GalleryHeritage extends AppCompatActivity {
         String tl = getIntent().getExtras().getString("Title");
         String desc = getIntent().getExtras().getString("Description");
 
-        img.setImageURI(uri);
+        switch (getIntent().getExtras().getString("Type")){
+            case "Monuments":
+                File Monuments = new File(GalleryHeritage.this.getFilesDir() ,"CulturalWealth/Monuments/" + getIntent().getExtras().getString("Image"));
+                Bitmap bitmapMonuments = BitmapFactory.decodeFile(Monuments.getAbsolutePath());
+                img.setImageBitmap(bitmapMonuments);
+                break;
+            case "Paintings":
+                File Paintings = new File(GalleryHeritage.this.getFilesDir() ,"CulturalWealth/Paintings/" + getIntent().getExtras().getString("Image"));
+                Bitmap bitmapPaintings = BitmapFactory.decodeFile(Paintings.getAbsolutePath());
+                img.setImageBitmap(bitmapPaintings);
+                break;
+            case "Characters":
+                File Characters  = new File(GalleryHeritage.this.getFilesDir() ,"CulturalWealth/ProfilesPictures/" + getIntent().getExtras().getString("Image"));
+                Bitmap bitmapCharacters = BitmapFactory.decodeFile(Characters.getAbsolutePath());
+                img.setImageBitmap(bitmapCharacters);
+                break;
+        }
+
+
         title.setText(tl);
         description.setMovementMethod(new ScrollingMovementMethod());
         description.setText(desc);

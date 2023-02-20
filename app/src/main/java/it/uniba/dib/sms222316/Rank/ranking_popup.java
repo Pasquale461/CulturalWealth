@@ -70,38 +70,27 @@ public class ranking_popup extends Dialog {
 
 
                         // Utilizziamo la reference per prendere il nome dell'utente
-                        userRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                            @Override
-                            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                                fullHrg.add(new Utente(document.getString("nome"), "" , "1000", documentSnapshot.getString("Image")));
-                                Log.d("documento" , documentSnapshot.getString("Image"));
-                                for (Utente element : fullHrg) {
-                                    Log.d("documento" , element.getName()+"  "+element.getProfilePic());
+                        userRef.get().addOnSuccessListener(documentSnapshot -> {
+                            fullHrg.add(new Utente(document.getString("nome"), "" , "1000", documentSnapshot.getString("Image")));
+                            Log.d("documento" , documentSnapshot.getString("Image"));
 
-                                }
-                                data = new ArrayList<>(fullHrg);
+                            data = new ArrayList<>(fullHrg);
 
-                                RecyclerView myrv = findViewById(R.id.recicler_ranking);
+                            RecyclerView myrv = findViewById(R.id.recicler_ranking);
 
 
-                                DisplayMetrics displayMetrics = new DisplayMetrics();
-                                getContext().getResources().getDisplayMetrics();
-                                float RecyclerWidth = (displayMetrics.widthPixels / displayMetrics.density) - 300; //larghezza sezione bottoni
-                                int spanCount = (int) (RecyclerWidth / 100) - 1;
+                            DisplayMetrics displayMetrics = new DisplayMetrics();
+                            getContext().getResources().getDisplayMetrics();
+                            float RecyclerWidth = (displayMetrics.widthPixels / displayMetrics.density) - 300; //larghezza sezione bottoni
+                            int spanCount = (int) (RecyclerWidth / 100) - 1;
 
 
-                                RecyclerViewUtente myAdapter = new RecyclerViewUtente(context, data);
+                            RecyclerViewUtente myAdapter = new RecyclerViewUtente(context, data);
 
-                                myrv.setLayoutManager(new LinearLayoutManager(context));
+                            myrv.setLayoutManager(new LinearLayoutManager(context));
 
-                                myrv.setAdapter(myAdapter);
-                            }
-                        }).addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                Log.d("documento" , "AAAAA");
-                            }
-                        });
+                            myrv.setAdapter(myAdapter);
+                        }).addOnFailureListener(e -> Log.d("documento" , "AAAAA"));
                     }
                     for (Utente element : fullHrg) {
                         Log.d("documentos" , element.getName()+"  "+element.getProfilePic());

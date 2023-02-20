@@ -1,23 +1,38 @@
 package it.uniba.dib.sms222316.Gallery;
 
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageButton;
+
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import it.uniba.dib.sms222316.Home;
 import it.uniba.dib.sms222316.PopupSettings;
 import it.uniba.dib.sms222316.R;
+import it.uniba.dib.sms222316.Rank.RecyclerViewUtente;
+import it.uniba.dib.sms222316.Utente;
 
 public class Gallery extends AppCompatActivity {
     ImageButton btnBack;
@@ -26,6 +41,7 @@ public class Gallery extends AppCompatActivity {
     SwitchCompat mVolume;
     enum heritage {
             Monuments, Paintings, Characters, All}
+    Query query;
 
     heritage pressed = heritage.All;
     @Override
@@ -35,7 +51,7 @@ public class Gallery extends AppCompatActivity {
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
         setContentView(R.layout.activity_gallery);
 
-        List<Heritage> data, fullHrg;
+        List<Heritage>  fullHrg;
         popupSettings = new PopupSettings(Gallery.this,Gallery.this);
         mVolume=popupSettings.findViewById(R.id.vol_musica);
         btnBack = findViewById(R.id.btnBack);
@@ -53,112 +69,269 @@ public class Gallery extends AppCompatActivity {
 
         //TODO: caricamento heritage
         fullHrg = new ArrayList<>();
-        fullHrg.add(new Heritage("Il Colosseo","Lorem ipsum dolor sit amet, consecteturyjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjmmmffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff adipiscing elit. Sed efficitur, nulla vel vestibulum aliquet, enim urna malesuada enim, vel pharetra tellus ipsum sit amet eros. Donec rutrum fringilla justo, at molestie lectus pretium sed. Morbi accumsan in velit eu sagittis. Fusce pretium non sapien non imperdiet. Duis id ultrices turpis, id blandit odio. Sed vitae libero in nulla volutpat posuere. Curabitur non sodales ex. Curabitur laoreet a odio id bibendum. Duis convallis neque quis felis rhoncus, sed fringilla ex commodo.","Monuments"));
-        fullHrg.add(new Heritage("La Gioconda","sdxgfc","Paintings"));
-        fullHrg.add(new Heritage("Galileo Galilei","fdgxc","Characters"));
 
-        fullHrg.add(new Heritage("Il Colosseo","gsdx","Monuments"));
-        fullHrg.add(new Heritage("La Gioconda","sdxgfc","Paintings"));
-        fullHrg.add(new Heritage("Galileo Galilei","fdgxc","Characters"));
 
-        fullHrg.add(new Heritage("Il Colosseo","gsdx","Monuments"));
-        fullHrg.add(new Heritage("La Gioconda","sdxgfc","Paintings"));
-        fullHrg.add(new Heritage("Galileo Galilei","fdgxc","Characters"));
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        CollectionReference reference = db.collection("Heritage");
+        query = reference.orderBy("Title", Query.Direction.ASCENDING);
+        query.get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                for (QueryDocumentSnapshot document : task.getResult()) {
 
-        fullHrg.add(new Heritage("Il Colosseo","gsdx","Monuments"));
-        fullHrg.add(new Heritage("La Gioconda","sdxgfc","Paintings"));
-        fullHrg.add(new Heritage("Galileo Galilei","fdgxc","Characters"));
+                    fullHrg.add(new Heritage(document.getString("Title") , document.getString("Description") , document.getString("Type") , document.getString("Image") ));
 
-        fullHrg.add(new Heritage("Il Colosseo","gsdx","Monuments"));
-        fullHrg.add(new Heritage("La Gioconda","sdxgfc","Paintings"));
-        fullHrg.add(new Heritage("Galileo Galilei","fdgxc","Characters"));
+                }
+                List<Heritage> data = new ArrayList<>(fullHrg);
 
-        fullHrg.add(new Heritage("Il Colosseo","gsdx","Monuments"));
-        fullHrg.add(new Heritage("La Gioconda","sdxgfc","Paintings"));
-        fullHrg.add(new Heritage("Galileo Galilei","fdgxc","Characters"));
-        data = new ArrayList<>(fullHrg);
+                RecyclerView myrv = findViewById(R.id.RecyclerView);
 
-        RecyclerView myrv = findViewById(R.id.RecyclerView);
+                DisplayMetrics displayMetrics = this.getResources().getDisplayMetrics();
+                float RecyclerWidth = (displayMetrics.widthPixels / displayMetrics.density) - 300; //larghezza sezione bottoni
+                int spanCount = (int) (RecyclerWidth / 100) - 1;
 
-        DisplayMetrics displayMetrics = this.getResources().getDisplayMetrics();
-        float RecyclerWidth = (displayMetrics.widthPixels / displayMetrics.density) - 300; //larghezza sezione bottoni
-        int spanCount = (int) (RecyclerWidth / 100) - 1;
+                RecyclerViewAdapter myAdapter = new RecyclerViewAdapter(this,data);
+                myrv.setLayoutManager(new GridLayoutManager(this,spanCount));
+                myrv.setAdapter(myAdapter);
 
-        RecyclerViewAdapter myAdapter = new RecyclerViewAdapter(this,data);
-        myrv.setLayoutManager(new GridLayoutManager(this,spanCount));
-        myrv.setAdapter(myAdapter);
+
+            } else {
+                Log.e("Query-Gallery", "Not found query");
+
+            }
+
+
+        });
+
+
+
+
 
 
 
         btnMonuments.setOnClickListener(v -> {
             if(pressed != heritage.Monuments){
-                data.clear();
-                List<Heritage> hrg;
-                hrg = new ArrayList<>();
-                hrg.add(new Heritage("Il Colosseo","gsdx","Monuments"));
-                data.addAll(hrg);
-                myAdapter.notifyDataSetChanged();
-                pressed = heritage.Monuments;
 
-                btnMonuments.setBackgroundResource(R.drawable.pressed);
-                btnPaintings.setBackgroundResource(R.drawable.defaultbtn);
-                btnCharacters.setBackgroundResource(R.drawable.defaultbtn);
+                fullHrg.clear();
+
+                Query query = reference.orderBy("Title", Query.Direction.ASCENDING).whereEqualTo("Type" , "Monuments");
+                query.get().addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+
+                            fullHrg.add(new Heritage(document.getString("Title") , document.getString("Description") , document.getString("Type") , document.getString("Image") ));
+
+                        }
+                        List<Heritage> data = new ArrayList<>(fullHrg);
+                        RecyclerView myrv = findViewById(R.id.RecyclerView);
+
+                        DisplayMetrics displayMetrics = this.getResources().getDisplayMetrics();
+                        float RecyclerWidth = (displayMetrics.widthPixels / displayMetrics.density) - 300; //larghezza sezione bottoni
+                        int spanCount = (int) (RecyclerWidth / 100) - 1;
+
+                        RecyclerViewAdapter myAdapter = new RecyclerViewAdapter(this,data);
+                        myrv.setLayoutManager(new GridLayoutManager(this,spanCount));
+                        myrv.setAdapter(myAdapter);
+                        btnMonuments.setBackgroundResource(R.drawable.pressed);
+                        btnPaintings.setBackgroundResource(R.drawable.defaultbtn);
+                        btnCharacters.setBackgroundResource(R.drawable.defaultbtn);
+
+
+
+                    } else {
+                        Log.e("Query-Gallery", "Not found query");
+                    }
+
+
+                });
+
             }
             else{
-                data.clear();
-                data.addAll(fullHrg);
-                myAdapter.notifyDataSetChanged();
-                pressed = heritage.All;
 
-                btnMonuments.setBackgroundResource(R.drawable.defaultbtn);
+                query = reference.orderBy("Title", Query.Direction.ASCENDING);
+                query.get().addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+
+                            fullHrg.add(new Heritage(document.getString("Title") , document.getString("Description") , document.getString("Type") , document.getString("Image") ));
+
+                        }
+                        List<Heritage> data = new ArrayList<>(fullHrg);
+
+                        RecyclerView myrv = findViewById(R.id.RecyclerView);
+
+                        DisplayMetrics displayMetrics = this.getResources().getDisplayMetrics();
+                        float RecyclerWidth = (displayMetrics.widthPixels / displayMetrics.density) - 300; //larghezza sezione bottoni
+                        int spanCount = (int) (RecyclerWidth / 100) - 1;
+
+                        RecyclerViewAdapter myAdapter = new RecyclerViewAdapter(this,data);
+                        myrv.setLayoutManager(new GridLayoutManager(this,spanCount));
+                        myrv.setAdapter(myAdapter);
+                        pressed = heritage.All;
+                        btnMonuments.setBackgroundResource(R.drawable.defaultbtn);
+
+
+                    } else {
+                        Log.e("Query-Gallery", "Not found query");
+
+                    }
+
+
+                });
+
+
+
             }
         });
 
         btnPaintings.setOnClickListener(v -> {
             if(pressed != heritage.Paintings){
-                data.clear();
-                List<Heritage> hrg;
-                hrg = new ArrayList<>();
-                hrg.add(new Heritage("La Gioconda","fdvf","Paintings"));
-                data.addAll(hrg);
-                myAdapter.notifyDataSetChanged();
-                pressed = heritage.Paintings;
+                fullHrg.clear();
 
-                btnPaintings.setBackgroundResource(R.drawable.pressed);
-                btnMonuments.setBackgroundResource(R.drawable.defaultbtn);
-                btnCharacters.setBackgroundResource(R.drawable.defaultbtn);
+                Query query = reference.orderBy("Title", Query.Direction.ASCENDING).whereEqualTo("Type" , "Paintings");
+                query.get().addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+
+                            fullHrg.add(new Heritage(document.getString("Title") , document.getString("Description") , document.getString("Type") , document.getString("Image") ));
+
+                        }
+                        List<Heritage> data = new ArrayList<>(fullHrg);
+                        RecyclerView myrv = findViewById(R.id.RecyclerView);
+
+                        DisplayMetrics displayMetrics = this.getResources().getDisplayMetrics();
+                        float RecyclerWidth = (displayMetrics.widthPixels / displayMetrics.density) - 300; //larghezza sezione bottoni
+                        int spanCount = (int) (RecyclerWidth / 100) - 1;
+
+                        RecyclerViewAdapter myAdapter = new RecyclerViewAdapter(this,data);
+                        myrv.setLayoutManager(new GridLayoutManager(this,spanCount));
+                        myrv.setAdapter(myAdapter);
+                        btnPaintings.setBackgroundResource(R.drawable.pressed);
+                        btnMonuments.setBackgroundResource(R.drawable.defaultbtn);
+                        btnCharacters.setBackgroundResource(R.drawable.defaultbtn);
+
+
+
+                    } else {
+                        Log.e("Query-Gallery", "Not found query");
+                    }
+
+
+                });
+
             }
             else{
-                data.clear();
-                data.addAll(fullHrg);
-                myAdapter.notifyDataSetChanged();
-                pressed = heritage.All;
 
-                btnPaintings.setBackgroundResource(R.drawable.defaultbtn);
+                query = reference.orderBy("Title", Query.Direction.ASCENDING);
+                query.get().addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+
+                            fullHrg.add(new Heritage(document.getString("Title") , document.getString("Description") , document.getString("Type") , document.getString("Image") ));
+
+                        }
+                        List<Heritage> data = new ArrayList<>(fullHrg);
+
+                        RecyclerView myrv = findViewById(R.id.RecyclerView);
+
+                        DisplayMetrics displayMetrics = this.getResources().getDisplayMetrics();
+                        float RecyclerWidth = (displayMetrics.widthPixels / displayMetrics.density) - 300; //larghezza sezione bottoni
+                        int spanCount = (int) (RecyclerWidth / 100) - 1;
+
+                        RecyclerViewAdapter myAdapter = new RecyclerViewAdapter(this,data);
+                        myrv.setLayoutManager(new GridLayoutManager(this,spanCount));
+                        myrv.setAdapter(myAdapter);
+                        pressed = heritage.All;
+                        btnPaintings.setBackgroundResource(R.drawable.defaultbtn);
+
+
+                    } else {
+                        Log.e("Query-Gallery", "Not found query");
+
+                    }
+
+
+                });
+
             }
         });
 
         btnCharacters.setOnClickListener(v -> {
             if(pressed != heritage.Characters){
-                data.clear();
-                List<Heritage> hrg;
-                hrg = new ArrayList<>();
-                hrg.add(new Heritage("Galileo Galilei","vffre","Characters"));
-                data.addAll(hrg);
-                myAdapter.notifyDataSetChanged();
-                pressed = heritage.Characters;
 
-                btnCharacters.setBackgroundResource(R.drawable.pressed);
-                btnMonuments.setBackgroundResource(R.drawable.defaultbtn);
-                btnPaintings.setBackgroundResource(R.drawable.defaultbtn);
+
+                fullHrg.clear();
+
+                Query query = reference.orderBy("Title", Query.Direction.ASCENDING).whereEqualTo("Type" , "Characters");
+                query.get().addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+
+                            fullHrg.add(new Heritage(document.getString("Title") , document.getString("Description") , document.getString("Type") , document.getString("Image") ));
+
+                        }
+                        List<Heritage> data = new ArrayList<>(fullHrg);
+                        RecyclerView myrv = findViewById(R.id.RecyclerView);
+
+                        DisplayMetrics displayMetrics = this.getResources().getDisplayMetrics();
+                        float RecyclerWidth = (displayMetrics.widthPixels / displayMetrics.density) - 300; //larghezza sezione bottoni
+                        int spanCount = (int) (RecyclerWidth / 100) - 1;
+
+                        RecyclerViewAdapter myAdapter = new RecyclerViewAdapter(this,data);
+                        myrv.setLayoutManager(new GridLayoutManager(this,spanCount));
+                        myrv.setAdapter(myAdapter);
+                        btnCharacters.setBackgroundResource(R.drawable.pressed);
+                        btnMonuments.setBackgroundResource(R.drawable.defaultbtn);
+                        btnPaintings.setBackgroundResource(R.drawable.defaultbtn);
+
+
+
+                    } else {
+                        Log.e("Query-Gallery", "Not found query");
+                    }
+
+
+                });
+
+
             }
             else{
-                data.clear();
-                data.addAll(fullHrg);
-                myAdapter.notifyDataSetChanged();
-                pressed = heritage.All;
 
-                btnCharacters.setBackgroundResource(R.drawable.defaultbtn);
+                query = reference.orderBy("Title", Query.Direction.ASCENDING);
+                query.get().addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+
+                            fullHrg.add(new Heritage(document.getString("Title") , document.getString("Description") , document.getString("Type") , document.getString("Image") ));
+
+                        }
+                        List<Heritage> data = new ArrayList<>(fullHrg);
+
+                        RecyclerView myrv = findViewById(R.id.RecyclerView);
+
+                        DisplayMetrics displayMetrics = this.getResources().getDisplayMetrics();
+                        float RecyclerWidth = (displayMetrics.widthPixels / displayMetrics.density) - 300; //larghezza sezione bottoni
+                        int spanCount = (int) (RecyclerWidth / 100) - 1;
+
+                        RecyclerViewAdapter myAdapter = new RecyclerViewAdapter(this,data);
+                        myrv.setLayoutManager(new GridLayoutManager(this,spanCount));
+                        myrv.setAdapter(myAdapter);
+                        pressed = heritage.All;
+                        btnMonuments.setBackgroundResource(R.drawable.defaultbtn);
+                        pressed = heritage.All;
+
+                        btnCharacters.setBackgroundResource(R.drawable.defaultbtn);
+
+
+                    } else {
+                        Log.e("Query-Gallery", "Not found query");
+
+                    }
+
+
+                });
+
+
+
             }
         });
     }
