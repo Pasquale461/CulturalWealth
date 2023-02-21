@@ -6,11 +6,10 @@
     android:background="@drawable/rounded_corners_fragment"
     tools:context=".Goals.FragmentMissions">
 
-    <TextView
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/MissionsRecycler"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/missions"
-        android:textColor="@color/white"
-        android:gravity="center"/>
+        android:layout_marginTop="10dp"/>
 
 </FrameLayout>

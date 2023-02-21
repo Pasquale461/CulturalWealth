@@ -38,4 +38,7 @@
     <!-- Popup Settings -->
     <string name="flagItalian" translatable="false">Flag Italian</string>
     <string name="flagEnglish" translatable="false">Flag English</string>
+
+    <!-- Fragment Missions -->
+    <string name="rewards" translatable="false">Rewards</string>
 </resources>
