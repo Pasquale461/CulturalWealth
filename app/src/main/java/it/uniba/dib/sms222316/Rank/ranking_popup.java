@@ -6,6 +6,9 @@ import android.content.Context;
 import android.net.Uri;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -43,13 +46,15 @@ public class ranking_popup extends Dialog {
     ArrayList<Utente> data, fullHrg = new ArrayList<>();
 
 
-    public ranking_popup(Context context ,Context context1) {
+    public ranking_popup(Context context) {
         super(context);
-
+        context.setTheme(android.R.style.Theme_DeviceDefault_NoActionBar);
+        getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
         setContentView(R.layout.ranking_popup);
 
         Log.d("TAG", "Questo è un messaggio di debug");
-
 
 
 

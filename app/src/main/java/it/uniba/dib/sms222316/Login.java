@@ -49,9 +49,6 @@ public class Login extends AppCompatActivity {
 
 
 
-        //TODO: Rimando schermata Guest
-
-        //TODO: Rimando schermata principale
 
         //Instanza oggetti visivi
         emailEditText = findViewById(R.id.emaillogintext);

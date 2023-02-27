@@ -12,7 +12,7 @@
         android:id="@+id/Navbar"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:background="@color/grey"
+        android:background="@color/marrone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -24,6 +24,7 @@
             android:background="?attr/selectableItemBackgroundBorderless"
             android:drawableStart="@drawable/painting"
             android:paddingEnd="14dp"
+
             android:text="@string/shop"
             android:textSize="15sp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -47,10 +48,10 @@
             style="@style/Widget.AppCompat.TextView"
             android:layout_width="217dp"
             android:layout_height="36dp"
-            android:textColor="#424242"
+            android:layout_marginLeft="5dp"
+            android:textColor="@color/white"
             android:textSize="20sp"
             android:textStyle="bold"
-            android:layout_marginLeft="5dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/imageButton3"
             app:layout_constraintTop_toTopOf="parent" />
@@ -60,10 +61,10 @@
             style="@android:style/Widget.Holo.ImageButton"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:background="#00FFFFFF"
-            android:scaleType="centerCrop"
             android:layout_marginLeft="15dp"
+            android:background="#00FFFFFF"
             android:contentDescription="@string/Avatar"
+            android:scaleType="centerCrop"
             android:scrollbarStyle="outsideInset"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -74,8 +75,8 @@
             android:id="@+id/rankbutton"
             android:layout_width="54dp"
             android:layout_height="51dp"
-            android:contentDescription="@string/BtnRank"
             android:background="@drawable/icon_rank_149"
+            android:contentDescription="@string/BtnRank"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/settings"
             app:layout_constraintTop_toTopOf="parent" />
@@ -98,6 +99,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="60dp"
+        android:background="#efe5dc"
+        android:backgroundTint="@color/pink_rose"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -130,14 +133,14 @@
                     android:id="@+id/imageView3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:contentDescription="@string/gallery"
                     android:scaleType="fitXY"
                     android:visibility="visible"
-                    app:srcCompat="@drawable/gallery"
-                    android:contentDescription="@string/gallery"
-                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"/>
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/gallery" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
 

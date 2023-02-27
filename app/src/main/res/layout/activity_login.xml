@@ -10,6 +10,7 @@
         android:id="@+id/frameLayout2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/pink_rose"
         tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="0dp">
 
@@ -27,7 +28,7 @@
             android:id="@+id/linearLayout"
             android:layout_width="289dp"
             android:layout_height="354dp"
-            android:background="#5E7C5823"
+            android:background="@color/marrone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/divider2"
@@ -89,7 +90,8 @@
                     android:hint="@string/mail"
                     android:inputType="textEmailAddress"
                     android:minHeight="48dp"
-                    android:textColorHint="#546E7A"
+                    android:textColor="@color/grey"
+                    android:textColorHint="@color/grey"
                     app:layout_constraintBottom_toTopOf="@+id/passwordlogintext"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -99,18 +101,18 @@
                     android:id="@+id/passwordlogintext"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="35dp"
+                    android:layout_marginBottom="35dp"
                     android:ems="10"
                     android:hint="@string/password"
                     android:importantForAutofill="no"
                     android:inputType="textPassword"
                     android:minHeight="48dp"
-                    android:textColorHint="#546E7A"
-                    android:layout_marginTop="35dp"
-                    android:layout_marginBottom="35dp"
+                    android:textColorHint="@color/grey"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/emaillogintext"/>
+                    app:layout_constraintTop_toBottomOf="@+id/emaillogintext" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -119,7 +121,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="289dp"
             android:layout_height="354dp"
-            android:background="#5E7C5823"
+            android:background="@color/marrone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/divider2"
             app:layout_constraintStart_toStartOf="parent"
@@ -146,6 +148,7 @@
 -Funzionalità online come il matchmaking con amici e le classifiche\n
 -Meno pubblicità\n
 -Opzioni di personalizzazione limitate."
+                android:textColor="@color/grey"
                 app:layout_constraintBottom_toTopOf="@+id/Guest"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.487"

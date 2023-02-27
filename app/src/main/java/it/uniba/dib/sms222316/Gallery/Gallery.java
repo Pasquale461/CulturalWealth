@@ -67,7 +67,7 @@ public class Gallery extends AppCompatActivity {
             finish();
         });
 
-        //TODO: caricamento heritage
+
         fullHrg = new ArrayList<>();
 
 
@@ -131,6 +131,8 @@ public class Gallery extends AppCompatActivity {
                         RecyclerViewAdapter myAdapter = new RecyclerViewAdapter(this,data);
                         myrv.setLayoutManager(new GridLayoutManager(this,spanCount));
                         myrv.setAdapter(myAdapter);
+                        myAdapter.notifyDataSetChanged();
+                        pressed = heritage.Monuments;
                         btnMonuments.setBackgroundResource(R.drawable.pressed);
                         btnPaintings.setBackgroundResource(R.drawable.defaultbtn);
                         btnCharacters.setBackgroundResource(R.drawable.defaultbtn);
@@ -166,6 +168,7 @@ public class Gallery extends AppCompatActivity {
                         RecyclerViewAdapter myAdapter = new RecyclerViewAdapter(this,data);
                         myrv.setLayoutManager(new GridLayoutManager(this,spanCount));
                         myrv.setAdapter(myAdapter);
+                        myAdapter.notifyDataSetChanged();
                         pressed = heritage.All;
                         btnMonuments.setBackgroundResource(R.drawable.defaultbtn);
 
@@ -205,6 +208,8 @@ public class Gallery extends AppCompatActivity {
                         RecyclerViewAdapter myAdapter = new RecyclerViewAdapter(this,data);
                         myrv.setLayoutManager(new GridLayoutManager(this,spanCount));
                         myrv.setAdapter(myAdapter);
+                        myAdapter.notifyDataSetChanged();
+                        pressed = heritage.Paintings;
                         btnPaintings.setBackgroundResource(R.drawable.pressed);
                         btnMonuments.setBackgroundResource(R.drawable.defaultbtn);
                         btnCharacters.setBackgroundResource(R.drawable.defaultbtn);
@@ -240,6 +245,7 @@ public class Gallery extends AppCompatActivity {
                         RecyclerViewAdapter myAdapter = new RecyclerViewAdapter(this,data);
                         myrv.setLayoutManager(new GridLayoutManager(this,spanCount));
                         myrv.setAdapter(myAdapter);
+                        myAdapter.notifyDataSetChanged();
                         pressed = heritage.All;
                         btnPaintings.setBackgroundResource(R.drawable.defaultbtn);
 
@@ -279,6 +285,8 @@ public class Gallery extends AppCompatActivity {
                         RecyclerViewAdapter myAdapter = new RecyclerViewAdapter(this,data);
                         myrv.setLayoutManager(new GridLayoutManager(this,spanCount));
                         myrv.setAdapter(myAdapter);
+                        myAdapter.notifyDataSetChanged();
+                        pressed = heritage.Characters;
                         btnCharacters.setBackgroundResource(R.drawable.pressed);
                         btnMonuments.setBackgroundResource(R.drawable.defaultbtn);
                         btnPaintings.setBackgroundResource(R.drawable.defaultbtn);
@@ -315,10 +323,8 @@ public class Gallery extends AppCompatActivity {
                         RecyclerViewAdapter myAdapter = new RecyclerViewAdapter(this,data);
                         myrv.setLayoutManager(new GridLayoutManager(this,spanCount));
                         myrv.setAdapter(myAdapter);
+                        myAdapter.notifyDataSetChanged();
                         pressed = heritage.All;
-                        btnMonuments.setBackgroundResource(R.drawable.defaultbtn);
-                        pressed = heritage.All;
-
                         btnCharacters.setBackgroundResource(R.drawable.defaultbtn);
 
 

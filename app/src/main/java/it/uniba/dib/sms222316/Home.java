@@ -59,16 +59,20 @@ public class Home extends AppCompatActivity {
         StrictMode.setThreadPolicy(policy);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
+        getWindow().requestFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_home);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().hide();
+        }
 
         //popup classifica
-        ranking_popup ranking_popup = new ranking_popup(Home.this, Home.this);
+        ranking_popup ranking_popup = new ranking_popup(Home.this);
         Window window = ranking_popup.getWindow();
         window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         DisplayMetrics displayMetrics = this.getResources().getDisplayMetrics();
         int WidthPixelrank = (displayMetrics.widthPixels);
         int HeightPixelrank = (displayMetrics.heightPixels);
-        window.setLayout((int) (WidthPixelrank * 0.85), (int) (HeightPixelrank * 0.80));
+        window.setLayout((int) (WidthPixelrank * 0.90), (int) (HeightPixelrank * 0.85));
         window.setGravity(Gravity.CENTER);
 
 
@@ -76,7 +80,7 @@ public class Home extends AppCompatActivity {
         PopupDialog popupDialog = new PopupDialog(Home.this, Home.this);
         popupDialog.setCanceledOnTouchOutside(false);
 
-        //Todo : bug quando
+
         //
         gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
