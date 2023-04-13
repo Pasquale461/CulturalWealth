@@ -20,6 +20,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -27,9 +28,13 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
+
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
@@ -64,6 +69,9 @@ public class Home extends AppCompatActivity {
         if (getSupportActionBar() != null) {
             getSupportActionBar().hide();
         }
+
+
+
 
         //popup classifica
         ranking_popup ranking_popup = new ranking_popup(Home.this);
@@ -126,11 +134,17 @@ public class Home extends AppCompatActivity {
 
         usrbtn.setOnClickListener(v -> {
 
+            FirebaseFirestore db = FirebaseFirestore.getInstance();
             Map Us = new HashMap<>();
             Us.put("email", Accountstring);
             Us.put("nome",usrtext.getText().toString());
             Us.put("friend_code",getRandomHexString(5));
-            FirebaseFirestore db = FirebaseFirestore.getInstance();
+            DocumentReference Defaultpg;
+
+            Defaultpg = db.collection("Heritage").document("Cleopatra");
+            List<DocumentReference> referenceArray = new ArrayList<>();
+            referenceArray.add(Defaultpg);
+            Us.put("Posseduti",referenceArray);
             db.collection("Users").document(FirebaseAuth.getInstance().getCurrentUser().getUid()).set(Us) //NULL POINTER
 
                     .addOnSuccessListener(aVoid -> {

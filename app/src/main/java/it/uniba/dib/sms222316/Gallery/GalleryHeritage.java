@@ -5,6 +5,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.ColorMatrix;
+import android.graphics.ColorMatrixColorFilter;
+import android.graphics.Paint;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
@@ -16,6 +21,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.io.File;
+import java.io.FileOutputStream;
 
 import it.uniba.dib.sms222316.R;
 
@@ -41,6 +47,7 @@ public class GalleryHeritage extends AppCompatActivity {
             startActivity(i);
             finish();
         });
+
 
 
 
@@ -75,5 +82,10 @@ public class GalleryHeritage extends AppCompatActivity {
         description.setText(desc);
 
 
+
+
+
+
     }
+
 }

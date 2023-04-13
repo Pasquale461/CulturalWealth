@@ -96,7 +96,7 @@ public class SplashActivity extends AppCompatActivity {
                 }
             }
         });
-
+        AssetsLoad();
         Backgroundloadscreen();
 
         if (conn) redirect();
