@@ -1,11 +1,8 @@
 package it.uniba.dib.sms222316.Gallery;
 
-
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,12 +12,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageButton;
-
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -31,8 +23,6 @@ import java.util.List;
 import it.uniba.dib.sms222316.Home;
 import it.uniba.dib.sms222316.PopupSettings;
 import it.uniba.dib.sms222316.R;
-import it.uniba.dib.sms222316.Rank.RecyclerViewUtente;
-import it.uniba.dib.sms222316.Utente;
 
 public class Gallery extends AppCompatActivity {
     ImageButton btnBack;
