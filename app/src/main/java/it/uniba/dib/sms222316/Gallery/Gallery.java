@@ -66,6 +66,7 @@ public class Gallery extends AppCompatActivity {
         query = reference.orderBy("Title", Query.Direction.ASCENDING);
         query.get().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
+                fullHrg.clear();
                 for (QueryDocumentSnapshot document : task.getResult()) {
 
                     fullHrg.add(new Heritage(document.getString("Title") , document.getString("Description") , document.getString("Type") , document.getString("Image") ));
@@ -138,7 +139,7 @@ public class Gallery extends AppCompatActivity {
 
             }
             else{
-
+                fullHrg.clear();
                 query = reference.orderBy("Title", Query.Direction.ASCENDING);
                 query.get().addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
@@ -215,7 +216,7 @@ public class Gallery extends AppCompatActivity {
 
             }
             else{
-
+                fullHrg.clear();
                 query = reference.orderBy("Title", Query.Direction.ASCENDING);
                 query.get().addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
@@ -293,7 +294,7 @@ public class Gallery extends AppCompatActivity {
 
             }
             else{
-
+                fullHrg.clear();
                 query = reference.orderBy("Title", Query.Direction.ASCENDING);
                 query.get().addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
