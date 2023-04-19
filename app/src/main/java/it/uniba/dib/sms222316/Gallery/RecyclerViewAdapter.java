@@ -5,15 +5,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.ColorFilter;
 import android.graphics.ColorMatrix;
 import android.graphics.ColorMatrixColorFilter;
-import android.graphics.Paint;
-import android.graphics.PorterDuff;
-import android.graphics.PorterDuffColorFilter;
-import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,15 +20,12 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.util.Assert;
+
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -105,7 +96,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                      file = new File(mContext.getFilesDir() ,"CulturalWealth/Monuments/" + mData.get(position).getPic());
                     ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
                     bitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
-                    bitmap.compress(Bitmap.CompressFormat.JPEG, 50, outputStream);
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, 0, outputStream);
                     holder.img.setImageBitmap(bitmap);
 
                     break;
@@ -113,6 +104,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                     holder.type.setBackgroundResource(R.drawable.painting);
                     file = new File(mContext.getFilesDir() ,"CulturalWealth/Paintings/" + mData.get(position).getPic());
                     bitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
+                   outputStream = new ByteArrayOutputStream();
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, 0, outputStream);
                     holder.img.setImageBitmap(bitmap);
 
                     break;
@@ -120,6 +113,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                     holder.type.setBackgroundResource(R.drawable.character);
                     file = new File(mContext.getFilesDir() ,"CulturalWealth/ProfilesPictures/" + mData.get(position).getPic());
                     bitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
+                    outputStream = new ByteArrayOutputStream();
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, 0, outputStream);
                     holder.img.setImageBitmap(bitmap);
 
                     break;

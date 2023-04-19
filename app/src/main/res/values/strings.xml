@@ -48,5 +48,8 @@
     <string name="RankPositions">Rank</string>
     <string name="RankTitle">Ranking</string>
 
+    <!-- RecyclerView Gallery -->
+    <string name="loading">Loading...</string>
+
 
 </resources>

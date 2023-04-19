@@ -89,14 +89,7 @@ public class Gallery extends AppCompatActivity {
                 Log.e("Query-Gallery", "Not found query");
 
             }
-
-
         });
-
-
-
-
-
 
 
         btnMonuments.setOnClickListener(v -> {

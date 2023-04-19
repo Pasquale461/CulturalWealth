@@ -12,7 +12,6 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
@@ -20,7 +19,6 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -159,16 +157,12 @@ public class Home extends AppCompatActivity {
 
 
         rankbutton.setOnClickListener(view -> {
-            Log.d("TAG", "home1");
             ranking_popup.show();
-            Log.d("TAG", "Home2");
         });
-        Log.d("TAG", "Home3");
         closer = ranking_popup.findViewById(R.id.closerankpopup);
         closer.setOnClickListener(view -> ranking_popup.hide());
 
-
-
+        //Settings
         Settings = findViewById(R.id.settings);
         popupSettings = new PopupSettings(Home.this,Home.this);
 
@@ -183,18 +177,14 @@ public class Home extends AppCompatActivity {
 
 
         //ricerca dell'utente
-
-
-
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("Users")
                 .whereEqualTo("email", Accountstring)
                 .get()
                 .addOnSuccessListener(queryDocumentSnapshots -> {
                     if (!queryDocumentSnapshots.isEmpty()) {
-                        showToast(Home.this , "trovato");
+
                     } else {
-                        showToast(Home.this , "Non trovato");
                         //APRIRE popup
                         popupDialog.show();
                     }
@@ -253,6 +243,11 @@ public class Home extends AppCompatActivity {
             //APRIRE popup impostazioni
             popupSettings.show();
         });
+
+        //Close Popup Setting
+        closer = popupSettings.findViewById(R.id.esci);
+        closer.setOnClickListener(view -> popupSettings.hide());
+
         findusername(Accountstring);
     }
     @Override
