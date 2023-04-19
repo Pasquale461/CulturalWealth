@@ -249,6 +249,15 @@ public class Home extends AppCompatActivity {
         closer.setOnClickListener(view -> popupSettings.hide());
 
         findusername(Accountstring);
+
+        Button play = findViewById(R.id.play);
+        play.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(Home.this, Game.class);
+                startActivity(i);
+            }
+        });
     }
     @Override
     protected void onPause() {
