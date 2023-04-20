@@ -1,6 +1,5 @@
 package it.uniba.dib.sms222316.Goals;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,8 +9,15 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FieldPath;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 import it.uniba.dib.sms222316.R;
 
@@ -40,27 +46,37 @@ public class RecyclerCategoryAdapter extends RecyclerView.Adapter<RecyclerCatego
         holder.category.setText(cData.get(position).getCategory());
 
         //Set recycler Achievements
-        List<Achievements> fullHrg, data;
-        fullHrg = new ArrayList<>();
-        if(cData.get(position).getCategory().equals("Start")){
-            fullHrg.add(new Achievements("10","Start", "Il Colosseo"));
-            fullHrg.add(new Achievements("100","Start", "Il Colosseo"));
-            fullHrg.add(new Achievements("250","Start", "Il Colosseo"));
-            fullHrg.add(new Achievements("500","Start", "Il Colosseo"));
-            fullHrg.add(new Achievements("1000","Start", "Il Colosseo"));
-            fullHrg.add(new Achievements("2500","Start", "Il Colosseo"));
-        }else{
-            fullHrg.add(new Achievements("10","Vittorie", "Il Colosseo"));
-        }
-        data = new ArrayList<>(fullHrg);
-        RecyclerView myrv = holder.Achievement;
+        List<Achievements> goals;
+        goals = new ArrayList<>();
 
-        RecyclerAchievementsAdapter myAdapter = new RecyclerAchievementsAdapter(data);
-        myrv.setLayoutManager(new LinearLayoutManager(Padre.getContext(),LinearLayoutManager.HORIZONTAL,false));
-        myrv.setAdapter(myAdapter);
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        CollectionReference reference = db.collection("Achievements");
+        Query query = reference.whereEqualTo(FieldPath.documentId(), cData.get(position).getCategory()).orderBy(FieldPath.documentId(), Query.Direction.ASCENDING);
 
+        query.get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                goals.clear();
+                for (DocumentSnapshot document : task.getResult()) {
+                    Map<String, Object> map = document.getData();
 
+                    for(Map.Entry<String, Object> entry : map.entrySet()){
+                        Map<String, Object> obb = (Map<String, Object>) entry.getValue();
 
+                        if(!obb.isEmpty()){
+                            goals.add(new Achievements(obb.get("Target").toString(), obb.get("Name").toString(),"Il Colosseo"));
+                        }
+                    }
+                }
+
+                Collections.reverse(goals); //TODO BISOGNA ORDINARLO PER TARGET
+                List<Achievements> data = new ArrayList<>(goals);
+                RecyclerView myrv = holder.Achievement;
+
+                RecyclerAchievementsAdapter myAdapter = new RecyclerAchievementsAdapter(data);
+                myrv.setLayoutManager(new LinearLayoutManager(Padre.getContext(), LinearLayoutManager.HORIZONTAL, false));
+                myrv.setAdapter(myAdapter);
+            }
+        });
     }
 
     @Override
