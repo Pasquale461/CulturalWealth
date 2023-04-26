@@ -37,10 +37,13 @@ public class RecyclerMissionsAdapter extends RecyclerView.Adapter<RecyclerMissio
     public void onBindViewHolder(@NonNull RecyclerMissionsAdapter.MyViewHolder holder, int position) {
 
         holder.Title.setText(mData.get(position).getTitle());
-        holder.ProgressNumber.setText(String.valueOf(mData.get(position).getProgressNumber()));
+        holder.ProgressNumber.setText(mData.get(position).getProgressNumber()+"/"+mData.get(position).getTarget());
         holder.Rewards.setText(String.valueOf(mData.get(position).getRewards()));
-        holder.RewardImg.setImageResource(R.drawable.coin);
-        holder.ProgressBar.setMax(10);
+        if(mData.get(position).getType().equals("xp"))
+            holder.RewardImg.setImageResource(R.drawable.xp);
+        else
+            holder.RewardImg.setImageResource(R.drawable.coin);
+        holder.ProgressBar.setMax(mData.get(position).getTarget());
         holder.ProgressBar.setProgress(mData.get(position).getProgressNumber());
     }
 

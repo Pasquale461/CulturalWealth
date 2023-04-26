@@ -7,9 +7,20 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FieldPath;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,19 +45,38 @@ public class FragmentMissions extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        List<Missions> fullHrg, data;
-        fullHrg = new ArrayList<>();
+        List<Missions> DailyMissions;
+        DailyMissions = new ArrayList<>();
 
-        fullHrg.add(new Missions("Missione del giorno", 2,30));
-        fullHrg.add(new Missions("Start", 3,80));
-        fullHrg.add(new Missions("buh", 1,10));
-        data = new ArrayList<>(fullHrg);
-        RecyclerView myrv = view.findViewById(R.id.MissionsRecycler);
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        CollectionReference reference = db.collection("Users").document(FirebaseAuth.getInstance().getCurrentUser().getUid()).collection("DailyMissions");
+        Query query = reference.orderBy(FieldPath.documentId(), Query.Direction.ASCENDING);
 
-        RecyclerMissionsAdapter myAdapter = new RecyclerMissionsAdapter(data);
-        myrv.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,false));
-        myrv.setAdapter(myAdapter);
-        //canScrollHorizontally()
+        query.get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                DailyMissions.clear();
+                for (QueryDocumentSnapshot document : task.getResult()) {
 
+                    DocumentReference mission = (DocumentReference) document.get("Base");
+                    mission.get().addOnCompleteListener(task1 -> {
+                        if(task1.isSuccessful()){
+                            DocumentSnapshot miss = task1.getResult();
+
+                            DailyMissions.add(new Missions(miss.getId(), Integer.parseInt(document.get("Progress").toString()), Integer.parseInt(miss.get("value").toString()), Integer.parseInt(miss.get("Target").toString()), miss.getString("Type")));
+
+                            List<Missions> data = new ArrayList<>(DailyMissions);
+
+                            RecyclerView myrv = view.findViewById(R.id.MissionsRecycler);
+                            RecyclerMissionsAdapter myAdapter = new RecyclerMissionsAdapter(data);
+                            myrv.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,false));
+                            myrv.setAdapter(myAdapter);
+
+                        }
+                    });
+                }
+            } else {
+                Log.e("Query-Gallery", "Not found query");
+            }
+        });
     }
 }
