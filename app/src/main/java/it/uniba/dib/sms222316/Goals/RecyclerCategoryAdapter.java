@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldPath;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -63,18 +64,26 @@ public class RecyclerCategoryAdapter extends RecyclerView.Adapter<RecyclerCatego
                         Map<String, Object> obb = (Map<String, Object>) entry.getValue();
 
                         if(!obb.isEmpty()){
-                            goals.add(new Achievements(obb.get("Target").toString(), obb.get("Name").toString(),"Il Colosseo"));
+                            DocumentReference reward = (DocumentReference) obb.get("Reward");
+                            reward.get().addOnCompleteListener(task1 -> {
+                                if(task1.isSuccessful()){
+                                    DocumentSnapshot rew = task1.getResult();
+                                    goals.add(new Achievements(obb.get("Target").toString(), obb.get("Name").toString(),rew.getString("Image")));
+
+                                    Collections.reverse(goals); //TODO BISOGNA ORDINARLO PER TARGET
+                                    List<Achievements> data = new ArrayList<>(goals);
+                                    RecyclerView myrv = holder.Achievement;
+
+                                    RecyclerAchievementsAdapter myAdapter = new RecyclerAchievementsAdapter(data);
+                                    myrv.setLayoutManager(new LinearLayoutManager(Padre.getContext(), LinearLayoutManager.HORIZONTAL, false));
+                                    myrv.setAdapter(myAdapter);
+
+                                }
+                            });
+
                         }
                     }
                 }
-
-                Collections.reverse(goals); //TODO BISOGNA ORDINARLO PER TARGET
-                List<Achievements> data = new ArrayList<>(goals);
-                RecyclerView myrv = holder.Achievement;
-
-                RecyclerAchievementsAdapter myAdapter = new RecyclerAchievementsAdapter(data);
-                myrv.setLayoutManager(new LinearLayoutManager(Padre.getContext(), LinearLayoutManager.HORIZONTAL, false));
-                myrv.setAdapter(myAdapter);
             }
         });
     }

@@ -1,7 +1,8 @@
 package it.uniba.dib.sms222316.Goals;
 
 import android.content.Context;
-import android.net.Uri;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,8 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.util.List;
 import it.uniba.dib.sms222316.R;
 
@@ -19,6 +22,7 @@ public class RecyclerAchievementsAdapter extends RecyclerView.Adapter<RecyclerAc
 
 
     private final List<Achievements> mData;
+    private Context context;
 
     public RecyclerAchievementsAdapter(List<Achievements> mData) {
         this.mData = mData;
@@ -29,6 +33,7 @@ public class RecyclerAchievementsAdapter extends RecyclerView.Adapter<RecyclerAc
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view ;
+        context = parent.getContext();
         LayoutInflater mInflater = LayoutInflater.from(parent.getContext());
         view = mInflater.inflate(R.layout.achievement_card,parent,false);
         return new MyViewHolder(view);
@@ -36,11 +41,16 @@ public class RecyclerAchievementsAdapter extends RecyclerView.Adapter<RecyclerAc
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerAchievementsAdapter.MyViewHolder holder, int position) {
-        Uri uri = Uri.parse("android.resource://it.uniba.dib.sms222316/drawable/"+mData.get(position).getRelic().replaceAll("\\s+", "_").toLowerCase());
+        Bitmap bitmap;
+        File file = new File(context.getFilesDir(), "CulturalWealth/ProfilesPictures/" + mData.get(position).getRelic());
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        bitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 0, outputStream);
+
 
         holder.TargetPoint.setText(mData.get(position).getTargetPoint());
-        holder.Relic.setText(mData.get(position).getRelic());
-        holder.img.setImageURI(uri);
+        holder.Relic.setText(mData.get(position).getRelic()); //TODO aggiustare il titolo degli obiettivi/vecchio ragionamento nome relic - path
+        holder.img.setImageBitmap(bitmap);
     }
 
     @Override

@@ -219,7 +219,7 @@ public class Gallery extends AppCompatActivity {
 
                         }
                         List<Heritage> data = new ArrayList<>(fullHrg);
-
+                        
                         RecyclerView myrv = findViewById(R.id.RecyclerView);
 
                         DisplayMetrics displayMetrics = this.getResources().getDisplayMetrics();

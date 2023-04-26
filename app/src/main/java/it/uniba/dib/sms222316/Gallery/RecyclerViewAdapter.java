@@ -93,7 +93,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             switch (control){
                 case Monuments:
                     holder.type.setBackgroundResource(R.drawable.monument);
-                     file = new File(mContext.getFilesDir() ,"CulturalWealth/Monuments/" + mData.get(position).getPic());
+                    file = new File(mContext.getFilesDir() ,"CulturalWealth/Monuments/" + mData.get(position).getPic());
                     ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
                     bitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
                     bitmap.compress(Bitmap.CompressFormat.JPEG, 0, outputStream);
@@ -222,11 +222,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         });
 
         return future;
-    }
-
-    public void showimage(TypeHeritage control)
-    {
-
     }
 
 }
