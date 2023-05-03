@@ -195,7 +195,7 @@
             android:layout_width="43dp"
             android:layout_height="43dp"
             android:layout_marginStart="34dp"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="19dp"
             app:layout_constraintStart_toStartOf="@+id/exa_27"
             app:layout_constraintTop_toTopOf="@+id/exa_27"
             app:srcCompat="@drawable/casella" />
@@ -213,10 +213,11 @@
             android:id="@+id/exa_30"
             android:layout_width="60dp"
             android:layout_height="60dp"
-            android:layout_marginTop="39dp"
+
+            app:layout_constraintBottom_toTopOf="@+id/exa_31"
             app:layout_constraintEnd_toEndOf="@+id/exa_29"
             app:layout_constraintStart_toStartOf="@+id/exa_29"
-            app:layout_constraintTop_toTopOf="@+id/exa_29"
+            app:layout_constraintTop_toBottomOf="@+id/exa_29"
             app:srcCompat="@drawable/casella" />
 
         <ImageView
