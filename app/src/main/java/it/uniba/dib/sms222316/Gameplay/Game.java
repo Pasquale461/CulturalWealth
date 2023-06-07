@@ -1,6 +1,8 @@
-package it.uniba.dib.sms222316;
+package it.uniba.dib.sms222316.Gameplay;
 
 import java.util.List;
+
+import it.uniba.dib.sms222316.Player;
 
 public class Game {
     private List<Player> players;

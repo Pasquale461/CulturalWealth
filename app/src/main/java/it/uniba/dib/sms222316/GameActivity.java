@@ -17,6 +17,8 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
+import it.uniba.dib.sms222316.Gameplay.Game;
+
 public class GameActivity extends AppCompatActivity {
     int[] position = new int[2];
     int start=0;
