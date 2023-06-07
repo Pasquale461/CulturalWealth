@@ -15,7 +15,7 @@ import com.wajahatkarim3.easyflipview.EasyFlipView;
 public class PopupField extends Dialog {
     Caselle caselle = new Caselle();
     ImageView[] casella;
-    public PopupField(@NonNull Context context,final Game activity) {
+    public PopupField(@NonNull Context context,final GameActivity activity) {
         super(context);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);

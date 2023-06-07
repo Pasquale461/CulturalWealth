@@ -9,11 +9,11 @@ import android.widget.TextView;
 import androidx.fragment.app.DialogFragment;
 
 public class TurnDialog extends DialogFragment {
-    private Games game;
+    private Game game;
     private TextView playerNameTextView;
     private TextView playerScoreTextView;
 
-    public TurnDialog(Games game) {
+    public TurnDialog(Game game) {
         this.game = game;
     }
 

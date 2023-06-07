@@ -12,7 +12,11 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageButton;
+
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -61,7 +65,22 @@ public class Gallery extends AppCompatActivity {
         fullHrg = new ArrayList<>();
 
 
+
         FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        /*ArrayList Owned = new ArrayList<>();
+        ArrayList<DocumentReference> OwnRef =(ArrayList<DocumentReference>) db.collection("Users").document(FirebaseAuth.getInstance().getCurrentUser().getUid()).get().getResult().get("Posseduti");
+        OwnRef.forEach(ownList -> {
+            ownList.get().addOnCompleteListener(task1 -> {
+                if(task1.isSuccessful()){
+                    DocumentSnapshot ownTitle = task1.getResult();
+                    Log.d("list", ownTitle.getString("Title"));
+                    //Owned.add(ownTitle.getString("Title "));
+                }
+            });
+        });*/
+
+
         CollectionReference reference = db.collection("Heritage");
         query = reference.orderBy("Title", Query.Direction.ASCENDING);
         query.get().addOnCompleteListener(task -> {
