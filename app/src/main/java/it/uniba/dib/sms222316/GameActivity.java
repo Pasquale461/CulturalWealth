@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import it.uniba.dib.sms222316.Gameplay.Game;
+import it.uniba.dib.sms222316.Gameplay.Property;
 
 public class GameActivity extends AppCompatActivity {
     int[] position = new int[2];
@@ -38,8 +39,13 @@ public class GameActivity extends AppCompatActivity {
         List<Player> players = new ArrayList<>();
         players.add(new Player("Giocatore 1"));
         players.add(new Player("Giocatore 2"));
+        List<Property> properties = new ArrayList<>();
+        int v[] = {1,2,3};
+        properties.add(new Property("", "" , "" , "" , 1 , v, 1 ,1 ,1));
+        properties.add(new Property("", "" , "" , "" , 1 , v, 1 ,1 ,1));
 
-        game = new Game(players);
+
+        game = new Game(players , properties);
         int coordinate[] =new int[2];
         casella = caselle.setCasella(this);
         PopupField field = new PopupField(GameActivity.this, GameActivity.this);
