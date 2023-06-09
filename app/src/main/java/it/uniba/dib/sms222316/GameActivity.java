@@ -13,8 +13,10 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.bumptech.glide.Glide;
+import pl.droidsonroids.gif.GifDrawable;
 import pl.droidsonroids.gif.GifImageView;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -78,21 +80,43 @@ public class GameActivity extends AppCompatActivity {
             }
         });
 
+
         rollButton.setOnClickListener(new View.OnClickListener() {
         @Override
             public void onClick(View v) {
             int randomNumber = (int) (Math.random() * 6) + 1;
-            Dice.setImageResource(R.drawable.dado1);
+            int gifResourceId = 0;
+            switch (randomNumber){
+                case 1: gifResourceId = R.drawable.dado1;break;
+                case 2: gifResourceId = R.drawable.dado2;break;
+                case 3: gifResourceId = R.drawable.dado3;break;
+                case 4: gifResourceId = R.drawable.dado4;break;
+                case 5: gifResourceId = R.drawable.dado5;break;
+                case 6: gifResourceId = R.drawable.dado6;break;
+            }
+            GifDrawable Gif = null;
+            try {
+                Gif = new GifDrawable(getResources(), gifResourceId);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            Gif.setLoopCount(1);
+            GifDrawable finalGif = Gif;
+            finalGif.reset(); // Resetta la GIF all'inizio
+            finalGif.start();
+            Dice.setImageDrawable(finalGif);
+
             rollButton.setEnabled(false);
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
                     rollButton.setEnabled(true);
+                    Toast.makeText(GameActivity.this, "Hai ottenuto " + randomNumber, Toast.LENGTH_SHORT).show();
                 }
-            }, 2000);
+            }, 3500);
 
             int currentPlayer = game.getCurrentPlayerIndex();
-            Toast.makeText(GameActivity.this, "Hai ottenuto " + randomNumber, Toast.LENGTH_SHORT).show();
+
             Path path = new Path();
 
             path.moveTo(casella[position[currentPlayer]].getX(),casella[position[currentPlayer]].getY());
@@ -103,19 +127,24 @@ public class GameActivity extends AppCompatActivity {
                 if(position[currentPlayer] == 40) position[currentPlayer] =0;
                 path.lineTo(casella[position[currentPlayer]].getX(), casella[position[currentPlayer]].getY());
             }
-            Handler handler = new Handler();
-            handler.postDelayed(new Runnable() {
+
+            new Handler().postDelayed(new Runnable() {
                 public void run() {
                     if(position[currentPlayer] < 40){
                         field.InfoField(position[currentPlayer]);
-                        field.show();
+                        //field.show();
                     }
                 }
             }, 2000);
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    ObjectAnimator animator = ObjectAnimator.ofFloat(pedina[currentPlayer], pedina[currentPlayer].X,pedina[currentPlayer].Y, path);
+                    animator.setDuration(2000);
+                    animator.start();
+                }
+            },3500);
 
-            ObjectAnimator animator = ObjectAnimator.ofFloat(pedina[currentPlayer], pedina[currentPlayer].X,pedina[currentPlayer].Y, path);
-            animator.setDuration(2000);
-            animator.start();
             players.get(currentPlayer).setPosition(position[currentPlayer]);
             playerNameTextView = view.findViewById(R.id.playerNameTextView);
             playerScoreTextView = view.findViewById(R.id.playerScoreTextView);
