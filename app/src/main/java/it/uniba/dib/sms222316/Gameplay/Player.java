@@ -21,7 +21,7 @@ public class Player {
         this.name = name;
         score = 0;
         prison = false;
-        turnPrison = 2;
+        turnPrison = 0;
     }
 
     public String getName() {return name;}
@@ -54,7 +54,8 @@ public class Player {
 
     public boolean isPrison() {return prison;}
 
-    public void setPrison(boolean prison) {this.prison = prison;}
+    public void setPrison(boolean prison) {this.prison = prison;
+    turnPrison=2;}
 
     public int getTurnPrison() {return turnPrison;}
 

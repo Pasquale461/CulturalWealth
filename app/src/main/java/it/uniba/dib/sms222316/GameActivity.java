@@ -13,7 +13,10 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+import pl.droidsonroids.gif.GifDrawable;
 import pl.droidsonroids.gif.GifImageView;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -110,11 +113,12 @@ public class GameActivity extends AppCompatActivity {
                 @Override
                 public void run() {
                     rollButton.setEnabled(true);
+                    Toast.makeText(GameActivity.this, "Hai ottenuto " + randomNumber, Toast.LENGTH_SHORT).show();
                 }
-            }, 2000);
+            }, 3500);
 
             int currentPlayer = game.getCurrentPlayerIndex();
-            Toast.makeText(GameActivity.this, "Hai ottenuto " + randomNumber, Toast.LENGTH_SHORT).show();
+
             Path path = new Path();
 
             path.moveTo(casella[position[currentPlayer]].getX(),casella[position[currentPlayer]].getY());
@@ -125,8 +129,8 @@ public class GameActivity extends AppCompatActivity {
                 if(position[currentPlayer] == 40) position[currentPlayer] =0;
                 path.lineTo(casella[position[currentPlayer]].getX(), casella[position[currentPlayer]].getY());
             }
-            Handler handler = new Handler();
-            handler.postDelayed(new Runnable() {
+
+            new Handler().postDelayed(new Runnable() {
                 public void run() {
                     if(position[currentPlayer] < 40){
                         field.InfoField(position[currentPlayer]);
@@ -134,12 +138,16 @@ public class GameActivity extends AppCompatActivity {
                     }
                 }
             }, 2000);
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    ObjectAnimator animator = ObjectAnimator.ofFloat(pedina[currentPlayer], pedina[currentPlayer].X,pedina[currentPlayer].Y, path);
+                    animator.setDuration(2000);
+                    animator.start();
+                }
+            },3500);
 
-            ObjectAnimator animator = ObjectAnimator.ofFloat(pedina[currentPlayer], pedina[currentPlayer].X,pedina[currentPlayer].Y, path);
-            animator.setDuration(2000);
-            animator.start();
             players.get(currentPlayer).setPosition(position[currentPlayer]);
-            Toast.makeText(GameActivity.this, "posizione" + players.get(currentPlayer).getPosition(), Toast.LENGTH_SHORT).show();
             playerNameTextView = view.findViewById(R.id.playerNameTextView);
             playerScoreTextView = view.findViewById(R.id.playerScoreTextView);
 
