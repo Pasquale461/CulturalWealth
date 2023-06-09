@@ -107,7 +107,28 @@ public class GameActivity extends AppCompatActivity {
             int[] numeri = new int[2];
             numeri = game.dadi();
             int randomNumber = numeri[0];
-            Dice.setImageResource(R.drawable.dado1);
+
+            int gifResourceId = 0;
+            switch (randomNumber){
+                case 1: gifResourceId = R.drawable.dado1;break;
+                case 2: gifResourceId = R.drawable.dado2;break;
+                case 3: gifResourceId = R.drawable.dado3;break;
+                case 4: gifResourceId = R.drawable.dado4;break;
+                case 5: gifResourceId = R.drawable.dado5;break;
+                case 6: gifResourceId = R.drawable.dado6;break;
+            }
+            GifDrawable Gif = null;
+            try {
+                Gif = new GifDrawable(getResources(), gifResourceId);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            Gif.setLoopCount(1);
+            GifDrawable finalGif = Gif;
+            finalGif.reset(); // Resetta la GIF all'inizio
+            finalGif.start();
+            Dice.setImageDrawable(finalGif);
+
             rollButton.setEnabled(false);
             new Handler().postDelayed(new Runnable() {
                 @Override
