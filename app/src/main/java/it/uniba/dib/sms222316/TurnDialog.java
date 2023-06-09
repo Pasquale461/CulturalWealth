@@ -9,6 +9,7 @@ import android.widget.TextView;
 import androidx.fragment.app.DialogFragment;
 
 import it.uniba.dib.sms222316.Gameplay.Game;
+import it.uniba.dib.sms222316.Gameplay.Player;
 
 public class TurnDialog extends DialogFragment {
     private Game game;

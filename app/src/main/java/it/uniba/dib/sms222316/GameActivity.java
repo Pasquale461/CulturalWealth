@@ -13,18 +13,18 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.bumptech.glide.Glide;
 import pl.droidsonroids.gif.GifImageView;
 import java.util.ArrayList;
 import java.util.List;
 
 import it.uniba.dib.sms222316.Gameplay.Game;
+import it.uniba.dib.sms222316.Gameplay.Player;
 import it.uniba.dib.sms222316.Gameplay.Property;
 
 public class GameActivity extends AppCompatActivity {
-    int[] position = new int[2];
+
     int start=0;
-    ImageView[] pedina = new ImageView[2];
+
     Caselle caselle = new Caselle();
     ImageView[] casella;
     boolean isViewCreated = false;
@@ -37,23 +37,39 @@ public class GameActivity extends AppCompatActivity {
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
         setContentView(R.layout.activity_game);
+
+
+
+        int coordinate[] =new int[2];
+        casella = caselle.setCasella(this);
         List<Player> players = new ArrayList<>();
         players.add(new Player("Giocatore 1"));
         players.add(new Player("Giocatore 2"));
+        players.add(new Player("Giocatore 3"));
         List<Property> properties = new ArrayList<>();
         int v[] = {1,2,3};
         properties.add(new Property("", "" , "" , "" , 1 , v, 1 ,1 ,1));
         properties.add(new Property("", "" , "" , "" , 1 , v, 1 ,1 ,1));
 
-
+        //Instanza oggetto partita
         game = new Game(players , properties);
-        int coordinate[] =new int[2];
-        casella = caselle.setCasella(this);
+        //Calcolo giocatori
+        ImageView[] pedina = new ImageView[game.getNumberOfPlayers()];
+        int[] position = new int[game.getNumberOfPlayers()];
+        pedina[0] = findViewById(R.id.pedina1);
+        pedina[1] = findViewById(R.id.pedina2);
+        pedina[2] = findViewById(R.id.pedina3);
+
+
+
+
+
         PopupField field = new PopupField(GameActivity.this, GameActivity.this);
         Button rollButton = findViewById(R.id.dado);
 
-        pedina[0] = findViewById(R.id.pedina1);
-        pedina[1] = findViewById(R.id.pedina2);
+
+
+
         View view = findViewById(R.id.relativeLayout);
         GifImageView Dice = findViewById(R.id.dice);
 
@@ -66,10 +82,12 @@ public class GameActivity extends AppCompatActivity {
 
                     casella[start].getLocationInWindow(coordinate);
 
-                    pedina[0].setX(coordinate[0]);
-                    pedina[0].setY(coordinate[1]);
-                    pedina[1].setX(coordinate[0]);
-                    pedina[1].setY(coordinate[1]);
+                    for (int i=0;i < game.getNumberOfPlayers();i++)
+                    {
+                        pedina[i].setX(coordinate[0]);
+                        pedina[i].setY(coordinate[1]);
+                    }
+
                     isViewCreated = true;
                 }
 
@@ -81,7 +99,11 @@ public class GameActivity extends AppCompatActivity {
         rollButton.setOnClickListener(new View.OnClickListener() {
         @Override
             public void onClick(View v) {
-            int randomNumber = (int) (Math.random() * 6) + 1;
+            game.iniziaPartita();
+            game.dadi();
+            int[] numeri = new int[2];
+            numeri = game.dadi();
+            int randomNumber = numeri[0];
             Dice.setImageResource(R.drawable.dado1);
             rollButton.setEnabled(false);
             new Handler().postDelayed(new Runnable() {
@@ -117,6 +139,7 @@ public class GameActivity extends AppCompatActivity {
             animator.setDuration(2000);
             animator.start();
             players.get(currentPlayer).setPosition(position[currentPlayer]);
+            Toast.makeText(GameActivity.this, "posizione" + players.get(currentPlayer).getPosition(), Toast.LENGTH_SHORT).show();
             playerNameTextView = view.findViewById(R.id.playerNameTextView);
             playerScoreTextView = view.findViewById(R.id.playerScoreTextView);
 

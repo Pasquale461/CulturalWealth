@@ -1,4 +1,4 @@
-package it.uniba.dib.sms222316;
+package it.uniba.dib.sms222316.Gameplay;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +33,14 @@ public class Player {
     public void setPosition(int position) {this.position = position;}
 
     public int getPosition() {return position;}
+
+    public int getMoney() {
+        return money;
+    }
+
+    public List<Property> getProperties() {
+        return properties;
+    }
 
     public void addProperty(Property property) {
         property.setGiocatore(this);

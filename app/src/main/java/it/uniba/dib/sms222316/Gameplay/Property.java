@@ -1,7 +1,5 @@
 package it.uniba.dib.sms222316.Gameplay;
 
-import it.uniba.dib.sms222316.Player;
-
 public class Property
 {
         private String nome , tipo , gruppo;
@@ -94,6 +92,10 @@ public class Property
             if (this.Giocatore == null)return true;
             else return false;
         }
+
+    public Player getGiocatore() {
+        return Giocatore;
+    }
 
     public void setGiocatore(Player giocatore) {
         Giocatore = giocatore;
