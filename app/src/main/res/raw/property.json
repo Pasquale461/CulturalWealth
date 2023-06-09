@@ -1,0 +1,301 @@
+{
+    "properties": [
+        {
+            "name": "Stonehenge",
+            "type": "monument",
+            "price": 1,
+            "rent": [1,2,3,4,5],
+            "paintCost": 1,
+            "description_it": "blabla",
+            "description_en": "blabla",
+            "sell_price": 1,
+            "group": "blue"
+        },
+        {
+            "name": "Three Pyramid of Gyza",
+            "type": "monument",
+            "price": 1,
+            "rent": [1,2,3,4,5],
+            "paintCost": 1,
+            "description_it": "blabla",
+            "description_en": "blabla",
+            "sell_price": 1,
+            "group": "blue"
+        },
+        {
+            "name": "Museo",
+            "type": "museum",
+            "price": 1,
+            "rent": [1,2,3,4],
+            "description_it": "blabla",
+            "description_en": "blabla",
+            "sell_price": 1
+        },
+        {
+            "name": "Petra",
+            "type": "monument",
+            "price": 1,
+            "rent": [1,2,3,4,5],
+            "paintCost": 1,
+            "description_it": "blabla",
+            "description_en": "blabla",
+            "sell_price": 1,
+            "group": "blue"
+        },
+        {
+            "name": "Parthenon",
+            "type": "monument",
+            "price": 1,
+            "rent": [1,2,3,4,5],
+            "paintCost": 1,
+            "description_it": "blabla",
+            "description_en": "blabla",
+            "sell_price": 1,
+            "group": "blue"
+        },
+        
+        {
+            "name": "Great Wall of China",
+            "type": "monument",
+            "price": 1,
+            "rent": [1,2,3,4,5],
+            "paintCost": 1,
+            "description_it": "blabla",
+            "description_en": "blabla",
+            "sell_price": 1,
+            "group": "blue"
+        },
+        {
+            "name": "Colosseum",
+            "type": "monument",
+            "price": 1,
+            "rent": [1,2,3,4,5],
+            "paintCost": 1,
+            "description_it": "blabla",
+            "description_en": "blabla",
+            "sell_price": 1,
+            "group": "blue"
+        },
+        {
+            "name": "elettro",
+            "type": "utility",
+            "price": 1,
+            "rent": 1,
+            "description_it": "blabla",
+            "description_en": "blabla",
+            "sell_price": 1
+        },
+        {
+            "name": "Chichen Itza",
+            "type": "monument",
+            "price": 1,
+            "rent": [1,2,3,4,5],
+            "paintCost": 1,
+            "description_it": "blabla",
+            "description_en": "blabla",
+            "sell_price": 1,
+            "group": "blue"
+        },
+        {
+            "name": "Hagia Sophia",
+            "type": "monument",
+            "price": 1,
+            "rent": [1,2,3,4,5],
+            "paintCost": 1,
+            "description_it": "blabla",
+            "description_en": "blabla",
+            "sell_price": 1,
+            "group": "blue"
+        },
+        {
+            "name": "Museo 2",
+            "type": "museum",
+            "price": 1,
+            "rent": [1,2,3,4],
+            "description_it": "blabla",
+            "description_en": "blabla",
+            "sell_price": 1
+        },
+        {
+            "name": "Angkor Wat",
+            "type": "monument",
+            "price": 1,
+            "rent": [1,2,3,4,5],
+            "paintCost": 1,
+            "description_it": "blabla",
+            "description_en": "blabla",
+            "sell_price": 1,
+            "group": "blue"
+        },
+        {
+            "name": "Alhambra",
+            "type": "monument",
+            "price": 1,
+            "rent": [1,2,3,4,5],
+            "paintCost": 1,
+            "description_it": "blabla",
+            "description_en": "blabla",
+            "sell_price": 1,
+            "group": "blue"
+        },
+        {
+            "name": "Kamakura Daibutsu",
+            "type": "monument",
+            "price": 1,
+            "rent": [1,2,3,4,5],
+            "paintCost": 1,
+            "description_it": "blabla",
+            "description_en": "blabla",
+            "sell_price": 1,
+            "group": "blue"
+        },
+        {
+            "name": "Bran Castle",
+            "type": "monument",
+            "price": 1,
+            "rent": [1,2,3,4,5],
+            "paintCost": 1,
+            "description_it": "blabla",
+            "description_en": "blabla",
+            "sell_price": 1,
+            "group": "blue"
+        },
+        {
+            "name": "Machu Picchu",
+            "type": "monument",
+            "price": 1,
+            "rent": [1,2,3,4,5],
+            "paintCost": 1,
+            "description_it": "blabla",
+            "description_en": "blabla",
+            "sell_price": 1,
+            "group": "blue"
+        },
+        {
+            "name": "Kremlin",
+            "type": "monument",
+            "price": 1,
+            "rent": [1,2,3,4,5],
+            "paintCost": 1,
+            "description_it": "blabla",
+            "description_en": "blabla",
+            "sell_price": 1,
+            "group": "blue"
+        },
+        {
+            "name": "Museo 3",
+            "type": "museum",
+            "price": 1,
+            "rent": [1,2,3,4],
+            "description_it": "blabla",
+            "description_en": "blabla",
+            "sell_price": 1
+        },
+        {
+            "name": "Taj Mahal",
+            "type": "monument",
+            "price": 1,
+            "rent": [1,2,3,4,5],
+            "paintCost": 1,
+            "description_it": "blabla",
+            "description_en": "blabla",
+            "sell_price": 1,
+            "group": "blue"
+        },
+        {
+            "name": "Big Ben",
+            "type": "monument",
+            "price": 1,
+            "rent": [1,2,3,4,5],
+            "paintCost": 1,
+            "description_it": "blabla",
+            "description_en": "blabla",
+            "sell_price": 1,
+            "group": "blue"
+        },
+        {
+            "name": "acqua",
+            "type": "utility",
+            "price": 1,
+            "rent": 1,
+            "description_it": "blabla",
+            "description_en": "blabla",
+            "sell_price": 1
+        },
+        {
+            "name": "Tour Eiffel",
+            "type": "monument",
+            "price": 1,
+            "rent": [1,2,3,4,5],
+            "paintCost": 1,
+            "description_it": "blabla",
+            "description_en": "blabla",
+            "sell_price": 1,
+            "group": "blue"
+        },
+        {
+            "name": "Christ the Redeemer",
+            "type": "monument",
+            "price": 1,
+            "rent": [1,2,3,4,5],
+            "paintCost": 1,
+            "description_it": "blabla",
+            "description_en": "blabla",
+            "sell_price": 1,
+            "group": "blue"
+        },
+        {
+            "name": "United Nations",
+            "type": "monument",
+            "price": 1,
+            "rent": [1,2,3,4,5],
+            "paintCost": 1,
+            "description_it": "blabla",
+            "description_en": "blabla",
+            "sell_price": 1,
+            "group": "blue"
+        },
+        {
+            "name": "Montreal Biosphere",
+            "type": "monument",
+            "price": 1,
+            "rent": [1,2,3,4,5],
+            "paintCost": 1,
+            "description_it": "blabla",
+            "description_en": "blabla",
+            "sell_price": 1,
+            "group": "blue"
+        },
+        {
+            "name": "Museo 4",
+            "type": "museum",
+            "price": 1,
+            "rent": [1,2,3,4],
+            "description_it": "blabla",
+            "description_en": "blabla",
+            "sell_price": 1
+        },
+        {
+            "name": "Sidney Opera House",
+            "type": "monument",
+            "price": 1,
+            "rent": [1,2,3,4,5],
+            "paintCost": 1,
+            "description_it": "blabla",
+            "description_en": "blabla",
+            "sell_price": 1,
+            "group": "blue"
+        },
+        {
+            "name": "Burj Khalifa",
+            "type": "monument",
+            "price": 1,
+            "rent": [1,2,3,4,5],
+            "paintCost": 1,
+            "description_it": "blabla",
+            "description_en": "blabla",
+            "sell_price": 1,
+            "group": "blue"
+        }
+    ]
+}

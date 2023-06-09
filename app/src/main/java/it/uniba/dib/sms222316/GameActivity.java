@@ -13,7 +13,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
+import com.bumptech.glide.Glide;
+import pl.droidsonroids.gif.GifImageView;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -54,7 +55,7 @@ public class GameActivity extends AppCompatActivity {
         pedina[0] = findViewById(R.id.pedina1);
         pedina[1] = findViewById(R.id.pedina2);
         View view = findViewById(R.id.relativeLayout);
-
+        GifImageView Dice = findViewById(R.id.dice);
 
         // Registra un OnGlobalLayoutListener sulla vista
         view.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
@@ -81,6 +82,7 @@ public class GameActivity extends AppCompatActivity {
         @Override
             public void onClick(View v) {
             int randomNumber = (int) (Math.random() * 6) + 1;
+            Dice.setImageResource(R.drawable.dado1);
             rollButton.setEnabled(false);
             new Handler().postDelayed(new Runnable() {
                 @Override
@@ -89,31 +91,32 @@ public class GameActivity extends AppCompatActivity {
                 }
             }, 2000);
 
-            int a = game.getCurrentPlayerIndex();
+            int currentPlayer = game.getCurrentPlayerIndex();
             Toast.makeText(GameActivity.this, "Hai ottenuto " + randomNumber, Toast.LENGTH_SHORT).show();
             Path path = new Path();
 
-            path.moveTo(casella[position[a]].getX(),casella[position[a]].getY());
+            path.moveTo(casella[position[currentPlayer]].getX(),casella[position[currentPlayer]].getY());
 
             for(int i = 1;i<=randomNumber;i++) {
 
-                position[a] ++;
-                if(position[a] == 40) position[a] =0;
-                path.lineTo(casella[position[a]].getX(), casella[position[a]].getY());
+                position[currentPlayer] ++;
+                if(position[currentPlayer] == 40) position[currentPlayer] =0;
+                path.lineTo(casella[position[currentPlayer]].getX(), casella[position[currentPlayer]].getY());
             }
             Handler handler = new Handler();
             handler.postDelayed(new Runnable() {
                 public void run() {
-                    if(position[a] < 40){
-                        field.InfoField(position[a]);
+                    if(position[currentPlayer] < 40){
+                        field.InfoField(position[currentPlayer]);
                         field.show();
                     }
                 }
             }, 2000);
 
-            ObjectAnimator animator = ObjectAnimator.ofFloat(pedina[a], pedina[a].X,pedina[a].Y, path);
+            ObjectAnimator animator = ObjectAnimator.ofFloat(pedina[currentPlayer], pedina[currentPlayer].X,pedina[currentPlayer].Y, path);
             animator.setDuration(2000);
             animator.start();
+            players.get(currentPlayer).setPosition(position[currentPlayer]);
             playerNameTextView = view.findViewById(R.id.playerNameTextView);
             playerScoreTextView = view.findViewById(R.id.playerScoreTextView);
 

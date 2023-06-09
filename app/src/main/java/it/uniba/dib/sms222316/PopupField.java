@@ -21,16 +21,16 @@ public class PopupField extends Dialog {
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
         setContentView(R.layout.info_field);
         casella = caselle.setCasella(context);
-        Button button = findViewById(R.id.frontbutton);
-        Button button1 = findViewById(R.id.backbutton);
+        Button front = findViewById(R.id.frontbutton);
+        Button back = findViewById(R.id.backbutton);
         EasyFlipView flip = findViewById(R.id.flip);
-        button.setOnClickListener(new View.OnClickListener() {
+        front.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 flip.flipTheView();
             }
         });
-        button1.setOnClickListener(new View.OnClickListener() {
+        back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 flip.flipTheView();
@@ -41,7 +41,6 @@ public class PopupField extends Dialog {
     public void InfoField(int field){
         TextView Name = findViewById(R.id.name);
         ImageView Image = findViewById(R.id.image);
-
         Name.setText(casella[field].getContentDescription());
     }
 }

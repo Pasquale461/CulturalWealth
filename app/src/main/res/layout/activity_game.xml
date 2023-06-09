@@ -20,7 +20,7 @@
             android:layout_height="60dp"
             android:layout_marginStart="68dp"
             android:layout_marginTop="169dp"
-            android:contentDescription="Prigione"
+            android:contentDescription="Prison"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/casella" />
@@ -30,7 +30,7 @@
             android:layout_width="43dp"
             android:layout_height="43dp"
             android:layout_marginBottom="55dp"
-            android:contentDescription="Angkor Wat"
+            android:contentDescription="Colosseum"
             app:layout_constraintBottom_toBottomOf="@+id/exa_10"
             app:layout_constraintEnd_toEndOf="@+id/exa_10"
             app:layout_constraintStart_toStartOf="@+id/exa_10"
@@ -41,7 +41,7 @@
             android:layout_width="43dp"
             android:layout_height="43dp"
             android:layout_marginBottom="39dp"
-            android:contentDescription="Alhambra"
+            android:contentDescription="Elettro"
             app:layout_constraintBottom_toBottomOf="@+id/exa_11"
             app:layout_constraintStart_toStartOf="@+id/exa_11"
             app:srcCompat="@drawable/casella" />
@@ -52,7 +52,7 @@
             android:layout_height="43dp"
             android:layout_marginStart="34dp"
             android:layout_marginBottom="19dp"
-            android:contentDescription="Kamakura Daibutsu"
+            android:contentDescription="Chichen Itza"
             app:layout_constraintBottom_toBottomOf="@+id/exa_12"
             app:layout_constraintStart_toStartOf="@+id/exa_12"
             app:srcCompat="@drawable/casella" />
@@ -62,7 +62,7 @@
             android:layout_width="43dp"
             android:layout_height="43dp"
             android:layout_marginBottom="39dp"
-            android:contentDescription="Bran Castle"
+            android:contentDescription="Hagia Sophia"
             app:layout_constraintBottom_toBottomOf="@+id/exa_13"
             app:layout_constraintStart_toStartOf="@+id/exa_13"
             app:srcCompat="@drawable/casella" />
@@ -84,7 +84,7 @@
             android:layout_height="43dp"
             android:layout_marginStart="34dp"
             android:layout_marginBottom="15dp"
-            android:contentDescription="Machu Picchu"
+            android:contentDescription="Angkor Wat"
             app:layout_constraintBottom_toBottomOf="@+id/exa_15"
             app:layout_constraintStart_toStartOf="@+id/exa_15"
             app:srcCompat="@drawable/casella" />
@@ -95,7 +95,7 @@
             android:layout_height="43dp"
             android:layout_marginStart="34dp"
             android:layout_marginTop="15dp"
-            android:contentDescription="Kremlin"
+            android:contentDescription="Probability"
             app:layout_constraintStart_toStartOf="@+id/exa_16"
             app:layout_constraintTop_toTopOf="@+id/exa_16"
             app:srcCompat="@drawable/casella" />
@@ -106,7 +106,7 @@
             android:layout_height="43dp"
             android:layout_marginStart="34dp"
             android:layout_marginBottom="15dp"
-            android:contentDescription="Taj Mahal"
+            android:contentDescription="Alhambra"
             app:layout_constraintBottom_toBottomOf="@+id/exa_17"
             app:layout_constraintStart_toStartOf="@+id/exa_17"
             app:srcCompat="@drawable/casella" />
@@ -117,7 +117,7 @@
             android:layout_height="43dp"
             android:layout_marginStart="34dp"
             android:layout_marginTop="15dp"
-            android:contentDescription="Big Ben"
+            android:contentDescription="Kamakura Daibutsu"
             app:layout_constraintStart_toStartOf="@+id/exa_18"
             app:layout_constraintTop_toTopOf="@+id/exa_18"
             app:srcCompat="@drawable/casella" />
@@ -127,7 +127,7 @@
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_marginStart="42dp"
-            android:contentDescription="Boh"
+            android:contentDescription="Parking"
             app:layout_constraintBottom_toBottomOf="@+id/exa_19"
             app:layout_constraintStart_toStartOf="@+id/exa_19"
             app:layout_constraintTop_toTopOf="@+id/exa_19"
@@ -138,7 +138,7 @@
             android:layout_width="43dp"
             android:layout_height="43dp"
             android:layout_marginStart="59dp"
-            android:contentDescription="Tour Eiffel"
+            android:contentDescription="Bran Castle"
             app:layout_constraintBottom_toBottomOf="@+id/exa_20"
             app:layout_constraintStart_toStartOf="@+id/exa_20"
             app:layout_constraintTop_toTopOf="@+id/exa_20"
@@ -150,7 +150,7 @@
             android:layout_height="43dp"
             android:layout_marginStart="34dp"
             android:layout_marginBottom="15dp"
-            android:contentDescription="Christ the Redeemer"
+            android:contentDescription="Chance"
             app:layout_constraintBottom_toBottomOf="@+id/exa_21"
             app:layout_constraintStart_toStartOf="@+id/exa_21"
             app:srcCompat="@drawable/casella" />
@@ -161,7 +161,7 @@
             android:layout_height="43dp"
             android:layout_marginStart="34dp"
             android:layout_marginTop="15dp"
-            android:contentDescription="United Nations"
+            android:contentDescription="Machu Picchu"
             app:layout_constraintStart_toStartOf="@+id/exa_22"
             app:layout_constraintTop_toTopOf="@+id/exa_22"
             app:srcCompat="@drawable/casella" />
@@ -172,7 +172,7 @@
             android:layout_height="43dp"
             android:layout_marginStart="34dp"
             android:layout_marginBottom="15dp"
-            android:contentDescription="Montreal Biosphere"
+            android:contentDescription="Kremlin"
             app:layout_constraintBottom_toBottomOf="@+id/exa_23"
             app:layout_constraintStart_toStartOf="@+id/exa_23"
             app:srcCompat="@drawable/casella" />
@@ -194,7 +194,7 @@
             android:layout_height="43dp"
             android:layout_marginStart="34dp"
             android:layout_marginTop="15dp"
-            android:contentDescription="Sidney Opera House"
+            android:contentDescription="Taj Mahal"
             app:layout_constraintStart_toStartOf="@+id/exa_25"
             app:layout_constraintTop_toTopOf="@+id/exa_25"
             app:srcCompat="@drawable/casella" />
@@ -204,7 +204,7 @@
             android:layout_width="43dp"
             android:layout_height="43dp"
             android:layout_marginTop="39dp"
-            android:contentDescription="Burj Khalifa"
+            android:contentDescription="Big Ben"
             app:layout_constraintStart_toStartOf="@+id/exa_26"
             app:layout_constraintTop_toTopOf="@+id/exa_26"
             app:srcCompat="@drawable/casella" />
@@ -215,6 +215,7 @@
             android:layout_height="43dp"
             android:layout_marginStart="34dp"
             android:layout_marginTop="19dp"
+            android:contentDescription="Acqua"
             app:layout_constraintStart_toStartOf="@+id/exa_27"
             app:layout_constraintTop_toTopOf="@+id/exa_27"
             app:srcCompat="@drawable/casella" />
@@ -224,6 +225,7 @@
             android:layout_width="43dp"
             android:layout_height="43dp"
             android:layout_marginTop="39dp"
+            android:contentDescription="Tour Eiffel"
             app:layout_constraintStart_toStartOf="@+id/exa_28"
             app:layout_constraintTop_toTopOf="@+id/exa_28"
             app:srcCompat="@drawable/casella" />
@@ -233,6 +235,7 @@
             android:layout_width="60dp"
             android:layout_height="60dp"
 
+            android:contentDescription="Go_to_jail"
             app:layout_constraintBottom_toTopOf="@+id/exa_31"
             app:layout_constraintEnd_toEndOf="@+id/exa_29"
             app:layout_constraintStart_toStartOf="@+id/exa_29"
@@ -244,7 +247,7 @@
             android:layout_width="43dp"
             android:layout_height="43dp"
             android:layout_marginTop="55dp"
-            android:contentDescription="Hagia Sophia"
+            android:contentDescription="Great Wall of China"
             app:layout_constraintEnd_toEndOf="@+id/exa_10"
             app:layout_constraintStart_toStartOf="@+id/exa_10"
             app:layout_constraintTop_toTopOf="@+id/exa_10"
@@ -255,7 +258,7 @@
             android:layout_width="43dp"
             android:layout_height="43dp"
             android:layout_marginTop="39dp"
-            android:contentDescription="Chichen Itza"
+            android:contentDescription="Parthenon"
             app:layout_constraintStart_toStartOf="@+id/exa_9"
             app:layout_constraintTop_toTopOf="@+id/exa_9"
             app:srcCompat="@drawable/casella" />
@@ -266,7 +269,7 @@
             android:layout_height="43dp"
             android:layout_marginStart="34dp"
             android:layout_marginTop="15dp"
-            android:contentDescription="Colosseum"
+            android:contentDescription="Chance"
             app:layout_constraintStart_toStartOf="@+id/exa_8"
             app:layout_constraintTop_toTopOf="@+id/exa_8"
             app:srcCompat="@drawable/casella" />
@@ -276,7 +279,7 @@
             android:layout_width="43dp"
             android:layout_height="43dp"
             android:layout_marginTop="39dp"
-            android:contentDescription="Great Wall of China"
+            android:contentDescription="Petra"
             app:layout_constraintStart_toStartOf="@+id/exa_7"
             app:layout_constraintTop_toTopOf="@+id/exa_7"
             app:srcCompat="@drawable/casella" />
@@ -298,7 +301,7 @@
             android:layout_height="43dp"
             android:layout_marginStart="34dp"
             android:layout_marginTop="15dp"
-            android:contentDescription="Parthenon"
+            android:contentDescription="Income_tax"
             app:layout_constraintStart_toStartOf="@+id/exa_5"
             app:layout_constraintTop_toTopOf="@+id/exa_5"
             app:srcCompat="@drawable/casella" />
@@ -309,7 +312,7 @@
             android:layout_height="43dp"
             android:layout_marginStart="34dp"
             android:layout_marginBottom="15dp"
-            android:contentDescription="Petra"
+            android:contentDescription="Three Pyramid of Gyza"
             app:layout_constraintBottom_toBottomOf="@+id/exa_4"
             app:layout_constraintStart_toStartOf="@+id/exa_4"
             app:srcCompat="@drawable/casella" />
@@ -320,7 +323,7 @@
             android:layout_height="43dp"
             android:layout_marginStart="34dp"
             android:layout_marginTop="15dp"
-            android:contentDescription="Three Pyramid of Gyza"
+            android:contentDescription="Probability"
             app:layout_constraintStart_toStartOf="@+id/exa_3"
             app:layout_constraintTop_toTopOf="@+id/exa_3"
             app:srcCompat="@drawable/casella" />
@@ -351,6 +354,7 @@
             android:layout_width="43dp"
             android:layout_height="43dp"
             android:layout_marginStart="59dp"
+            android:contentDescription="Burj Khalifa"
             app:layout_constraintBottom_toBottomOf="@+id/exa_0"
             app:layout_constraintStart_toStartOf="@+id/exa_0"
             app:layout_constraintTop_toTopOf="@+id/exa_0"
@@ -362,6 +366,7 @@
             android:layout_height="43dp"
             android:layout_marginStart="34dp"
             android:layout_marginTop="15dp"
+            android:contentDescription="Luxury_Tax"
             app:layout_constraintStart_toStartOf="@+id/exa_39"
             app:layout_constraintTop_toTopOf="@+id/exa_39"
             app:srcCompat="@drawable/casella" />
@@ -372,6 +377,7 @@
             android:layout_height="43dp"
             android:layout_marginStart="34dp"
             android:layout_marginBottom="15dp"
+            android:contentDescription="Sidney Opera House"
             app:layout_constraintBottom_toBottomOf="@+id/exa_38"
             app:layout_constraintStart_toStartOf="@+id/exa_38"
             app:srcCompat="@drawable/casella" />
@@ -382,6 +388,7 @@
             android:layout_height="43dp"
             android:layout_marginStart="34dp"
             android:layout_marginTop="15dp"
+            android:contentDescription="Chance"
             app:layout_constraintStart_toStartOf="@+id/exa_37"
             app:layout_constraintTop_toTopOf="@+id/exa_37"
             app:srcCompat="@drawable/casella" />
@@ -392,6 +399,7 @@
             android:layout_height="43dp"
             android:layout_marginStart="34dp"
             android:layout_marginBottom="15dp"
+            android:contentDescription="Museo 4"
             app:layout_constraintBottom_toBottomOf="@+id/exa_36"
             app:layout_constraintStart_toStartOf="@+id/exa_36"
             app:srcCompat="@drawable/casella" />
@@ -402,6 +410,7 @@
             android:layout_height="43dp"
             android:layout_marginStart="34dp"
             android:layout_marginBottom="15dp"
+            android:contentDescription="Montreal Biosphere"
             app:layout_constraintBottom_toBottomOf="@+id/exa_35"
             app:layout_constraintStart_toStartOf="@+id/exa_35"
             app:srcCompat="@drawable/casella" />
@@ -411,6 +420,7 @@
             android:layout_width="43dp"
             android:layout_height="43dp"
             android:layout_marginBottom="39dp"
+            android:contentDescription="Probability"
             app:layout_constraintBottom_toBottomOf="@+id/exa_34"
             app:layout_constraintStart_toStartOf="@+id/exa_34"
             app:srcCompat="@drawable/casella" />
@@ -421,6 +431,7 @@
             android:layout_height="43dp"
             android:layout_marginStart="34dp"
             android:layout_marginBottom="15dp"
+            android:contentDescription="United Nations"
             app:layout_constraintBottom_toBottomOf="@+id/exa_33"
             app:layout_constraintStart_toStartOf="@+id/exa_33"
             app:srcCompat="@drawable/casella" />
@@ -430,6 +441,7 @@
             android:layout_width="43dp"
             android:layout_height="43dp"
             android:layout_marginBottom="39dp"
+            android:contentDescription="Christ the Redeemer"
             app:layout_constraintBottom_toBottomOf="@+id/exa_32"
             app:layout_constraintStart_toStartOf="@+id/exa_32"
             app:srcCompat="@drawable/casella" />
@@ -490,6 +502,18 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/character" />
+
+        <pl.droidsonroids.gif.GifImageView
+            android:id="@+id/dice"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.444"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.498"
+            />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
