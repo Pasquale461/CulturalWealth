@@ -3,7 +3,7 @@ package it.uniba.dib.sms222316.Gameplay;
 public class Property
 {
         private String nome , tipo , gruppo;
-        private int costo , costoCasa , costoVendita;
+        private int costo , costoQuadro , prezzoVendita;
         private int posizione;
 
         private int affitto[];
@@ -13,30 +13,30 @@ public class Property
         private Player Giocatore;
 
         //Costruttore per l'inizio della partita
-        public Property(String nome,  String tipo, String gruppo,  String descrizione , int costo, int affitto[], int costoCasa , int costoVendita , int posizione) {
+        public Property(String nome,  String tipo, String gruppo,  String descrizione , int costo, int affitto[], int costoQuadro , int prezzoVendita , int posizione) {
             this.nome = nome;
             this.costo = costo;
             this.affitto = affitto;
             this.tipo = tipo;
             this.gruppo = gruppo;
             this.descrizione = descrizione;
-            this.costoCasa = costoCasa;
-            this.costoVendita = costoVendita;
+            this.costoQuadro = costoQuadro;
+            this.prezzoVendita = prezzoVendita;
             this.posizione = posizione;
             this.paints =0;
             this.Giocatore = null;
         }
 
         //Costruttore per il caricamento partita
-        public Property(String nome, int costo, int affitto[], String tipo , String gruppo , String descrizione , int costoCasa , int costoVendita , int posizione , int paints , Player Giocatore) {
+        public Property(String nome, int costo, int affitto[], String tipo , String gruppo , String descrizione , int costoQuadro , int prezzoVendita , int posizione , int paints , Player Giocatore) {
             this.nome = nome;
             this.costo = costo;
             this.affitto = affitto;
             this.tipo = tipo;
             this.gruppo = gruppo;
             this.descrizione = descrizione;
-            this.costoCasa = costoCasa;
-            this.costoVendita = costoVendita;
+            this.costoQuadro = costoQuadro;
+            this.prezzoVendita = prezzoVendita;
             this.posizione = posizione;
             this.paints = paints;
             this.Giocatore = Giocatore;
@@ -60,12 +60,12 @@ public class Property
             return gruppo;
         }
 
-        public int getCostoCasa() {
-            return costoCasa;
+        public int getCostoQuadro() {
+            return costoQuadro;
         }
 
-        public int getcostoVendita() {
-            return costoVendita;
+        public int getCostoVendita() {
+            return prezzoVendita;
         }
 
         public int[] getAffitto() {

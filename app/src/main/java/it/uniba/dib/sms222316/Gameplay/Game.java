@@ -1,5 +1,18 @@
 package it.uniba.dib.sms222316.Gameplay;
 
+import android.content.res.Resources;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Game {
@@ -121,6 +134,7 @@ public class Game {
     public int getNumberOfPlayers() {
         return this.players.size();
     }
+
 }
 
 

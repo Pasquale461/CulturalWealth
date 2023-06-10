@@ -3,20 +3,29 @@ package it.uniba.dib.sms222316;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.animation.ObjectAnimator;
+import android.content.res.Resources;
 import android.graphics.Path;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import pl.droidsonroids.gif.GifDrawable;
 import pl.droidsonroids.gif.GifImageView;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,13 +58,55 @@ public class GameActivity extends AppCompatActivity {
         players.add(new Player("Giocatore 1"));
         players.add(new Player("Giocatore 2"));
         players.add(new Player("Giocatore 3"));
-        List<Property> properties = new ArrayList<>();
-        int v[] = {1,2,3};
-        properties.add(new Property("", "" , "" , "" , 1 , v, 1 ,1 ,1));
-        properties.add(new Property("", "" , "" , "" , 1 , v, 1 ,1 ,1));
 
+        List<Property> properties = new ArrayList<>();
+        Resources resources = getResources();
+        int resourceId = resources.getIdentifier("property", "raw", getPackageName());
+        InputStream inputStream = resources.openRawResource(resourceId);
+        BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+        StringBuilder jsonString = new StringBuilder();
+        String line;
+
+        try {
+            while ((line = reader.readLine()) != null) {
+                jsonString.append(line);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try {
+            JSONObject jsonObject0 = new JSONObject(String.valueOf(jsonString));
+            JSONArray jsonArray = jsonObject0.getJSONArray("properties");
+            for (int i = 0; i < jsonArray.length(); i++) {
+                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                String name = jsonObject.getString("name");
+                String type = jsonObject.getString("type");
+                String group = jsonObject.getString("group");
+                String description = jsonObject.getString("description_it");
+                int price = jsonObject.getInt("price");
+                JSONArray rentarray = jsonObject.getJSONArray("rent");
+                int[] rent = new int[rentarray.length()];
+                for (int j = 0; j < rentarray.length(); j++) {
+                    rent[j] = rentarray.getInt(j);
+                }
+                int paintCost = jsonObject.getInt("paintCost");
+                int sell_price = jsonObject.getInt("sell_price");
+                int posizione = jsonObject.getInt("position");
+
+                Property property = new Property(name,type,group,description,price,rent,paintCost,sell_price,posizione);
+                properties.add(property);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        for (Property data : properties) {
+            String peni = data.getNome()+"-"+data.getCosto();
+            Log.d("GameActivity", peni);
+        }
         //Instanza oggetto partita
         game = new Game(players , properties);
+        game.iniziaPartita();
         //Calcolo giocatori
         ImageView[] pedina = new ImageView[game.getNumberOfPlayers()];
         int[] position = new int[game.getNumberOfPlayers()];
@@ -68,14 +119,19 @@ public class GameActivity extends AppCompatActivity {
 
 
         PopupField field = new PopupField(GameActivity.this, GameActivity.this);
-        Button rollButton = findViewById(R.id.dado);
+        Button rollDice = findViewById(R.id.dado);
 
 
 
 
         View view = findViewById(R.id.relativeLayout);
-        GifImageView Dice = findViewById(R.id.dice);
-
+        GifImageView Dice1 = findViewById(R.id.dice1);
+        GifImageView Dice2 = findViewById(R.id.dice2);
+        int random[] = game.dadi();
+        int lastFrameIndex1 = rollDice(random[0]).getNumberOfFrames() - 1;
+        Dice1.setImageBitmap(rollDice(random[0]).seekToFrameAndGet(lastFrameIndex1));
+        int lastFrameIndex2 = rollDice(random[1]).getNumberOfFrames() - 1;
+        Dice2.setImageBitmap(rollDice(random[1]).seekToFrameAndGet(lastFrameIndex2));
         // Registra un OnGlobalLayoutListener sulla vista
         view.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
@@ -99,42 +155,31 @@ public class GameActivity extends AppCompatActivity {
             }
         });
 
-        rollButton.setOnClickListener(new View.OnClickListener() {
+        rollDice.setOnClickListener(new View.OnClickListener() {
         @Override
             public void onClick(View v) {
-            game.iniziaPartita();
-            game.dadi();
-            int[] numeri = new int[2];
-            numeri = game.dadi();
-            int randomNumber = numeri[0];
+            int[] numeri = game.dadi();
 
-            int gifResourceId = 0;
-            switch (randomNumber){
-                case 1: gifResourceId = R.drawable.dado1;break;
-                case 2: gifResourceId = R.drawable.dado2;break;
-                case 3: gifResourceId = R.drawable.dado3;break;
-                case 4: gifResourceId = R.drawable.dado4;break;
-                case 5: gifResourceId = R.drawable.dado5;break;
-                case 6: gifResourceId = R.drawable.dado6;break;
-            }
-            GifDrawable Gif = null;
-            try {
-                Gif = new GifDrawable(getResources(), gifResourceId);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-            Gif.setLoopCount(1);
-            GifDrawable finalGif = Gif;
-            finalGif.reset(); // Resetta la GIF all'inizio
-            finalGif.start();
-            Dice.setImageDrawable(finalGif);
-
-            rollButton.setEnabled(false);
+            GifDrawable Gif1 = rollDice(numeri[0]);
+            GifDrawable Gif2 = rollDice(numeri[1]);
+            Gif1.reset(); // Resetta la GIF all'inizio
+            Gif1.start();
+            Dice1.setImageDrawable(Gif1);
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    rollButton.setEnabled(true);
-                    Toast.makeText(GameActivity.this, "Hai ottenuto " + randomNumber, Toast.LENGTH_SHORT).show();
+                    Gif2.reset(); // Resetta la GIF all'inizio
+                    Gif2.start();
+                    Dice2.setImageDrawable(Gif2);
+                }
+            },200);
+
+            rollDice.setEnabled(false);
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    rollDice.setEnabled(true);
+                    //Toast.makeText(GameActivity.this, "Hai ottenuto " + (numeri[0]+numeri[1]), Toast.LENGTH_SHORT).show();
                 }
             }, 3500);
 
@@ -144,7 +189,7 @@ public class GameActivity extends AppCompatActivity {
 
             path.moveTo(casella[position[currentPlayer]].getX(),casella[position[currentPlayer]].getY());
 
-            for(int i = 1;i<=randomNumber;i++) {
+            for(int i = 1;i<=(numeri[0]+numeri[1]);i++) {
 
                 position[currentPlayer] ++;
                 if(position[currentPlayer] == 40) position[currentPlayer] =0;
@@ -154,11 +199,11 @@ public class GameActivity extends AppCompatActivity {
             new Handler().postDelayed(new Runnable() {
                 public void run() {
                     if(position[currentPlayer] < 40){
-                        field.InfoField(position[currentPlayer]);
+                        field.InfoField(position[currentPlayer],properties);
                         field.show();
                     }
                 }
-            }, 2000);
+            }, 4000);
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
@@ -172,7 +217,7 @@ public class GameActivity extends AppCompatActivity {
             playerNameTextView = view.findViewById(R.id.playerNameTextView);
             playerScoreTextView = view.findViewById(R.id.playerScoreTextView);
 
-            updateUI(randomNumber);
+            updateUI((numeri[0]+numeri[1]));
 
             game.endTurn();
             }
@@ -185,5 +230,28 @@ public class GameActivity extends AppCompatActivity {
     playerNameTextView.setText(currentPlayer.getName());
     playerScoreTextView.setText(String.valueOf(currentPlayer.getScore()));
     return currentPlayer;
-}
+    }
+
+    private GifDrawable rollDice(int number){
+        int gifResourceId = 0;
+        switch (number){
+            case 1: gifResourceId = R.drawable.dado1;break;
+            case 2: gifResourceId = R.drawable.dado2;break;
+            case 3: gifResourceId = R.drawable.dado3;break;
+            case 4: gifResourceId = R.drawable.dado4;break;
+            case 5: gifResourceId = R.drawable.dado5;break;
+            case 6: gifResourceId = R.drawable.dado6;break;
+        }
+        GifDrawable Gif = null;
+        try {
+            Gif = new GifDrawable(getResources(), gifResourceId);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        Gif.setLoopCount(1);
+
+        return Gif;
+    }
+
+
 }
