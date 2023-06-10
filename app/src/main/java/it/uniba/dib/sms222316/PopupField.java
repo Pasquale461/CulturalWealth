@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.res.AssetManager;
 import android.content.res.Resources;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -89,15 +90,15 @@ public class PopupField extends Dialog {
                     int[] rentarray = properties.get(i).getAffitto();
                     int[] rent = new int[rentarray.length];
                     for (int j = 0; j < rentarray.length; j++) {
-                        rent[j] = rentarray[i];
+                        rent[j] = rentarray[j];
                     }
                     Rent.setText("Rendita:"+rent[0]);
                     Rent1P.setText("rendita con 1 quadro:"+rent[1]);
                     Rent2P.setText("rendita con 2 quadro:"+rent[2]);
                     Rent3P.setText("rendita con 3 quadro:"+rent[3]);
                     Rent4P.setText("rendita con 4 quadro:"+rent[4]);
-
                 }
+
             }
 
 

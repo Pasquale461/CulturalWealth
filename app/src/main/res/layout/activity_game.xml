@@ -11,6 +11,8 @@
         android:layout_width="782dp"
         android:layout_height="match_parent"
         android:layout_alignParentBottom="true"
+        android:background="@drawable/sfondo_tabellone"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.045"
         app:layout_constraintStart_toStartOf="parent"
@@ -18,11 +20,13 @@
 
         <ImageView
             android:id="@+id/exa_10"
-            android:layout_width="60dp"
+            android:layout_width="0dp"
             android:layout_height="60dp"
             android:layout_marginStart="68dp"
-            android:layout_marginTop="169dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="24dp"
             android:contentDescription="Prison"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/casella" />
@@ -304,6 +308,7 @@
             android:layout_marginStart="34dp"
             android:layout_marginTop="15dp"
             android:contentDescription="Income_tax"
+            android:tint="#7C7CB342"
             app:layout_constraintStart_toStartOf="@+id/exa_5"
             app:layout_constraintTop_toTopOf="@+id/exa_5"
             app:srcCompat="@drawable/casella" />
@@ -326,6 +331,7 @@
             android:layout_marginStart="34dp"
             android:layout_marginTop="15dp"
             android:contentDescription="Probability"
+            android:tint="#7C7CB342"
             app:layout_constraintStart_toStartOf="@+id/exa_3"
             app:layout_constraintTop_toTopOf="@+id/exa_3"
             app:srcCompat="@drawable/casella" />
@@ -337,6 +343,7 @@
             android:layout_marginStart="34dp"
             android:layout_marginBottom="15dp"
             android:contentDescription="Stonehenge"
+            android:tint="#7C7CB342"
             app:layout_constraintBottom_toBottomOf="@+id/exa_2"
             app:layout_constraintStart_toStartOf="@+id/exa_2"
             app:srcCompat="@drawable/casella" />
@@ -346,6 +353,7 @@
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_marginStart="42dp"
+            android:tint="#3E9A9A9A"
             app:layout_constraintBottom_toBottomOf="@+id/exa_1"
             app:layout_constraintStart_toStartOf="@+id/exa_1"
             app:layout_constraintTop_toTopOf="@+id/exa_1"
@@ -454,10 +462,9 @@
             android:layout_height="28dp"
             android:layout_marginStart="336dp"
             android:layout_marginTop="348dp"
-            android:background="#851515"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/character" />
+            app:srcCompat="@drawable/abstract_painting_ic_national_culture_paris_svgrepo_com" />
 
         <ImageView
             android:id="@+id/pedina3"
@@ -465,10 +472,9 @@
             android:layout_height="28dp"
             android:layout_marginStart="336dp"
             android:layout_marginTop="348dp"
-            android:background="#8BC34A"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/character" />
+            app:srcCompat="@drawable/moai_svgrepo_com" />
 
         <Button
             android:id="@+id/dado"
@@ -511,10 +517,9 @@
             android:layout_height="28dp"
             android:layout_marginStart="336dp"
             android:layout_marginTop="320dp"
-            android:background="#2196F3"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/character" />
+            app:srcCompat="@drawable/culture_japan_japanese_svgrepo_com" />
 
         <pl.droidsonroids.gif.GifImageView
             android:id="@+id/dice2"
