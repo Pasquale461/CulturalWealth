@@ -132,18 +132,6 @@
                 app:layout_constraintVertical_bias="0.049" />
 
             <Button
-                android:id="@+id/buy"
-                android:layout_width="84dp"
-                android:layout_height="37dp"
-                android:text="compra"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.904"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.949" />
-
-            <Button
                 android:id="@+id/frontbutton"
                 android:layout_width="24dp"
                 android:layout_height="24dp"

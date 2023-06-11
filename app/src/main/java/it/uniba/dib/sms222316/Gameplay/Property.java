@@ -42,6 +42,18 @@ public class Property
             this.Giocatore = Giocatore;
         }
 
+        public Property(String nome, String tipo, String descrizione , int costo, int affitto[], int prezzoVendita , int posizione){
+            this.nome = nome;
+            this.costo = costo;
+            this.affitto = affitto;
+            this.tipo = tipo;
+            this.descrizione = descrizione;
+            this.prezzoVendita = prezzoVendita;
+            this.posizione = posizione;
+            this.paints =0;
+            this.Giocatore = null;
+        }
+
 
 
         public String getNome() {

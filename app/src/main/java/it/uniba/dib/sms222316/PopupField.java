@@ -72,31 +72,69 @@ public class PopupField extends Dialog {
         TextView Rent3P = findViewById(R.id.rentthreepaint);
         TextView Rent4P = findViewById(R.id.rentfourpaint);
         TextView Description = findViewById(R.id.smalldescription);
-
             for (int i = 0; i < properties.size(); i++) {
-                String name = properties.get(i).getNome();
-
-
-                if (name.equals(casella[field].getContentDescription())) {
-                    Name.setText(name);
-                    int price = properties.get(i).getCosto();
-                    Price.setText("Prezzo:"+price);
-                    int paintCost = properties.get(i).getCostoQuadro();
-                    PaintCost.setText("Costo Quadro:"+paintCost);
-                    String description = properties.get(i).getDescrizione();
-                    Description.setText(description);
-                    int sell_price = properties.get(i).getCostoVendita();
-                    Sell_Price.setText("Vendita:"+sell_price);
-                    int[] rentarray = properties.get(i).getAffitto();
-                    int[] rent = new int[rentarray.length];
-                    for (int j = 0; j < rentarray.length; j++) {
-                        rent[j] = rentarray[j];
+                if(properties.get(i).getTipo().equals("monument")) {
+                    String name = properties.get(i).getNome();
+                    if (name.equals(casella[field].getContentDescription())) {
+                        Name.setText(name);
+                        int price = properties.get(i).getCosto();
+                        Price.setText("Prezzo:" + price);
+                        int paintCost = properties.get(i).getCostoQuadro();
+                        PaintCost.setText("Costo Quadro:" + paintCost);
+                        String description = properties.get(i).getDescrizione();
+                        Description.setText(description);
+                        int sell_price = properties.get(i).getCostoVendita();
+                        Sell_Price.setText("Vendita:" + sell_price);
+                        int[] rentarray = properties.get(i).getAffitto();
+                        int[] rent = new int[rentarray.length];
+                        for (int j = 0; j < rentarray.length; j++) {
+                            rent[j] = rentarray[j];
+                        }
+                        Rent.setText("Rendita:" + rent[0]);
+                        Rent1P.setText("rendita con 1 quadro:" + rent[1]);
+                        Rent2P.setText("rendita con 2 quadro:" + rent[2]);
+                        Rent3P.setText("rendita con 3 quadro:" + rent[3]);
+                        Rent4P.setText("rendita con 4 quadro:" + rent[4]);
                     }
-                    Rent.setText("Rendita:"+rent[0]);
-                    Rent1P.setText("rendita con 1 quadro:"+rent[1]);
-                    Rent2P.setText("rendita con 2 quadro:"+rent[2]);
-                    Rent3P.setText("rendita con 3 quadro:"+rent[3]);
-                    Rent4P.setText("rendita con 4 quadro:"+rent[4]);
+                }
+                if(properties.get(i).getTipo().equals("museum")) {
+                    String name = properties.get(i).getNome();
+                    if (name.equals(casella[field].getContentDescription())) {
+                        Name.setText(name);
+                        int price = properties.get(i).getCosto();
+                        Price.setText("Prezzo:" + price);
+                        String description = properties.get(i).getDescrizione();
+                        Description.setText(description);
+                        int sell_price = properties.get(i).getCostoVendita();
+                        Sell_Price.setText("Vendita:" + sell_price);
+                        int[] rentarray = properties.get(i).getAffitto();
+                        int[] rent = new int[rentarray.length];
+                        for (int j = 0; j < rentarray.length; j++) {
+                            rent[j] = rentarray[j];
+                        }
+                        Rent.setText("Rendita:" + rent[0]);
+                        Rent1P.setText("rendita con 1 museo:" + rent[1]);
+                        Rent2P.setText("rendita con 2 musei:" + rent[2]);
+                        Rent3P.setText("rendita con 3 musei:" + rent[3]);
+                    }
+                }
+                if(properties.get(i).getTipo().equals("utility")) {
+                    String name = properties.get(i).getNome();
+                    if (name.equals(casella[field].getContentDescription())) {
+                        Name.setText(name);
+                        int price = properties.get(i).getCosto();
+                        Price.setText("Prezzo:" + price);
+                        String description = properties.get(i).getDescrizione();
+                        Description.setText(description);
+                        int sell_price = properties.get(i).getCostoVendita();
+                        Sell_Price.setText("Vendita:" + sell_price);
+                        int[] rentarray = properties.get(i).getAffitto();
+                        int[] rent = new int[rentarray.length];
+                        for (int j = 0; j < rentarray.length; j++) {
+                            rent[j] = rentarray[j];
+                        }
+                        Rent.setText("Rendita:" + rent[0]);
+                    }
                 }
 
             }

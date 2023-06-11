@@ -1,7 +1,9 @@
 package it.uniba.dib.sms222316;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.animation.Animator;
 import android.animation.ObjectAnimator;
 import android.content.res.Resources;
 import android.graphics.Path;
@@ -49,16 +51,23 @@ public class GameActivity extends AppCompatActivity {
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
         setContentView(R.layout.activity_game);
-
+        playerNameTextView = findViewById(R.id.playerNameTextView);
+        playerScoreTextView = findViewById(R.id.playerScoreTextView);
+        Button endturn = findViewById(R.id.endTurn);
+        Button info = findViewById(R.id.Info);
+        info.setVisibility(View.INVISIBLE);
 
 
         int coordinate[] =new int[2];
         casella = caselle.setCasella(this);
+
+        //Creazione lista Giocatori
         List<Player> players = new ArrayList<>();
         players.add(new Player("Giocatore 1"));
         players.add(new Player("Giocatore 2"));
         players.add(new Player("Giocatore 3"));
 
+        //Lettura file JSON delle proprieta
         List<Property> properties = new ArrayList<>();
         Resources resources = getResources();
         int resourceId = resources.getIdentifier("property", "raw", getPackageName());
@@ -77,8 +86,11 @@ public class GameActivity extends AppCompatActivity {
         try {
             JSONObject jsonObject0 = new JSONObject(String.valueOf(jsonString));
             JSONArray jsonArray = jsonObject0.getJSONArray("properties");
+
+            //Creazione oggetti Proprietà
             for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
+                if(jsonObject.getString("type").equals("monument")){
                 String name = jsonObject.getString("name");
                 String type = jsonObject.getString("type");
                 String group = jsonObject.getString("group");
@@ -95,18 +107,37 @@ public class GameActivity extends AppCompatActivity {
 
                 Property property = new Property(name,type,group,description,price,rent,paintCost,sell_price,posizione);
                 properties.add(property);
+                }
+                if(jsonObject.getString("type").equals("museum") || jsonObject.getString("type").equals("utility")){
+                    String name = jsonObject.getString("name");
+                    String type = jsonObject.getString("type");
+                    String description = jsonObject.getString("description_it");
+                    int price = jsonObject.getInt("price");
+                    JSONArray rentarray = jsonObject.getJSONArray("rent");
+                    int[] rent = new int[rentarray.length()];
+                    for (int j = 0; j < rentarray.length(); j++) {
+                        rent[j] = rentarray.getInt(j);
+                    }
+                    int sell_price = jsonObject.getInt("sell_price");
+                    int posizione = jsonObject.getInt("position");
+
+                    Property property = new Property(name,type,description,price,rent,sell_price,posizione);
+                    properties.add(property);
+                }
             }
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
         for (Property data : properties) {
-            String peni = data.getNome()+"-"+data.getCosto();
+            String peni = data.getNome()+"-"+data.getTipo();
             Log.d("GameActivity", peni);
         }
+
         //Instanza oggetto partita
         game = new Game(players , properties);
         game.iniziaPartita();
+
         //Calcolo giocatori
         ImageView[] pedina = new ImageView[game.getNumberOfPlayers()];
         int[] position = new int[game.getNumberOfPlayers()];
@@ -123,7 +154,7 @@ public class GameActivity extends AppCompatActivity {
 
 
 
-
+        //Creazione animazione Dadi
         View view = findViewById(R.id.relativeLayout);
         GifImageView Dice1 = findViewById(R.id.dice1);
         GifImageView Dice2 = findViewById(R.id.dice2);
@@ -132,6 +163,8 @@ public class GameActivity extends AppCompatActivity {
         Dice1.setImageBitmap(rollDice(random[0]).seekToFrameAndGet(lastFrameIndex1));
         int lastFrameIndex2 = rollDice(random[1]).getNumberOfFrames() - 1;
         Dice2.setImageBitmap(rollDice(random[1]).seekToFrameAndGet(lastFrameIndex2));
+
+
         // Registra un OnGlobalLayoutListener sulla vista
         view.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
@@ -140,7 +173,7 @@ public class GameActivity extends AppCompatActivity {
                 if (!isViewCreated) {
 
                     casella[start].getLocationInWindow(coordinate);
-
+                    //Posizionamento delle pedine sul Via
                     for (int i=0;i < game.getNumberOfPlayers();i++)
                     {
                         pedina[i].setX(coordinate[0]);
@@ -155,78 +188,103 @@ public class GameActivity extends AppCompatActivity {
             }
         });
 
+        updateUI(players.get(0).getScore());
+        endturn.setVisibility(View.INVISIBLE);
+
+
         rollDice.setOnClickListener(new View.OnClickListener() {
         @Override
             public void onClick(View v) {
-            int[] numeri = game.dadi();
 
+            //Lancio dei dadi
+            int[] numeri = game.dadi();
+            rollDice.setEnabled(false);
             GifDrawable Gif1 = rollDice(numeri[0]);
             GifDrawable Gif2 = rollDice(numeri[1]);
             Gif1.reset(); // Resetta la GIF all'inizio
-            Gif1.start();
+            Gif1.start(); // Inizia animazione GIF
             Dice1.setImageDrawable(Gif1);
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
                     Gif2.reset(); // Resetta la GIF all'inizio
-                    Gif2.start();
+                    Gif2.start(); // Inizia animazione GIF
                     Dice2.setImageDrawable(Gif2);
                 }
             },200);
 
-            rollDice.setEnabled(false);
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    rollDice.setEnabled(true);
-                    //Toast.makeText(GameActivity.this, "Hai ottenuto " + (numeri[0]+numeri[1]), Toast.LENGTH_SHORT).show();
-                }
-            }, 3500);
+
 
             int currentPlayer = game.getCurrentPlayerIndex();
 
             Path path = new Path();
-
             path.moveTo(casella[position[currentPlayer]].getX(),casella[position[currentPlayer]].getY());
-
             for(int i = 1;i<=(numeri[0]+numeri[1]);i++) {
-
                 position[currentPlayer] ++;
                 if(position[currentPlayer] == 40) position[currentPlayer] =0;
                 path.lineTo(casella[position[currentPlayer]].getX(), casella[position[currentPlayer]].getY());
             }
 
             new Handler().postDelayed(new Runnable() {
-                public void run() {
-                    if(position[currentPlayer] < 40){
-                        field.InfoField(position[currentPlayer],properties);
-                        field.show();
-                    }
-                }
-            }, 4000);
-            new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
                     ObjectAnimator animator = ObjectAnimator.ofFloat(pedina[currentPlayer], pedina[currentPlayer].X,pedina[currentPlayer].Y, path);
                     animator.setDuration(2000);
                     animator.start();
+                    Animator.AnimatorListener animatorListener = new Animator.AnimatorListener() {
+                        @Override
+                        public void onAnimationStart(@NonNull Animator animation) {
+
+                        }
+
+                        @Override
+                        public void onAnimationEnd(@NonNull Animator animation) {
+                            info.setVisibility(View.VISIBLE);
+                            endturn.setVisibility(View.VISIBLE);
+                        }
+
+                        @Override
+                        public void onAnimationCancel(@NonNull Animator animation) {
+
+                        }
+
+                        @Override
+                        public void onAnimationRepeat(@NonNull Animator animation) {
+
+                        }
+                    };
+                    animator.addListener(animatorListener);
                 }
             },3500);
 
+
+
+            info.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    field.InfoField(position[currentPlayer],properties);
+                    field.show();
+                }
+            });
             players.get(currentPlayer).setPosition(position[currentPlayer]);
-            playerNameTextView = view.findViewById(R.id.playerNameTextView);
-            playerScoreTextView = view.findViewById(R.id.playerScoreTextView);
+            }
 
-            updateUI((numeri[0]+numeri[1]));
+        });
+        endturn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                game.endTurn();
+                endturn.setVisibility(View.INVISIBLE);
+                info.setVisibility(View.INVISIBLE);
+                rollDice.setEnabled(true);
 
-            game.endTurn();
             }
         });
 
     }
-    private Player updateUI(int randomnumber) {
+    private Player updateUI(int random) {
     Player currentPlayer = game.getCurrentPlayer();
-    currentPlayer.addScore(randomnumber);
+    currentPlayer.addScore(random);
     playerNameTextView.setText(currentPlayer.getName());
     playerScoreTextView.setText(String.valueOf(currentPlayer.getScore()));
     return currentPlayer;
