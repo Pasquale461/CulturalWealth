@@ -1,17 +1,21 @@
 package it.uniba.dib.sms222316.Gallery;
 
+
+
 public class Heritage {
 
     private String Title, Description, Type, Pic;
+    private boolean Own;
 
     public Heritage() {
     }
 
-    public Heritage(String title, String description, String type, String pic) {
+    public Heritage(String title, String description, String type, String pic, boolean own) {
         Title = title;
         Description = description;
         Type = type;
         Pic = pic;
+        Own = own;
     }
 
     public String getPic() {
@@ -42,4 +46,15 @@ public class Heritage {
         Type = type;
     }
 
+    public void setPic(String pic) {
+        Pic = pic;
+    }
+
+    public boolean isOwn() {
+        return Own;
+    }
+
+    public void setOwn(boolean own) {
+        Own = own;
+    }
 }

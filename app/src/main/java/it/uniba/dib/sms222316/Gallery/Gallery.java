@@ -12,15 +12,10 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageButton;
-
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -52,7 +47,7 @@ public class Gallery extends AppCompatActivity {
         btnMonuments = findViewById(R.id.btnMonuments);
         btnPaintings = findViewById(R.id.btnPaintings);
         btnCharacters = findViewById(R.id.btnCharacters);
-
+        ArrayList Owned = (ArrayList) getIntent().getSerializableExtra("Owned");//TO-Do OGGETTO PLAYER NON SOLO ARRAY POSSEDUTI
 
         //Button back
         btnBack.setOnClickListener(v -> {
@@ -65,30 +60,19 @@ public class Gallery extends AppCompatActivity {
         fullHrg = new ArrayList<>();
 
 
-
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-
-        /*ArrayList Owned = new ArrayList<>();
-        ArrayList<DocumentReference> OwnRef =(ArrayList<DocumentReference>) db.collection("Users").document(FirebaseAuth.getInstance().getCurrentUser().getUid()).get().getResult().get("Posseduti");
-        OwnRef.forEach(ownList -> {
-            ownList.get().addOnCompleteListener(task1 -> {
-                if(task1.isSuccessful()){
-                    DocumentSnapshot ownTitle = task1.getResult();
-                    Log.d("list", ownTitle.getString("Title"));
-                    //Owned.add(ownTitle.getString("Title "));
-                }
-            });
-        });*/
 
 
         CollectionReference reference = db.collection("Heritage");
         query = reference.orderBy("Title", Query.Direction.ASCENDING);
+
         query.get().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 fullHrg.clear();
                 for (QueryDocumentSnapshot document : task.getResult()) {
-
-                    fullHrg.add(new Heritage(document.getString("Title") , document.getString("Description") , document.getString("Type") , document.getString("Image") ));
+                    String title = document.getString("Title");
+                    boolean own = Owned.contains(title);
+                    fullHrg.add(new Heritage(title , document.getString("Description") , document.getString("Type") , document.getString("Image"), own));
 
                 }
                 List<Heritage> data = new ArrayList<>(fullHrg);
@@ -120,8 +104,11 @@ public class Gallery extends AppCompatActivity {
                 query.get().addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         for (QueryDocumentSnapshot document : task.getResult()) {
+                            String title = document.getString("Title");
+                            boolean own = Owned.contains(title);
+                            fullHrg.add(new Heritage(title , document.getString("Description") , document.getString("Type") , document.getString("Image"), own));
 
-                            fullHrg.add(new Heritage(document.getString("Title") , document.getString("Description") , document.getString("Type") , document.getString("Image") ));
+
 
                         }
                         List<Heritage> data = new ArrayList<>(fullHrg);
@@ -157,7 +144,10 @@ public class Gallery extends AppCompatActivity {
                     if (task.isSuccessful()) {
                         for (QueryDocumentSnapshot document : task.getResult()) {
 
-                            fullHrg.add(new Heritage(document.getString("Title") , document.getString("Description") , document.getString("Type") , document.getString("Image") ));
+                            String title = document.getString("Title");
+                            boolean own = Owned.contains(title);
+                            fullHrg.add(new Heritage(title , document.getString("Description") , document.getString("Type") , document.getString("Image"), own));
+
 
                         }
                         List<Heritage> data = new ArrayList<>(fullHrg);
@@ -198,7 +188,9 @@ public class Gallery extends AppCompatActivity {
                     if (task.isSuccessful()) {
                         for (QueryDocumentSnapshot document : task.getResult()) {
 
-                            fullHrg.add(new Heritage(document.getString("Title") , document.getString("Description") , document.getString("Type") , document.getString("Image") ));
+                            String title = document.getString("Title");
+                            boolean own = Owned.contains(title);
+                            fullHrg.add(new Heritage(title , document.getString("Description") , document.getString("Type") , document.getString("Image"), own));
 
                         }
                         List<Heritage> data = new ArrayList<>(fullHrg);
@@ -234,11 +226,13 @@ public class Gallery extends AppCompatActivity {
                     if (task.isSuccessful()) {
                         for (QueryDocumentSnapshot document : task.getResult()) {
 
-                            fullHrg.add(new Heritage(document.getString("Title") , document.getString("Description") , document.getString("Type") , document.getString("Image") ));
+                            String title = document.getString("Title");
+                            boolean own = Owned.contains(title);
+                            fullHrg.add(new Heritage(title , document.getString("Description") , document.getString("Type") , document.getString("Image"), own));
 
                         }
                         List<Heritage> data = new ArrayList<>(fullHrg);
-                        
+
                         RecyclerView myrv = findViewById(R.id.RecyclerView);
 
                         DisplayMetrics displayMetrics = this.getResources().getDisplayMetrics();
@@ -275,7 +269,9 @@ public class Gallery extends AppCompatActivity {
                     if (task.isSuccessful()) {
                         for (QueryDocumentSnapshot document : task.getResult()) {
 
-                            fullHrg.add(new Heritage(document.getString("Title") , document.getString("Description") , document.getString("Type") , document.getString("Image") ));
+                            String title = document.getString("Title");
+                            boolean own = Owned.contains(title);
+                            fullHrg.add(new Heritage(title , document.getString("Description") , document.getString("Type") , document.getString("Image"), own));
 
                         }
                         List<Heritage> data = new ArrayList<>(fullHrg);
@@ -312,7 +308,9 @@ public class Gallery extends AppCompatActivity {
                     if (task.isSuccessful()) {
                         for (QueryDocumentSnapshot document : task.getResult()) {
 
-                            fullHrg.add(new Heritage(document.getString("Title") , document.getString("Description") , document.getString("Type") , document.getString("Image") ));
+                            String title = document.getString("Title");
+                            boolean own = Owned.contains(title);
+                            fullHrg.add(new Heritage(title , document.getString("Description") , document.getString("Type") , document.getString("Image"), own));
 
                         }
                         List<Heritage> data = new ArrayList<>(fullHrg);

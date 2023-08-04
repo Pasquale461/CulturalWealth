@@ -27,6 +27,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
@@ -99,9 +100,39 @@ public class Home extends AppCompatActivity {
         if(account != null) Accountstring = account.getEmail();
         else Accountstring = FirebaseAuth.getInstance().getCurrentUser().getEmail(); //Controllo dell'errore
 
+
+
+
+        //TO-DO Player data upload
+        //TO-DO LOAD POSSEDUTI
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+
+        ArrayList<String> Owned = new ArrayList<>();
+        DocumentReference OwnRef = db.collection("Users").document(FirebaseAuth.getInstance().getCurrentUser().getUid());
+        OwnRef.get().addOnCompleteListener(task1 -> {
+            if (task1.isSuccessful()) {
+                ArrayList<DocumentReference> OwnList = (ArrayList<DocumentReference>) task1.getResult().get("Posseduti");
+                OwnList.forEach(ownList -> {
+                    ownList.get().addOnCompleteListener(task2 -> {
+                        if (task2.isSuccessful()) {
+
+                            DocumentSnapshot ownTitle = task2.getResult();
+                            Owned.add(ownTitle.get("Title").toString());
+                        }
+                    });
+                });
+
+
+            }
+        });
+
+
+        //open gallery
         CardView Gallery = findViewById(R.id.Gallery);
         Gallery.setOnClickListener(v -> {
             Intent i = new Intent(Home.this, it.uniba.dib.sms222316.Gallery.Gallery.class);
+            i.putExtra("Owned", Owned);
             startActivity(i);
         });
 
@@ -132,7 +163,7 @@ public class Home extends AppCompatActivity {
 
         usrbtn.setOnClickListener(v -> {
 
-            FirebaseFirestore db = FirebaseFirestore.getInstance();
+            //FirebaseFirestore db = FirebaseFirestore.getInstance();
             Map Us = new HashMap<>();
             Us.put("email", Accountstring);
             Us.put("nome",usrtext.getText().toString());
@@ -176,8 +207,10 @@ public class Home extends AppCompatActivity {
         }
 
 
+
+
         //ricerca dell'utente
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        //FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("Users")
                 .whereEqualTo("email", Accountstring)
                 .get()

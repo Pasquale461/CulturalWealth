@@ -69,7 +69,6 @@ public class RecyclerCategoryAdapter extends RecyclerView.Adapter<RecyclerCatego
                                 if(task1.isSuccessful()){
                                     DocumentSnapshot rew = task1.getResult();
                                     goals.add(new Achievements(obb.get("Target").toString(), obb.get("Name").toString(),rew.getString("Image")));
-
                                     Collections.reverse(goals); //TODO BISOGNA ORDINARLO PER TARGET
                                     List<Achievements> data = new ArrayList<>(goals);
                                     RecyclerView myrv = holder.Achievement;

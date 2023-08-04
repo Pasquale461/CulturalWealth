@@ -49,7 +49,7 @@ public class FragmentMissions extends Fragment {
         DailyMissions = new ArrayList<>();
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        CollectionReference reference = db.collection("Users").document(FirebaseAuth.getInstance().getCurrentUser().getUid()).collection("DailyMissions");
+        CollectionReference reference = db.collection("Users").document(FirebaseAuth.getInstance().getCurrentUser().getUid()).collection("DailyMissions");//TODO: userID da oggetto utente
         Query query = reference.orderBy(FieldPath.documentId(), Query.Direction.ASCENDING);
 
         query.get().addOnCompleteListener(task -> {

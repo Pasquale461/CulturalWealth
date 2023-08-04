@@ -8,7 +8,6 @@ import android.graphics.BitmapFactory;
 import android.graphics.ColorFilter;
 import android.graphics.ColorMatrix;
 import android.graphics.ColorMatrixColorFilter;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,17 +19,10 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
-
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.util.*;
-import java.util.concurrent.CompletableFuture;
 
 import it.uniba.dib.sms222316.R;
 
@@ -71,9 +63,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
             TypeHeritage control = TypeHeritage.valueOf(mData.get(position).getType());
 
-            isUnlocked(mData.get(position).getTitle()).thenAccept(result -> {
-
-                if (!result) {
+                if (!mData.get(position).isOwn()) {
 
                     ColorMatrix colorMatrix = new ColorMatrix();
                     colorMatrix.setSaturation(0);
@@ -87,8 +77,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                     holder.img.invalidate();
                     holder.img.setColorFilter(null);
                 }
-
-            });
 
             switch (control){
                 case Monuments:
@@ -124,9 +112,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             holder.cardView.setOnClickListener(v -> {
 
                 Intent intent = new Intent(mContext, GalleryHeritage.class);
-                isUnlocked(mData.get(position).getTitle()).thenAccept(result ->
-                {
-                    if(result)
+
+                    if(mData.get(position).isOwn())
                     {
                         intent.putExtra("Title",mData.get(position).getTitle());
                         intent.putExtra("Description",mData.get(position).getDescription());
@@ -141,12 +128,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                         Context context = holder.itemView.getContext();
                         Toast.makeText(context, "Not Unclocked", Toast.LENGTH_SHORT).show();
                     }
-                });
-
-
-
-
-
             });
         }
 
@@ -172,57 +153,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         }
 
 
-    public CompletableFuture<Boolean> isUnlocked(String title) {
-        FirebaseUser users = FirebaseAuth.getInstance().getCurrentUser();
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        DocumentReference reference = db.collection("Users").document(users.getUid());
 
-        CompletableFuture<Boolean> future = new CompletableFuture<>();
-
-        reference.get().addOnCompleteListener(task -> {
-            if (task.isSuccessful()) {
-                DocumentSnapshot document = task.getResult();
-
-                ArrayList<DocumentReference> posseduti = (ArrayList<DocumentReference>)document.get("Posseduti");
-                List<CompletableFuture<Boolean>> futures = new ArrayList<>();
-
-                for (DocumentReference posseduto : posseduti) {
-                    CompletableFuture<Boolean> possedutoFuture = new CompletableFuture<>();
-
-                    posseduto.get().addOnCompleteListener(documentTask -> {
-                        if (documentTask.isSuccessful()) {
-                            DocumentSnapshot documentSnapshot = documentTask.getResult();
-
-                            if (documentSnapshot.exists()) {
-
-                                if (title.equals(documentSnapshot.get("Title").toString())) {
-
-                                    possedutoFuture.complete(true);
-                                    Log.d("result" , "true" + title);
-                                    return;
-                                }
-                            }
-                        }
-
-                        possedutoFuture.complete(false);
-                        Log.d("result" , "false" + title);
-                    });
-
-                    futures.add(possedutoFuture);
-                }
-
-                CompletableFuture.allOf(futures.toArray(new CompletableFuture[0])).thenAccept(v -> {
-                    boolean result = futures.stream().anyMatch(CompletableFuture::join);
-                    future.complete(result);
-                });
-            } else {
-                future.complete(false);
-                Log.d("result" , "false");
-            }
-        });
-
-        return future;
-    }
 
 }
 
