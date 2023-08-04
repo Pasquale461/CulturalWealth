@@ -20,6 +20,7 @@ public class Player {
     public Player(String name) {
         this.name = name;
         score = 0;
+        money = 1500;
         prison = false;
         turnPrison = 0;
     }

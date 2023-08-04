@@ -17,6 +17,12 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.FirebaseFirestore;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -55,7 +61,9 @@ public class GameActivity extends AppCompatActivity {
         playerScoreTextView = findViewById(R.id.playerScoreTextView);
         Button endturn = findViewById(R.id.endTurn);
         Button info = findViewById(R.id.Info);
+        Button buy = findViewById(R.id.buy);
         info.setVisibility(View.INVISIBLE);
+        buy.setVisibility(View.INVISIBLE);
 
 
         int coordinate[] =new int[2];
@@ -63,6 +71,8 @@ public class GameActivity extends AppCompatActivity {
 
         //Creazione lista Giocatori
         List<Player> players = new ArrayList<>();
+        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
+
         players.add(new Player("Giocatore 1"));
         players.add(new Player("Giocatore 2"));
         players.add(new Player("Giocatore 3"));
@@ -153,7 +163,6 @@ public class GameActivity extends AppCompatActivity {
         Button rollDice = findViewById(R.id.dado);
 
 
-
         //Creazione animazione Dadi
         View view = findViewById(R.id.relativeLayout);
         GifImageView Dice1 = findViewById(R.id.dice1);
@@ -188,10 +197,7 @@ public class GameActivity extends AppCompatActivity {
             }
         });
 
-        updateUI(players.get(0).getScore());
         endturn.setVisibility(View.INVISIBLE);
-
-
         rollDice.setOnClickListener(new View.OnClickListener() {
         @Override
             public void onClick(View v) {
@@ -241,6 +247,10 @@ public class GameActivity extends AppCompatActivity {
                         public void onAnimationEnd(@NonNull Animator animation) {
                             info.setVisibility(View.VISIBLE);
                             endturn.setVisibility(View.VISIBLE);
+                            for (Property data : properties) {
+                                if(data.getPosizione() == position[currentPlayer] && data.getGiocatore() == null)
+                                    buy.setVisibility(View.VISIBLE);
+                            }
                         }
 
                         @Override
@@ -256,8 +266,13 @@ public class GameActivity extends AppCompatActivity {
                     animator.addListener(animatorListener);
                 }
             },3500);
-
-
+            buy.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //game.gestisciAcquisto(players.get(currentPlayer),properties.);
+                }
+            });
+            updateUI(numeri[0]);
 
             info.setOnClickListener(new View.OnClickListener() {
                 @Override

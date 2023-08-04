@@ -1,4 +1,4 @@
-package it.uniba.dib.sms222316;
+package layout.sms222316;
 
 import org.junit.Test;
 
@@ -12,6 +12,6 @@ import static org.junit.Assert.*;
 public class ExampleUnitTest {
     @Test
     public void addition_isCorrect() {
-        assertEquals(4, 2 + 2);
+        Assert.assertEquals(4, 2 + 2);
     }
 }

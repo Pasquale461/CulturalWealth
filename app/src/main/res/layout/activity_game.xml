@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/sfondo_tabellone"
     tools:context=".GameActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -11,7 +12,7 @@
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_alignParentBottom="true"
-        android:background="@drawable/sfondo_tabellone"
+
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.045"
@@ -562,10 +563,20 @@
             android:text="info"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.334"
+            app:layout_constraintHorizontal_bias="0.161"
             app:layout_constraintStart_toEndOf="@+id/exa_32"
             app:layout_constraintTop_toBottomOf="@+id/endTurn"
             app:layout_constraintVertical_bias="0.164" />
+
+        <Button
+            android:id="@+id/buy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Compra"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/Info"
+            app:layout_constraintTop_toBottomOf="@+id/endTurn" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

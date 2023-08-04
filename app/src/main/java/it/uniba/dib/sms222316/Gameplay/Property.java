@@ -60,6 +60,8 @@ public class Property
             return nome;
         }
 
+        public int getPosizione() { return posizione; }
+
         public int getCosto() {
             return costo;
         }
@@ -105,11 +107,11 @@ public class Property
             else return false;
         }
 
-    public Player getGiocatore() {
+        public Player getGiocatore() {
         return Giocatore;
     }
 
-    public void setGiocatore(Player giocatore) {
+        public void setGiocatore(Player giocatore) {
         Giocatore = giocatore;
     }
 }
