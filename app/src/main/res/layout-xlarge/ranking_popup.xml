@@ -108,7 +108,7 @@
             app:layout_constraintVertical_bias="0.0">
 
             <ImageView
-                android:id="@+id/user_icon"
+                android:id="@+id/user_icon1"
                 android:layout_width="45dp"
                 android:layout_height="40dp"
                 android:background="#00FFFFFF"
@@ -118,7 +118,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/user_name"
+                android:id="@+id/user_name1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/RankName"
@@ -126,7 +126,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.079"
-                app:layout_constraintStart_toEndOf="@+id/user_icon"
+                app:layout_constraintStart_toEndOf="@+id/user_icon1"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
@@ -150,7 +150,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.397"
-                app:layout_constraintStart_toEndOf="@+id/user_name"
+                app:layout_constraintStart_toEndOf="@+id/user_name1"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.571" />
 

@@ -24,8 +24,8 @@ public class TurnDialog extends DialogFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_game, container, false);
 
-        playerNameTextView = view.findViewById(R.id.playerNameTextView);
-        playerScoreTextView = view.findViewById(R.id.playerNameTextView);
+        playerNameTextView = view.findViewById(R.id.name1);
+        playerScoreTextView = view.findViewById(R.id.money1);
 
         updateUI();
 

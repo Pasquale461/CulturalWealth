@@ -19,9 +19,12 @@ import android.widget.TextView;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -49,6 +52,8 @@ public class GameActivity extends AppCompatActivity {
     ImageView[] casella;
     boolean isViewCreated = false;
     private TextView playerNameTextView;
+    private TextView playerNameTextView2;
+    private TextView playerNameTextView3;
     private TextView playerScoreTextView;
     Game game;
     @Override
@@ -57,8 +62,8 @@ public class GameActivity extends AppCompatActivity {
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
         setContentView(R.layout.activity_game);
-        playerNameTextView = findViewById(R.id.playerNameTextView);
-        playerScoreTextView = findViewById(R.id.playerScoreTextView);
+        playerNameTextView = findViewById(R.id.name1);
+        playerScoreTextView = findViewById(R.id.money1);
         Button endturn = findViewById(R.id.endTurn);
         Button info = findViewById(R.id.Info);
         Button buy = findViewById(R.id.buy);
@@ -73,6 +78,10 @@ public class GameActivity extends AppCompatActivity {
         List<Player> players = new ArrayList<>();
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
 
+
+        playerNameTextView = findViewById(R.id.name1);findusername(FirebaseAuth.getInstance().getCurrentUser().getEmail());
+        playerNameTextView2 = findViewById(R.id.name2);playerNameTextView2.setText("Guest 2");
+        playerNameTextView3 = findViewById(R.id.name33);playerNameTextView3.setText("Guest 3");
         players.add(new Player("Giocatore 1"));
         players.add(new Player("Giocatore 2"));
         players.add(new Player("Giocatore 3"));
@@ -298,12 +307,31 @@ public class GameActivity extends AppCompatActivity {
 
     }
     private Player updateUI(int random) {
+
     Player currentPlayer = game.getCurrentPlayer();
     currentPlayer.addScore(random);
-    playerNameTextView.setText(currentPlayer.getName());
     playerScoreTextView.setText(String.valueOf(currentPlayer.getScore()));
     return currentPlayer;
     }
+
+    private void findusername(String Accountstring)
+    {
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("Users")
+                .whereEqualTo("email", Accountstring)
+                .get()
+                .addOnSuccessListener(queryDocumentSnapshots -> {
+                    for (QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
+                        playerNameTextView.setText(documentSnapshot.getString("nome"));
+
+                    }
+                });
+
+
+    }
+
+
 
     private GifDrawable rollDice(int number){
         int gifResourceId = 0;

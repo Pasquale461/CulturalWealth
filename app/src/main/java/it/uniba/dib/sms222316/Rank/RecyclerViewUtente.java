@@ -70,9 +70,9 @@ public class RecyclerViewUtente extends RecyclerView.Adapter<RecyclerViewUtente.
         public MyViewHolderUser(View itemView) {
             super(itemView);
 
-            User_name = itemView.findViewById(R.id.user_name) ;
+            User_name = itemView.findViewById(R.id.user_name1) ;
             cardView = itemView.findViewById(R.id.card_utente);
-            img = itemView.findViewById(R.id.user_icon);
+            img = itemView.findViewById(R.id.user_icon1);
             points = itemView.findViewById(R.id.user_score);
         }
     }

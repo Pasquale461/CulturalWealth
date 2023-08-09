@@ -14,7 +14,7 @@
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/linearLayout2"
+        android:id="@+id/infoplayer1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:alpha="1"
@@ -22,7 +22,7 @@
         android:baselineAligned="false">
 
         <TextView
-            android:id="@+id/user_name"
+            android:id="@+id/user_name1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="User Name"
@@ -55,7 +55,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.3"
-            app:layout_constraintStart_toEndOf="@+id/user_name"
+            app:layout_constraintStart_toEndOf="@+id/user_name1"
             app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.cardview.widget.CardView
@@ -63,14 +63,14 @@
             android:layout_height="40dp"
             app:cardCornerRadius="15dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/user_name"
+            app:layout_constraintEnd_toStartOf="@+id/user_name1"
             app:layout_constraintHorizontal_bias="0.57"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
 
             <ImageView
-                android:id="@+id/user_icon"
+                android:id="@+id/user_icon1"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="fitEnd"
