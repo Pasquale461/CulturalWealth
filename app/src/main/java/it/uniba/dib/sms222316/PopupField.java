@@ -2,33 +2,21 @@ package it.uniba.dib.sms222316;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.content.res.AssetManager;
-import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
 import com.wajahatkarim3.easyflipview.EasyFlipView;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
 import java.util.List;
 
-import it.uniba.dib.sms222316.Gameplay.Game;
 import it.uniba.dib.sms222316.Gameplay.Property;
 
 public class PopupField extends Dialog {
@@ -72,10 +60,20 @@ public class PopupField extends Dialog {
         TextView Rent3P = findViewById(R.id.rentthreepaint);
         TextView Rent4P = findViewById(R.id.rentfourpaint);
         TextView Description = findViewById(R.id.smalldescription);
-            for (int i = 0; i < properties.size(); i++) {
+        ImageView photo = findViewById(R.id.imagecard);
+        for (int i = 0; i < properties.size(); i++) {
                 if(properties.get(i).getTipo().equals("monument")) {
                     String name = properties.get(i).getNome();
                     if (name.equals(casella[field].getContentDescription())) {
+
+                        String imagePath = properties.get(i).getphoto(); // Sostituisci con il tuo percorso effettivo
+                        Log.d("imgpath"  , "aaaa:"+ imagePath);
+                        // Carica l'immagine dal percorso specifico
+                        Bitmap bitmap = BitmapFactory.decodeFile(imagePath);
+
+                        // Imposta l'immagine Bitmap nell'ImageView
+                        photo.setImageBitmap(bitmap);
+
                         Name.setText(name);
                         int price = properties.get(i).getCosto();
                         Price.setText("Prezzo:" + price);
@@ -98,6 +96,9 @@ public class PopupField extends Dialog {
                     }
                 }
                 if(properties.get(i).getTipo().equals("museum")) {
+                    int imageResource = R.drawable.museo;
+
+
                     String name = properties.get(i).getNome();
                     if (name.equals(casella[field].getContentDescription())) {
                         Name.setText(name);
@@ -141,6 +142,6 @@ public class PopupField extends Dialog {
 
 
 
-        ImageView Image = findViewById(R.id.image);
+        ImageView Image = findViewById(R.id.imagecard);
     }
 }

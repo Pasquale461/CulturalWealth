@@ -10,7 +10,8 @@
             "description_en": "blabla",
             "sell_price": 30,
             "group": "1",
-            "position": 1
+            "position": 1,
+            "foto_path" : "/data/data/it.uniba.dib.sms222316/files/CulturalWealth/Monuments/stonhenge.png"
         },
         {
             "name": "Three Pyramid of Gyza",
@@ -22,7 +23,8 @@
             "description_en": "blabla",
             "sell_price": 30,
             "group": "1",
-            "position": 3
+            "position": 3,
+            "foto_path" : "/data/data/it.uniba.dib.sms222316/files/CulturalWealth/Monuments/ThreePyramidsofGiza.png"
         },
         {
             "name": "Petra",
@@ -34,7 +36,8 @@
             "description_en": "blabla",
             "sell_price": 50,
             "group": "2",
-            "position": 6
+            "position": 6,
+            "foto_path" : "/data/data/it.uniba.dib.sms222316/files/CulturalWealth/Monuments/AncientCityPetraWonder.png"
         },
         {
             "name": "Parthenon",
@@ -46,7 +49,8 @@
             "description_en": "blabla",
             "sell_price": 50,
             "group": "2",
-            "position": 8
+            "position": 8,
+            "foto_path" : "/data/data/it.uniba.dib.sms222316/files/CulturalWealth/Monuments/Parthenon.png"
         },
         
         {
@@ -59,7 +63,8 @@
             "description_en": "blabla",
             "sell_price": 60,
             "group": "2",
-            "position": 9
+            "position": 9,
+            "foto_path" : "/data/data/it.uniba.dib.sms222316/files/CulturalWealth/Monuments/GreatWallofChina.png"
         },
         {
             "name": "Colosseum",
@@ -71,7 +76,8 @@
             "description_en": "blabla",
             "sell_price": 70,
             "group": "3",
-            "position": 11
+            "position": 11,
+            "foto_path" : "/data/data/it.uniba.dib.sms222316/files/CulturalWealth/Monuments/colosseo.png"
         },
         {
             "name": "Chichen Itza",
@@ -83,7 +89,8 @@
             "description_en": "blabla",
             "sell_price": 70,
             "group": "3",
-            "position": 13
+            "position": 13,
+            "foto_path" : "/data/data/it.uniba.dib.sms222316/files/CulturalWealth/Monuments/ChichenItza.png"
         },
         {
             "name": "Hagia Sophia",
@@ -95,7 +102,8 @@
             "description_en": "blabla",
             "sell_price": 80,
             "group": "3",
-            "position": 14
+            "position": 14,
+            "foto_path" : "/data/data/it.uniba.dib.sms222316/files/CulturalWealth/Monuments/HagiaSofia.png"
         },
         {
             "name": "Angkor Wat",
@@ -107,7 +115,8 @@
             "description_en": "blabla",
             "sell_price": 90,
             "group": "4",
-            "position": 16
+            "position": 16,
+            "foto_path" : "/data/data/it.uniba.dib.sms222316/files/CulturalWealth/Monuments/AngkorWat.png"
         },
         {
             "name": "Alhambra",
@@ -119,7 +128,8 @@
             "description_en": "blabla",
             "sell_price": 90,
             "group": "4",
-            "position": 18
+            "position": 18,
+            "foto_path" : "/data/data/it.uniba.dib.sms222316/files/CulturalWealth/Monuments/Alhambra.png"
         },
         {
             "name": "Kamakura Daibutsu",
@@ -131,7 +141,8 @@
             "description_en": "blabla",
             "sell_price": 100,
             "group": "4",
-            "position": 19
+            "position": 19,
+            "foto_path" : "/data/data/it.uniba.dib.sms222316/files/CulturalWealth/Monuments/KamakuraDaibutsu.png"
         },
         {
             "name": "Bran Castle",
@@ -143,7 +154,8 @@
             "description_en": "blabla",
             "sell_price": 110,
             "group": "5",
-            "position": 21
+            "position": 21,
+            "foto_path" : "/data/data/it.uniba.dib.sms222316/files/CulturalWealth/Monuments/bran castle.png"
         },
         {
             "name": "Machu Picchu",
@@ -155,7 +167,8 @@
             "description_en": "blabla",
             "sell_price": 110,
             "group": "5",
-            "position": 23
+            "position": 23,
+            "foto_path" : "/data/data/it.uniba.dib.sms222316/files/CulturalWealth/Monuments/MachuPicchu.png"
         },
         {
             "name": "Kremlin",
@@ -167,7 +180,8 @@
             "description_en": "blabla",
             "sell_price": 120,
             "group": "5",
-            "position": 24
+            "position": 24,
+            "foto_path" : "/data/data/it.uniba.dib.sms222316/files/CulturalWealth/Monuments/kremlino.png"
         },
         {
             "name": "Taj Mahal",
@@ -179,7 +193,8 @@
             "description_en": "blabla",
             "sell_price": 130,
             "group": "6",
-            "position": 26
+            "position": 26,
+            "foto_path" : "/data/data/it.uniba.dib.sms222316/files/CulturalWealth/Monuments/TajMahal.png"
         },
         {
             "name": "Big Ben",
@@ -191,7 +206,8 @@
             "description_en": "blabla",
             "sell_price": 130,
             "group": "6",
-            "position": 27
+            "position": 27,
+            "foto_path" : "/data/data/it.uniba.dib.sms222316/files/CulturalWealth/Monuments/big ben.png"
         },
         {
             "name": "Tour Eiffel",
@@ -203,7 +219,8 @@
             "description_en": "blabla",
             "sell_price": 140,
             "group": "6",
-            "position": 28
+            "position": 28,
+            "foto_path" : "/data/data/it.uniba.dib.sms222316/files/CulturalWealth/Monuments/TourEiffel.png"
         },
         {
             "name": "Christ the Redeemer",
@@ -215,7 +232,8 @@
             "description_en": "blabla",
             "sell_price": 200,
             "group": "7",
-            "position": 31
+            "position": 31,
+            "foto_path" : "/data/data/it.uniba.dib.sms222316/files/CulturalWealth/Monuments/cristo redentore.png"
         },
         {
             "name": "United Nations",
@@ -227,7 +245,8 @@
             "description_en": "blabla",
             "sell_price": 150,
             "group": "7",
-            "position": 32
+            "position": 32,
+            "foto_path" : "/data/data/it.uniba.dib.sms222316/files/CulturalWealth/Monuments/NazioniUnite.png"
         },
         {
             "name": "Montreal Biosphere",
@@ -239,7 +258,8 @@
             "description_en": "blabla",
             "sell_price": 160,
             "group": "7",
-            "position": 34
+            "position": 34,
+            "foto_path" : "/data/data/it.uniba.dib.sms222316/files/CulturalWealth/Monuments/MontrealBiospherecartoonized.png"
         },
         {
             "name": "Sidney Opera House",
@@ -251,7 +271,8 @@
             "description_en": "blabla",
             "sell_price": 150,
             "group": "8",
-            "position": 37
+            "position": 37,
+            "foto_path" : "/data/data/it.uniba.dib.sms222316/files/CulturalWealth/Monuments/SydneyOperaHouse.png"
         },
         {
             "name": "Burj Khalifa",
@@ -263,7 +284,8 @@
             "description_en": "blabla",
             "sell_price": 200,
             "group": "8",
-            "position": 39
+            "position": 39,
+            "foto_path" : "/data/data/it.uniba.dib.sms222316/files/CulturalWealth/Monuments/BurjKhalifa.png"
         },
         {
             "name": "Museo",
@@ -273,7 +295,8 @@
             "description_it": "blabla",
             "description_en": "blabla",
             "sell_price": 100,
-            "position": 5
+            "position": 5,
+            "foto_path" : ""
         },
         {
             "name": "Elettro",
@@ -283,7 +306,8 @@
             "description_it": "blabla",
             "description_en": "blabla",
             "sell_price": 75,
-            "position": 12
+            "position": 12,
+            "foto_path" : ""
         },
         {
             "name": "Museo 2",
@@ -293,7 +317,8 @@
             "description_it": "blabla",
             "description_en": "blabla",
             "sell_price": 100,
-            "position": 15
+            "position": 15,
+            "foto_path" : ""
         },
         {
             "name": "Museo 3",
@@ -303,7 +328,8 @@
             "description_it": "blabla",
             "description_en": "blabla",
             "sell_price": 100,
-            "position": 25
+            "position": 25,
+            "foto_path" : ""
         },
         {
             "name": "Acqua",
@@ -313,7 +339,8 @@
             "description_it": "blabla",
             "description_en": "blabla",
             "sell_price": 75,
-            "position": 28
+            "position": 28,
+            "foto_path" : ""
         },
         {
             "name": "Museo 4",
@@ -323,7 +350,8 @@
             "description_it": "blabla",
             "description_en": "blabla",
             "sell_price": 100,
-            "position": 35
+            "position": 35,
+            "foto_path" : ""
         }
     ]
 }

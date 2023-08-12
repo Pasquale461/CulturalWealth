@@ -123,13 +123,14 @@ public class GameActivity extends AppCompatActivity {
                 int paintCost = jsonObject.getInt("paintCost");
                 int sell_price = jsonObject.getInt("sell_price");
                 int posizione = jsonObject.getInt("position");
-
-                Property property = new Property(name,type,group,description,price,rent,paintCost,sell_price,posizione);
+                String foto = jsonObject.getString("foto_path");
+                Property property = new Property(name,type,group,description,price,rent,paintCost,sell_price,posizione,foto);
                 properties.add(property);
                 }
                 if(jsonObject.getString("type").equals("museum") || jsonObject.getString("type").equals("utility")){
                     String name = jsonObject.getString("name");
                     String type = jsonObject.getString("type");
+                    String group = "";
                     String description = jsonObject.getString("description_it");
                     int price = jsonObject.getInt("price");
                     JSONArray rentarray = jsonObject.getJSONArray("rent");
@@ -137,10 +138,12 @@ public class GameActivity extends AppCompatActivity {
                     for (int j = 0; j < rentarray.length(); j++) {
                         rent[j] = rentarray.getInt(j);
                     }
+                    int paintCost = 0;
                     int sell_price = jsonObject.getInt("sell_price");
                     int posizione = jsonObject.getInt("position");
+                    String foto = "";
 
-                    Property property = new Property(name,type,description,price,rent,sell_price,posizione);
+                    Property property = new Property(name,type,group,description,price,rent,paintCost,sell_price,posizione,foto);
                     properties.add(property);
                 }
             }

@@ -5,7 +5,7 @@ public class Property
         private String nome , tipo , gruppo;
         private int costo , costoQuadro , prezzoVendita;
         private int posizione;
-
+        private String photo;
         private int affitto[];
         private int paints;
 
@@ -13,7 +13,7 @@ public class Property
         private Player Giocatore;
 
         //Costruttore per l'inizio della partita
-        public Property(String nome,  String tipo, String gruppo,  String descrizione , int costo, int affitto[], int costoQuadro , int prezzoVendita , int posizione) {
+        public Property(String nome,  String tipo, String gruppo,  String descrizione , int costo, int affitto[], int costoQuadro , int prezzoVendita , int posizione, String photo) {
             this.nome = nome;
             this.costo = costo;
             this.affitto = affitto;
@@ -24,6 +24,7 @@ public class Property
             this.prezzoVendita = prezzoVendita;
             this.posizione = posizione;
             this.paints =0;
+            this.photo = photo;
             this.Giocatore = null;
         }
 
@@ -113,5 +114,8 @@ public class Property
 
         public void setGiocatore(Player giocatore) {
         Giocatore = giocatore;
+    }
+
+    public String getphoto() {return photo;
     }
 }

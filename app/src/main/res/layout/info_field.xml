@@ -64,7 +64,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
-                android:id="@+id/image"
+                android:id="@+id/imagecard"
                 android:layout_width="210dp"
                 android:layout_height="209dp"
                 app:layout_constraintBottom_toTopOf="@+id/smalldescription"
@@ -72,7 +72,8 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/backname"
                 app:layout_constraintVertical_bias="0.553"
-                tools:srcCompat="@tools:sample/avatars" />
+                app:srcCompat="@drawable/museo"
+                tools:srcCompat="@drawable/museo" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

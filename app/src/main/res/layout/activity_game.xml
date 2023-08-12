@@ -10,7 +10,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/relativeLayout"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentBottom="true"
 
@@ -23,18 +23,16 @@
 
         <ImageView
             android:id="@+id/exa_10"
-            android:layout_width="90dp"
-            android:layout_height="57dp"
-            android:layout_marginStart="16dp"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_marginStart="28dp"
             android:layout_marginTop="24dp"
             android:layout_marginBottom="24dp"
             android:contentDescription="Prison"
-            app:tint="@color/grey"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.501"
-
             app:srcCompat="@drawable/casella" />
 
         <ImageView
@@ -43,7 +41,7 @@
             android:layout_height="43dp"
             android:layout_marginBottom="55dp"
             android:contentDescription="Colosseum"
-            app:tint="@color/new_orleans"
+            android:tint="@color/Redwood"
             app:layout_constraintBottom_toBottomOf="@+id/exa_10"
             app:layout_constraintEnd_toEndOf="@+id/exa_10"
             app:layout_constraintStart_toStartOf="@+id/exa_10"
@@ -65,8 +63,8 @@
             android:layout_height="43dp"
             android:layout_marginStart="34dp"
             android:layout_marginBottom="19dp"
-            app:tint="@color/new_orleans"
             android:contentDescription="Chichen Itza"
+            android:tint="@color/Redwood"
             app:layout_constraintBottom_toBottomOf="@+id/exa_12"
             app:layout_constraintStart_toStartOf="@+id/exa_12"
             app:srcCompat="@drawable/casella" />
@@ -76,8 +74,8 @@
             android:layout_width="43dp"
             android:layout_height="43dp"
             android:layout_marginBottom="39dp"
-            app:tint="@color/new_orleans"
             android:contentDescription="Hagia Sophia"
+            android:tint="@color/Redwood"
             app:layout_constraintBottom_toBottomOf="@+id/exa_13"
             app:layout_constraintStart_toStartOf="@+id/exa_13"
             app:srcCompat="@drawable/casella" />
@@ -100,7 +98,7 @@
             android:layout_marginStart="34dp"
             android:layout_marginBottom="15dp"
             android:contentDescription="Angkor Wat"
-            app:tint="@color/purple_200"
+            android:tint="@color/Jodie_Blue"
             app:layout_constraintBottom_toBottomOf="@+id/exa_15"
             app:layout_constraintStart_toStartOf="@+id/exa_15"
             app:srcCompat="@drawable/casella" />
@@ -122,8 +120,8 @@
             android:layout_height="43dp"
             android:layout_marginStart="34dp"
             android:layout_marginBottom="15dp"
-            app:tint="@color/purple_200"
             android:contentDescription="Alhambra"
+            android:tint="@color/Jodie_Blue"
             app:layout_constraintBottom_toBottomOf="@+id/exa_17"
             app:layout_constraintStart_toStartOf="@+id/exa_17"
             app:srcCompat="@drawable/casella" />
@@ -133,9 +131,9 @@
             android:layout_width="43dp"
             android:layout_height="43dp"
             android:layout_marginStart="34dp"
-            app:tint="@color/purple_200"
             android:layout_marginTop="15dp"
             android:contentDescription="Kamakura Daibutsu"
+            android:tint="@color/Jodie_Blue"
             app:layout_constraintStart_toStartOf="@+id/exa_18"
             app:layout_constraintTop_toTopOf="@+id/exa_18"
             app:srcCompat="@drawable/casella" />
@@ -146,7 +144,6 @@
             android:layout_height="60dp"
             android:layout_marginStart="42dp"
             android:contentDescription="Parking"
-            app:tint="@color/grey"
             app:layout_constraintBottom_toBottomOf="@+id/exa_19"
             app:layout_constraintStart_toStartOf="@+id/exa_19"
             app:layout_constraintTop_toTopOf="@+id/exa_19"
@@ -158,7 +155,7 @@
             android:layout_height="43dp"
             android:layout_marginStart="59dp"
             android:contentDescription="Bran Castle"
-            app:tint="@color/teal_200"
+            android:tint="@color/summer_green"
             app:layout_constraintBottom_toBottomOf="@+id/exa_20"
             app:layout_constraintStart_toStartOf="@+id/exa_20"
             app:layout_constraintTop_toTopOf="@+id/exa_20"
@@ -181,8 +178,8 @@
             android:layout_height="43dp"
             android:layout_marginStart="34dp"
             android:layout_marginTop="15dp"
-            app:tint="@color/teal_200"
             android:contentDescription="Machu Picchu"
+            android:tint="@color/summer_green"
             app:layout_constraintStart_toStartOf="@+id/exa_22"
             app:layout_constraintTop_toTopOf="@+id/exa_22"
             app:srcCompat="@drawable/casella" />
@@ -194,7 +191,7 @@
             android:layout_marginStart="34dp"
             android:layout_marginBottom="15dp"
             android:contentDescription="Kremlin"
-            app:tint="@color/teal_200"
+            android:tint="@color/summer_green"
             app:layout_constraintBottom_toBottomOf="@+id/exa_23"
             app:layout_constraintStart_toStartOf="@+id/exa_23"
             app:srcCompat="@drawable/casella" />
@@ -216,8 +213,8 @@
             android:layout_height="43dp"
             android:layout_marginStart="34dp"
             android:layout_marginTop="15dp"
-            app:tint="@color/summer_green"
             android:contentDescription="Taj Mahal"
+            android:tint="@color/Coral_pink"
             app:layout_constraintStart_toStartOf="@+id/exa_25"
             app:layout_constraintTop_toTopOf="@+id/exa_25"
             app:srcCompat="@drawable/casella" />
@@ -228,7 +225,7 @@
             android:layout_height="43dp"
             android:layout_marginTop="39dp"
             android:contentDescription="Big Ben"
-            app:tint="@color/summer_green"
+            android:tint="@color/Coral_pink"
             app:layout_constraintStart_toStartOf="@+id/exa_26"
             app:layout_constraintTop_toTopOf="@+id/exa_26"
             app:srcCompat="@drawable/casella" />
@@ -239,8 +236,8 @@
             android:layout_height="43dp"
             android:layout_marginStart="34dp"
             android:layout_marginTop="19dp"
-            app:tint="@color/summer_green"
             android:contentDescription="Acqua"
+            android:tint="@color/Coral_pink"
             app:layout_constraintStart_toStartOf="@+id/exa_27"
             app:layout_constraintTop_toTopOf="@+id/exa_27"
             app:srcCompat="@drawable/casella" />
@@ -259,7 +256,7 @@
             android:id="@+id/exa_30"
             android:layout_width="60dp"
             android:layout_height="60dp"
-            app:tint="@color/grey"
+
             android:contentDescription="Go_to_jail"
             app:layout_constraintBottom_toTopOf="@+id/exa_31"
             app:layout_constraintEnd_toEndOf="@+id/exa_29"
@@ -272,8 +269,8 @@
             android:layout_width="43dp"
             android:layout_height="43dp"
             android:layout_marginTop="55dp"
-            app:tint="@color/dark_wood"
             android:contentDescription="Great Wall of China"
+            android:tint="@color/saffron"
             app:layout_constraintEnd_toEndOf="@+id/exa_10"
             app:layout_constraintStart_toStartOf="@+id/exa_10"
             app:layout_constraintTop_toTopOf="@+id/exa_10"
@@ -285,7 +282,7 @@
             android:layout_height="43dp"
             android:layout_marginTop="39dp"
             android:contentDescription="Parthenon"
-            app:tint="@color/dark_wood"
+            android:tint="@color/saffron"
             app:layout_constraintStart_toStartOf="@+id/exa_9"
             app:layout_constraintTop_toTopOf="@+id/exa_9"
             app:srcCompat="@drawable/casella" />
@@ -296,7 +293,6 @@
             android:layout_height="43dp"
             android:layout_marginStart="34dp"
             android:layout_marginTop="15dp"
-
             android:contentDescription="Chance"
             app:layout_constraintStart_toStartOf="@+id/exa_8"
             app:layout_constraintTop_toTopOf="@+id/exa_8"
@@ -308,7 +304,7 @@
             android:layout_height="43dp"
             android:layout_marginTop="39dp"
             android:contentDescription="Petra"
-            app:tint="@color/dark_wood"
+            android:tint="@color/saffron"
             app:layout_constraintStart_toStartOf="@+id/exa_7"
             app:layout_constraintTop_toTopOf="@+id/exa_7"
             app:srcCompat="@drawable/casella" />
@@ -333,7 +329,7 @@
             android:contentDescription="Income_tax"
             app:layout_constraintStart_toStartOf="@+id/exa_5"
             app:layout_constraintTop_toTopOf="@+id/exa_5"
-            app:srcCompat="@drawable/casella"/>
+            app:srcCompat="@drawable/casella" />
 
         <ImageView
             android:id="@+id/exa_3"
@@ -341,8 +337,8 @@
             android:layout_height="43dp"
             android:layout_marginStart="34dp"
             android:layout_marginBottom="15dp"
-            app:tint="@android:color/holo_green_dark"
             android:contentDescription="Three Pyramid of Gyza"
+            android:tint="@color/Air_Force_blue"
             app:layout_constraintBottom_toBottomOf="@+id/exa_4"
             app:layout_constraintStart_toStartOf="@+id/exa_4"
             app:srcCompat="@drawable/casella" />
@@ -365,21 +361,22 @@
             android:layout_marginStart="34dp"
             android:layout_marginBottom="15dp"
             android:contentDescription="Stonehenge"
+            android:tint="@color/Air_Force_blue"
+            android:tintMode="src_in"
             app:layout_constraintBottom_toBottomOf="@+id/exa_2"
             app:layout_constraintStart_toStartOf="@+id/exa_2"
-            app:srcCompat="@drawable/casella"
-            app:tint="@android:color/holo_green_dark" />
+            app:srcCompat="@drawable/casella" />
 
         <ImageView
             android:id="@+id/exa_0"
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_marginStart="42dp"
+            android:tint="#3E9A9A9A"
             app:layout_constraintBottom_toBottomOf="@+id/exa_1"
             app:layout_constraintStart_toStartOf="@+id/exa_1"
             app:layout_constraintTop_toTopOf="@+id/exa_1"
-            app:tint="@color/grey"
-            app:srcCompat="@drawable/casella"/>
+            app:srcCompat="@drawable/casella" />
 
         <ImageView
             android:id="@+id/exa_39"
@@ -387,7 +384,7 @@
             android:layout_height="43dp"
             android:layout_marginStart="59dp"
             android:contentDescription="Burj Khalifa"
-            app:tint="@color/purple_500"
+            android:tint="@color/Violet"
             app:layout_constraintBottom_toBottomOf="@+id/exa_0"
             app:layout_constraintStart_toStartOf="@+id/exa_0"
             app:layout_constraintTop_toTopOf="@+id/exa_0"
@@ -410,8 +407,8 @@
             android:layout_height="43dp"
             android:layout_marginStart="34dp"
             android:layout_marginBottom="15dp"
-            app:tint="@color/purple_500"
             android:contentDescription="Sidney Opera House"
+            android:tint="@color/Violet"
             app:layout_constraintBottom_toBottomOf="@+id/exa_38"
             app:layout_constraintStart_toStartOf="@+id/exa_38"
             app:srcCompat="@drawable/casella" />
@@ -444,8 +441,8 @@
             android:layout_height="43dp"
             android:layout_marginStart="34dp"
             android:layout_marginBottom="15dp"
-            app:tint="@color/sandy_brown"
             android:contentDescription="Montreal Biosphere"
+            android:tint="@color/Pumpkin"
             app:layout_constraintBottom_toBottomOf="@+id/exa_35"
             app:layout_constraintStart_toStartOf="@+id/exa_35"
             app:srcCompat="@drawable/casella" />
@@ -466,8 +463,8 @@
             android:layout_height="43dp"
             android:layout_marginStart="34dp"
             android:layout_marginBottom="15dp"
-            app:tint="@color/sandy_brown"
             android:contentDescription="United Nations"
+            android:tint="@color/Pumpkin"
             app:layout_constraintBottom_toBottomOf="@+id/exa_33"
             app:layout_constraintStart_toStartOf="@+id/exa_33"
             app:srcCompat="@drawable/casella" />
@@ -477,8 +474,8 @@
             android:layout_width="43dp"
             android:layout_height="43dp"
             android:layout_marginBottom="39dp"
-            app:tint="@color/sandy_brown"
             android:contentDescription="Christ the Redeemer"
+            android:tint="@color/Pumpkin"
             app:layout_constraintBottom_toBottomOf="@+id/exa_32"
             app:layout_constraintStart_toStartOf="@+id/exa_32"
             app:srcCompat="@drawable/casella" />
@@ -556,12 +553,11 @@
             android:id="@+id/Info"
             android:layout_width="58dp"
             android:layout_height="47dp"
-            android:layout_marginEnd="100dp"
             android:layout_marginBottom="4dp"
             android:backgroundTint="@color/new_orleans"
             android:text="info"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/infoplayer2"
             app:layout_constraintTop_toBottomOf="@+id/endTurn" />
 
         <Button
