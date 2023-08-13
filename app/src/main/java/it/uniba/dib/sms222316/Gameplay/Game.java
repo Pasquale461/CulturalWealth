@@ -1,6 +1,7 @@
 package it.uniba.dib.sms222316.Gameplay;
 
 import android.content.res.Resources;
+import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -32,7 +33,16 @@ public class Game {
         return players.get(currentPlayerIndex);
     }
 
-    public void endTurn() {
+    public void endTurn(List<Player> players) {
+        int count =1;
+        Log.d("count" , ""+count);
+            for (Player app : players)
+            {
+                if (!app.isBankrupt())count+=1;
+                Log.d("count" , ""+count);
+            }
+            if (count == 1)terminaPartita();
+            if(players.get(currentPlayerIndex).getMoney() <= 0){currentPlayerIndex = (currentPlayerIndex + 1) % players.size();players.get(currentPlayerIndex).setBankrupt();endTurn(players);}else
         currentPlayerIndex = (currentPlayerIndex + 1) % players.size();
     }
 
@@ -52,7 +62,7 @@ public class Game {
 
     public void gestisciLancioDadi(Player player, int valoreDado1, int valoreDado2) {
         if (!gameStarted) {
-            throw new IllegalStateException("La partita non è ancora iniziata.");
+
         }
 
         int sommaDadi = valoreDado1 + valoreDado2;
@@ -99,7 +109,7 @@ public class Game {
 
     public void prossimoTurno() {
         if (!gameStarted) {
-            throw new IllegalStateException("La partita non è ancora iniziata.");
+            //
         }
 
 
@@ -109,7 +119,7 @@ public class Game {
     public int[] dadi() {
 
         if (!gameStarted) {
-            throw new IllegalStateException("La partita non è ancora iniziata.");
+
         }
         int[] randomNumber= new int[2];
         randomNumber[0] = (int) (Math.random() * 6) + 1;

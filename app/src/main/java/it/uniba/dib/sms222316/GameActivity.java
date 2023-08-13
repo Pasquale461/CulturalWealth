@@ -6,12 +6,17 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.animation.Animator;
 import android.animation.ObjectAnimator;
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.graphics.Path;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewTreeObserver;
+import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -30,6 +35,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import it.uniba.dib.sms222316.Rank.ranking_popup;
+import it.uniba.dib.sms222316.databinding.EndgamePopupBinding;
 import pl.droidsonroids.gif.GifDrawable;
 import pl.droidsonroids.gif.GifImageView;
 
@@ -221,92 +228,107 @@ public class GameActivity extends AppCompatActivity {
             public void onClick(View v) {
 
             //Lancio dei dadi
-            int[] numeri = game.dadi();
-            rollDice.setEnabled(false);
-            GifDrawable Gif1 = rollDice(numeri[0]);
-            GifDrawable Gif2 = rollDice(numeri[1]);
-            Gif1.reset(); // Resetta la GIF all'inizio
-            Gif1.start(); // Inizia animazione GIF
-            Dice1.setImageDrawable(Gif1);
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    Gif2.reset(); // Resetta la GIF all'inizio
-                    Gif2.start(); // Inizia animazione GIF
-                    Dice2.setImageDrawable(Gif2);
+
+
+                if (game.getCurrentPlayer().getMoney() <= 0) {
+                    players.get(game.getCurrentPlayerIndex()).setBankrupt();
+                    updateUI(players);
                 }
-            },200);
 
-
-
-            int currentPlayer = game.getCurrentPlayerIndex();
-
-            Path path = new Path();
-            path.moveTo(casella[position[currentPlayer]].getX(),casella[position[currentPlayer]].getY());
-            for(int i = 1;i<=(numeri[0]+numeri[1]);i++) {
-                position[currentPlayer] ++;
-                if(position[currentPlayer] == 40) position[currentPlayer] =0;
-                path.lineTo(casella[position[currentPlayer]].getX(), casella[position[currentPlayer]].getY());
+                int[] numeri = game.dadi();
+            if(!game.isGameStarted())
+            {
+                endgame_popup end = new endgame_popup(GameActivity.this);
+                //popup classifica
+                Window window = end.getWindow();
+                window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                window.setGravity(Gravity.CENTER);
+                end.show();
             }
+                rollDice.setEnabled(false);
+                GifDrawable Gif1 = rollDice(numeri[0]);
+                GifDrawable Gif2 = rollDice(numeri[1]);
+                Gif1.reset(); // Resetta la GIF all'inizio
+                Gif1.start(); // Inizia animazione GIF
+                Dice1.setImageDrawable(Gif1);
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        Gif2.reset(); // Resetta la GIF all'inizio
+                        Gif2.start(); // Inizia animazione GIF
+                        Dice2.setImageDrawable(Gif2);
+                    }
+                }, 200);
 
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    ObjectAnimator animator = ObjectAnimator.ofFloat(pedina[currentPlayer], pedina[currentPlayer].X,pedina[currentPlayer].Y, path);
-                    animator.setDuration(2000);
-                    animator.start();
-                    Animator.AnimatorListener animatorListener = new Animator.AnimatorListener() {
-                        @Override
-                        public void onAnimationStart(@NonNull Animator animation) {
 
-                        }
+                int currentPlayer = game.getCurrentPlayerIndex();
 
-                        @Override
-                        public void onAnimationEnd(@NonNull Animator animation) {
-                            info.setVisibility(View.VISIBLE);
-                            endturn.setVisibility(View.VISIBLE);
-                            for (Property data : properties) {
-                                if(data.getPosizione() == position[currentPlayer] && data.getGiocatore() == null)
-                                    buy.setVisibility(View.VISIBLE);
+                Path path = new Path();
+                path.moveTo(casella[position[currentPlayer]].getX(), casella[position[currentPlayer]].getY());
+                for (int i = 1; i <= (numeri[0] + numeri[1]); i++) {
+                    position[currentPlayer]++;
+                    if (position[currentPlayer] == 40) position[currentPlayer] = 0;
+                    path.lineTo(casella[position[currentPlayer]].getX(), casella[position[currentPlayer]].getY());
+                }
+
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        ObjectAnimator animator = ObjectAnimator.ofFloat(pedina[currentPlayer], pedina[currentPlayer].X, pedina[currentPlayer].Y, path);
+                        animator.setDuration(2000);
+                        animator.start();
+                        Animator.AnimatorListener animatorListener = new Animator.AnimatorListener() {
+                            @Override
+                            public void onAnimationStart(@NonNull Animator animation) {
+
                             }
-                        }
 
-                        @Override
-                        public void onAnimationCancel(@NonNull Animator animation) {
+                            @Override
+                            public void onAnimationEnd(@NonNull Animator animation) {
+                                info.setVisibility(View.VISIBLE);
+                                endturn.setVisibility(View.VISIBLE);
+                                for (Property data : properties) {
+                                    if (data.getPosizione() == position[currentPlayer] && data.getGiocatore() == null)
+                                        buy.setVisibility(View.VISIBLE);
+                                }
+                            }
 
-                        }
+                            @Override
+                            public void onAnimationCancel(@NonNull Animator animation) {
 
-                        @Override
-                        public void onAnimationRepeat(@NonNull Animator animation) {
+                            }
 
-                        }
-                    };
-                    animator.addListener(animatorListener);
-                }
-            },3500);
-            buy.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    //game.gestisciAcquisto(players.get(currentPlayer),properties.);
-                }
-            });
+                            @Override
+                            public void onAnimationRepeat(@NonNull Animator animation) {
+
+                            }
+                        };
+                        animator.addListener(animatorListener);
+                    }
+                }, 3500);
+                buy.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //game.gestisciAcquisto(players.get(currentPlayer),properties.);
+                    }
+                });
                 updateUI(players);
 
-            info.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    field.InfoField(position[currentPlayer],properties);
-                    field.show();
-                }
-            });
-            players.get(currentPlayer).setPosition(position[currentPlayer]);
+                info.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        field.InfoField(position[currentPlayer], properties);
+                        field.show();
+                    }
+                });
+                players.get(currentPlayer).setPosition(position[currentPlayer]);
             }
 
         });
         endturn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                game.endTurn();
+                game.endTurn(players);
                 endturn.setVisibility(View.INVISIBLE);
                 info.setVisibility(View.INVISIBLE);
                 rollDice.setEnabled(true);
@@ -317,14 +339,17 @@ public class GameActivity extends AppCompatActivity {
     }
     private Player updateUI(List<Player> players) {
         Player currentPlayer = game.getCurrentPlayer();
+
         int money1 = players.get(0).getMoney();
         int money2 = players.get(2).getMoney();
         int money3 = players.get(1).getMoney();
-        players.get(0).removeMoney(10);
+        players.get(0).removeMoney(1500);
+        players.get(1).removeMoney(400);
 
-        playerScoreTextView.setText(String.valueOf(money1)+ "$");
-        playerScoreTextView3.setText(String.valueOf(money3)+ "$");
-        playerScoreTextView2.setText(String.valueOf(money2)+ "$");
+
+        if (players.get(0).isBankrupt())playerScoreTextView.setText("BANCAROTTA");else playerScoreTextView.setText(String.valueOf(money1)+ "$");
+        if (players.get(1).isBankrupt())playerScoreTextView.setText("BANCAROTTA");else playerScoreTextView2.setText(String.valueOf(money2)+ "$");
+        if (players.get(2).isBankrupt())playerScoreTextView.setText("BANCAROTTA");else playerScoreTextView3.setText(String.valueOf(money3)+ "$");
     return currentPlayer;
     }
 

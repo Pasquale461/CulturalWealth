@@ -14,10 +14,12 @@ public class Player {
 
     private List<Property> properties;
     private boolean prison;
+    private boolean bankrupt;
     private int turnPrison;
 
 
     public Player(String name) {
+        bankrupt = false;
         this.name = name;
         score = 0;
         money = 1500;
@@ -67,4 +69,6 @@ public class Player {
     public void removeMoney(int money) {this.money -= money;}
 
     public void removeTurn() {turnPrison--;}
+    public void setBankrupt() {this.bankrupt = true;}
+    public boolean isBankrupt() {return bankrupt;}
 }
