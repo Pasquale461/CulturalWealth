@@ -55,6 +55,8 @@ public class GameActivity extends AppCompatActivity {
     private TextView playerNameTextView2;
     private TextView playerNameTextView3;
     private TextView playerScoreTextView;
+    private TextView playerScoreTextView2;
+    private TextView playerScoreTextView3;
     Game game;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +66,8 @@ public class GameActivity extends AppCompatActivity {
         setContentView(R.layout.activity_game);
         playerNameTextView = findViewById(R.id.name1);
         playerScoreTextView = findViewById(R.id.money1);
+        playerScoreTextView2 = findViewById(R.id.money2);
+        playerScoreTextView3 = findViewById(R.id.money3);
         Button endturn = findViewById(R.id.endTurn);
         Button info = findViewById(R.id.Info);
         Button buy = findViewById(R.id.buy);
@@ -159,6 +163,8 @@ public class GameActivity extends AppCompatActivity {
         //Instanza oggetto partita
         game = new Game(players , properties);
         game.iniziaPartita();
+        updateUI(players);
+
 
         //Calcolo giocatori
         ImageView[] pedina = new ImageView[game.getNumberOfPlayers()];
@@ -284,7 +290,7 @@ public class GameActivity extends AppCompatActivity {
                     //game.gestisciAcquisto(players.get(currentPlayer),properties.);
                 }
             });
-            updateUI(numeri[0]);
+                updateUI(players);
 
             info.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -309,11 +315,16 @@ public class GameActivity extends AppCompatActivity {
         });
 
     }
-    private Player updateUI(int random) {
+    private Player updateUI(List<Player> players) {
+        Player currentPlayer = game.getCurrentPlayer();
+        int money1 = players.get(0).getMoney();
+        int money2 = players.get(2).getMoney();
+        int money3 = players.get(1).getMoney();
+        players.get(0).removeMoney(10);
 
-    Player currentPlayer = game.getCurrentPlayer();
-    currentPlayer.addScore(random);
-    playerScoreTextView.setText(String.valueOf(currentPlayer.getScore()));
+        playerScoreTextView.setText(String.valueOf(money1)+ "$");
+        playerScoreTextView3.setText(String.valueOf(money3)+ "$");
+        playerScoreTextView2.setText(String.valueOf(money2)+ "$");
     return currentPlayer;
     }
 
