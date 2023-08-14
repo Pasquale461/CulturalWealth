@@ -45,10 +45,6 @@ public class Player {
         return properties;
     }
 
-    public void addProperty(Property property) {
-        property.setGiocatore(this);
-        properties.add(property);
-    }
 
     public void removeProperty(Property property) {
         property.setGiocatore(null);

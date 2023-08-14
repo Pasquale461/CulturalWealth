@@ -42,7 +42,7 @@ public class Game {
                 Log.d("count" , ""+count);
             }
             if (count == 1)terminaPartita();
-            if(players.get(currentPlayerIndex).getMoney() <= 0){currentPlayerIndex = (currentPlayerIndex + 1) % players.size();players.get(currentPlayerIndex).setBankrupt();endTurn(players);}else
+            if(players.get(currentPlayerIndex).getMoney() <= 0){players.get(currentPlayerIndex).setBankrupt(); currentPlayerIndex = (currentPlayerIndex + 1) % players.size();endTurn(players);}else
         currentPlayerIndex = (currentPlayerIndex + 1) % players.size();
     }
 
@@ -86,11 +86,11 @@ public class Game {
 
     public void gestisciAcquisto(Player player, Property property) {
         int prezzoProprieta = property.getCosto();
-
         if (player.getMoney() >= prezzoProprieta) {
-            player.addProperty(property);
+            //player.addProperty(property);     ridondante salvarsi la lista delle proprietà se il giocatore è salvato nelle proprietà
             player.removeMoney(prezzoProprieta);
             property.setGiocatore(player);
+
         }
     }
 

@@ -309,7 +309,17 @@ public class GameActivity extends AppCompatActivity {
                 buy.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        //game.gestisciAcquisto(players.get(currentPlayer),properties.);
+
+                        for (Property prop : properties) {
+                            if(prop.getTipo().equals("monument")) {
+                                String name = prop.getNome();
+
+                                if (name.equals(casella[position[currentPlayer]].getContentDescription())) {
+                                    game.gestisciAcquisto(players.get(currentPlayer),prop);
+                                }
+                            }
+                        }
+                        //updateUI();
                     }
                 });
                 updateUI(players);
@@ -337,19 +347,21 @@ public class GameActivity extends AppCompatActivity {
         });
 
     }
+
+
     private Player updateUI(List<Player> players) {
         Player currentPlayer = game.getCurrentPlayer();
-
-        int money1 = players.get(0).getMoney();
-        int money2 = players.get(2).getMoney();
-        int money3 = players.get(1).getMoney();
         players.get(0).removeMoney(1500);
         players.get(1).removeMoney(400);
+        int money1 = players.get(0).getMoney();
+        int money2 = players.get(1).getMoney();
+        int money3 = players.get(2).getMoney();
+
 
 
         if (players.get(0).isBankrupt())playerScoreTextView.setText("BANCAROTTA");else playerScoreTextView.setText(String.valueOf(money1)+ "$");
-        if (players.get(1).isBankrupt())playerScoreTextView.setText("BANCAROTTA");else playerScoreTextView2.setText(String.valueOf(money2)+ "$");
-        if (players.get(2).isBankrupt())playerScoreTextView.setText("BANCAROTTA");else playerScoreTextView3.setText(String.valueOf(money3)+ "$");
+        if (players.get(1).isBankrupt())playerScoreTextView2.setText("BANCAROTTA");else playerScoreTextView2.setText(String.valueOf(money2)+ "$");
+        if (players.get(2).isBankrupt())playerScoreTextView3.setText("BANCAROTTA");else playerScoreTextView3.setText(String.valueOf(money3)+ "$");
     return currentPlayer;
     }
 
