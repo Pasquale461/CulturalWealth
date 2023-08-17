@@ -51,10 +51,12 @@ public class Home extends AppCompatActivity {
     Audio audio;
     PopupSettings popupSettings;
     TextView profilename;
+    ArrayList<String> Owned = new ArrayList<>();
     private long backPressed;
     private static final int TIME_INTERVALL = 2000;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
         super.onCreate(savedInstanceState);
         LanguageManager lang = new LanguageManager(this);
         lang.ChangeLanguage(lang.GetLang());
@@ -105,36 +107,10 @@ public class Home extends AppCompatActivity {
 
         //TO-DO Player data upload
         //TO-DO LOAD POSSEDUTI
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
 
 
-        ArrayList<String> Owned = new ArrayList<>();
-        DocumentReference OwnRef = db.collection("Users").document(FirebaseAuth.getInstance().getCurrentUser().getUid());
-        OwnRef.get().addOnCompleteListener(task1 -> {
-            if (task1.isSuccessful()) {
-                ArrayList<DocumentReference> OwnList = (ArrayList<DocumentReference>) task1.getResult().get("Posseduti");
-                OwnList.forEach(ownList -> {
-                    ownList.get().addOnCompleteListener(task2 -> {
-                        if (task2.isSuccessful()) {
-
-                            DocumentSnapshot ownTitle = task2.getResult();
-                            Owned.add(ownTitle.get("Title").toString());
-                        }
-                    });
-                });
 
 
-            }
-        });
-
-
-        //open gallery
-        CardView Gallery = findViewById(R.id.Gallery);
-        Gallery.setOnClickListener(v -> {
-            Intent i = new Intent(Home.this, it.uniba.dib.sms222316.Gallery.Gallery.class);
-            i.putExtra("Owned", Owned);
-            startActivity(i);
-        });
 
         //Open Popup Goals
         Button goalsBtn = findViewById(R.id.goals_btn);
@@ -161,13 +137,24 @@ public class Home extends AppCompatActivity {
         usrtext = popupDialog.findViewById(R.id.username_text);
         usrbtn = popupDialog.findViewById(R.id.submitUserButton);
 
+        //open gallery
+        CardView Gallery = findViewById(R.id.Gallery);
+        Gallery.setOnClickListener(v -> {
+            loadprop();
+
+        });
         usrbtn.setOnClickListener(v -> {
 
             //FirebaseFirestore db = FirebaseFirestore.getInstance();
+            List<DocumentReference> posseduti = new ArrayList<DocumentReference>();
+            DocumentReference def = db.collection("Heritage").document();
+           // def.set("Heritage/GalileoGalilei");
+            posseduti.add(def);
             Map Us = new HashMap<>();
             Us.put("email", Accountstring);
             Us.put("nome",usrtext.getText().toString());
             Us.put("friend_code",getRandomHexString(5));
+            //Us.put("Posseduti",posseduti);
             DocumentReference Defaultpg;
 
             Defaultpg = db.collection("Heritage").document("Cleopatra");
@@ -180,6 +167,7 @@ public class Home extends AppCompatActivity {
                         //aggiunto
                         showToast(Home.this, "aggiunto");
                         findusername(Accountstring);
+
                     })
                     .addOnFailureListener(e ->
                             showToast(Home.this, "non aggiunto"));
@@ -332,6 +320,34 @@ public class Home extends AppCompatActivity {
 
                     }
                 });
+
+
+    }
+
+    public void loadprop(){
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        DocumentReference OwnRef = db.collection("Users").document(FirebaseAuth.getInstance().getCurrentUser().getUid());
+        OwnRef.get().addOnCompleteListener(task1 -> {
+            if (task1.isSuccessful()) {
+                ArrayList<DocumentReference> OwnList = (ArrayList<DocumentReference>) task1.getResult().get("Posseduti");
+                OwnList.forEach(ownList -> {
+                    ownList.get().addOnCompleteListener(task2 -> {
+                        if (task2.isSuccessful()) {
+
+                            DocumentSnapshot ownTitle = task2.getResult();
+                            Owned.add(ownTitle.get("Title").toString());
+                            Intent i = new Intent(Home.this, it.uniba.dib.sms222316.Gallery.Gallery.class);
+                            i.putExtra("Owned", Owned);
+                            startActivity(i);
+                        }
+                    });
+                });
+
+
+            }
+        });
+
 
 
     }

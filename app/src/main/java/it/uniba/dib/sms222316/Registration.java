@@ -50,14 +50,15 @@ public class Registration extends AppCompatActivity {
 
     }
     void createAccount(){
-
+        Log.d("current" ,"entra");
         String mail = Mail.getText().toString();
         String pass = Password.getText().toString();
         String user = Username.getText().toString();
         boolean isValid = validateData(mail, pass);
         if(!isValid)return;
         createAccountInFirebase(mail, pass, user);
-        showToast(Registration.this, "Successo");
+        Log.d("current" ,"uscito");
+        //showToast(Registration.this, "Successo");
         startActivity(new Intent(Registration.this, Login.class));
     }
 
@@ -67,15 +68,17 @@ public class Registration extends AppCompatActivity {
     {
         changeInProgress(true);
         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
-        firebaseAuth.createUserWithEmailAndPassword(Email,Password_local).addOnCompleteListener(Registration.this,
+        firebaseAuth.createUserWithEmailAndPassword(Email,Password_local).addOnCompleteListener(
                 new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
+                        Log.d("current",  "inizio");
                         if(task.isSuccessful()){
                             //acc is done
 
-                            firebaseAuth.getCurrentUser().sendEmailVerification();
-                            firebaseAuth.signOut();
+                            //firebaseAuth.getCurrentUser().sendEmailVerification();
+                            Log.d("current",  firebaseAuth.getCurrentUser().toString());
+                            //firebaseAuth.signOut();
                             String UID = firebaseAuth.getCurrentUser().getUid();
                             Log.e("a", "entrato");
                             Map<String, Object> Users = new HashMap<>();

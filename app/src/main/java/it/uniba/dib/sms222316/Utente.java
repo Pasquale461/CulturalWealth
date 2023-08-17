@@ -2,11 +2,20 @@ package it.uniba.dib.sms222316;
 
 import android.net.Uri;
 
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class Utente {
-    private final String name;
-    private final String email;
-    private final String points;
-    private final String ProfilePic;
+    private List<DocumentReference> posseduti;
+    private String ProfilePic;
+    private String email;
+    private String friend_code;
+    private String name;
+    private String points;
+
 
 
 
@@ -15,6 +24,7 @@ public class Utente {
         this.email = email;
         this.points = points;
         this.ProfilePic = ProfilePic;
+
 
     }
 

@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -25,6 +26,8 @@ public class PopupField extends Dialog {
 
     public PopupField(@NonNull Context context,final GameActivity activity) {
         super(context);
+        context.setTheme(android.R.style.Theme_DeviceDefault_NoActionBar);
+        getWindow().requestFeature(Window.FEATURE_NO_TITLE);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
         setContentView(R.layout.info_field);
@@ -61,7 +64,19 @@ public class PopupField extends Dialog {
         TextView Rent4P = findViewById(R.id.rentfourpaint);
         TextView Description = findViewById(R.id.smalldescription);
         ImageView photo = findViewById(R.id.imagecard);
+        Name.setText("");
+        Price.setText("");
+        Description.setText("");
+        Sell_Price.setText("");
+        Rent.setText("");
+        Rent1P.setText("");
+        Rent2P.setText("");
+        Rent3P.setText("");
+        Rent4P.setText("");
+        PaintCost.setText("");
+        photo.setImageBitmap(null);
         for (int i = 0; i < properties.size(); i++) {
+
                 if(properties.get(i).getTipo().equals("monument")) {
                     String name = properties.get(i).getNome();
                     if (name.equals(casella[field].getContentDescription())) {
@@ -95,7 +110,7 @@ public class PopupField extends Dialog {
                         Rent4P.setText("rendita con 4 quadro:" + rent[4]);
                     }
                 }
-                if(properties.get(i).getTipo().equals("museum")) {
+                else if(properties.get(i).getTipo().equals("museum")) {
 
                     String name = properties.get(i).getNome();
                     if (name.equals(casella[field].getContentDescription())) {
@@ -118,7 +133,8 @@ public class PopupField extends Dialog {
                         Rent3P.setText("rendita con 3 musei:" + rent[3]);
                     }
                 }
-                if(properties.get(i).getTipo().equals("utility")) {
+                else if(properties.get(i).getTipo().equals("utility")) {
+
                     String name = properties.get(i).getNome();
                     if (name.equals(casella[field].getContentDescription())) {
                         Name.setText(name);
@@ -136,6 +152,7 @@ public class PopupField extends Dialog {
                         Rent.setText("Rendita:" + rent[0]);
                     }
                 }
+
 
             }
 

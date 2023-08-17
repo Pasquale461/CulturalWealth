@@ -4,6 +4,7 @@ import static it.uniba.dib.sms222316.Utility.showToast;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.view.WindowManager;
@@ -31,12 +32,13 @@ public class Login extends AppCompatActivity {
 
     private long backPressed;
     private static final int TIME_INTERVALL = 2000;
-    Button Register, Login , loginWithGoogle;
+    Button Register, Login , loginWithGoogle, anonymousLoginButton;
     EditText emailEditText, passwordEditText;
     GoogleSignInOptions gso;
     GoogleSignInClient gsc;
     FirebaseUser user, mUser;
     FirebaseAuth firebaseAuth;
+
 
 
     @Override
@@ -45,8 +47,13 @@ public class Login extends AppCompatActivity {
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
         setContentView(R.layout.activity_login);
-
-
+        anonymousLoginButton = findViewById(R.id.Guest);
+        anonymousLoginButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                signInAnonymously();
+            }
+        });
 
 
 
@@ -95,6 +102,22 @@ public class Login extends AppCompatActivity {
         backPressed = System.currentTimeMillis();
     }
 
+    //funzionew che gestire il Guest user
+    private void signInAnonymously() {
+        firebaseAuth.signInAnonymously()
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            Log.d("AnonymousLogin", "signInAnonymously:success");
+                            HomeActivity();
+                        } else {
+                            Log.w("AnonymousLogin", "signInAnonymously:failure", task.getException());
+                        }
+                    }
+                });
+    }
+
     //Funzione che gestisce il login classico
     void loginUser()
     {
@@ -107,11 +130,7 @@ public class Login extends AppCompatActivity {
 
     //
     boolean validateData(String Email , String Password_local){
-        if(!Patterns.EMAIL_ADDRESS.matcher(Email).matches())
-        {
-            emailEditText.setError("Email non valida");
-            return false;
-        }
+
         if(Password_local.length()<6)
         {
             passwordEditText.setError("Lunghezza della password troppo corta");
@@ -128,13 +147,7 @@ public class Login extends AppCompatActivity {
             changeInProgress(false);
             if (task.isSuccessful())
             {
-                if (firebaseAuth.getCurrentUser().isEmailVerified()) //registrazione avvenuta correrttamente (controllo errore)
-                {
-                    startActivity(new Intent(Login.this, Home.class));
-                }else
-                {
-                    showToast(Login.this, "Email non valida");//registrazione non avvenuta
-                }
+               HomeActivity();
             }
             else
             {
@@ -212,4 +225,11 @@ public class Login extends AppCompatActivity {
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
     }
+
+
+
+
+
 }
+
+
