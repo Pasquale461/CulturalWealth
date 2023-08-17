@@ -1,26 +1,24 @@
 package it.uniba.dib.sms222316.Gameplay;
 
-import java.util.ArrayList;
-import java.util.List;
 
 import java.util.List;
 
-import it.uniba.dib.sms222316.Gameplay.Property;
 
 public class Player {
     private String name;
     private int score, money;
     private int position;
-
+    private int icon;
     private List<Property> properties;
     private boolean prison;
     private boolean bankrupt;
     private int turnPrison;
 
 
-    public Player(String name) {
+    public Player(String name, int icon) {
         bankrupt = false;
         this.name = name;
+        this.icon = icon;
         score = 0;
         money = 1500;
         prison = false;
@@ -55,6 +53,10 @@ public class Player {
 
     public void setPrison(boolean prison) {this.prison = prison;
     turnPrison=2;}
+
+    public int getIcon() {
+        return icon;
+    }
 
     public int getTurnPrison() {return turnPrison;}
 

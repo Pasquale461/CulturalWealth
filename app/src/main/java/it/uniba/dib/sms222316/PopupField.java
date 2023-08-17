@@ -96,12 +96,11 @@ public class PopupField extends Dialog {
                     }
                 }
                 if(properties.get(i).getTipo().equals("museum")) {
-                    int imageResource = R.drawable.museo;
-
 
                     String name = properties.get(i).getNome();
                     if (name.equals(casella[field].getContentDescription())) {
                         Name.setText(name);
+                        photo.setImageResource(R.drawable.museo);
                         int price = properties.get(i).getCosto();
                         Price.setText("Prezzo:" + price);
                         String description = properties.get(i).getDescrizione();

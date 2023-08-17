@@ -36,6 +36,7 @@
 
 
                 <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/Icons"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
@@ -222,7 +223,7 @@
                         android:layout_height="43dp"
                         android:layout_marginStart="34dp"
                         android:layout_marginTop="15dp"
-                        android:contentDescription="Museo3"
+                        android:contentDescription="Museo 3"
                         app:layout_constraintStart_toStartOf="@+id/exa_24"
                         app:layout_constraintTop_toTopOf="@+id/exa_24"
                         app:srcCompat="@drawable/casella" />
@@ -257,7 +258,6 @@
                         android:layout_marginStart="34dp"
                         android:layout_marginTop="19dp"
                         android:contentDescription="Acqua"
-                        app:tint="@color/Coral_pink"
                         app:layout_constraintStart_toStartOf="@+id/exa_27"
                         app:layout_constraintTop_toTopOf="@+id/exa_27"
                         app:srcCompat="@drawable/casella" />
@@ -268,6 +268,7 @@
                         android:layout_height="43dp"
                         android:layout_marginTop="39dp"
                         android:contentDescription="Tour Eiffel"
+                        app:tint="@color/Coral_pink"
                         app:layout_constraintStart_toStartOf="@+id/exa_28"
                         app:layout_constraintTop_toTopOf="@+id/exa_28"
                         app:srcCompat="@drawable/casella" />
@@ -510,7 +511,7 @@
                         app:layout_constraintTop_toTopOf="@+id/exa_0"
                         app:layout_constraintHorizontal_bias="0.9"
                         app:layout_constraintVertical_bias="0.9"
-                        app:srcCompat="@drawable/coin"/>
+                        />
 
                     <ImageView
                         android:id="@+id/Ico_1"
@@ -522,7 +523,7 @@
                         app:layout_constraintTop_toTopOf="@+id/exa_1"
                         app:layout_constraintHorizontal_bias="0.9"
                         app:layout_constraintVertical_bias="0.9"
-                        app:srcCompat="@drawable/coin"/>
+                        />
 
                     <ImageView
                         android:id="@+id/Ico_2"
@@ -534,7 +535,7 @@
                         app:layout_constraintTop_toTopOf="@+id/exa_2"
                         app:layout_constraintHorizontal_bias="0.9"
                         app:layout_constraintVertical_bias="0.9"
-                        app:srcCompat="@drawable/coin"/>
+                        />
 
                     <ImageView
                         android:id="@+id/Ico_3"
@@ -546,7 +547,7 @@
                         app:layout_constraintTop_toTopOf="@+id/exa_3"
                         app:layout_constraintHorizontal_bias="0.9"
                         app:layout_constraintVertical_bias="0.9"
-                        app:srcCompat="@drawable/coin"/>
+                        />
 
                     <ImageView
                         android:id="@+id/Ico_4"
@@ -558,7 +559,7 @@
                         app:layout_constraintTop_toTopOf="@+id/exa_4"
                         app:layout_constraintHorizontal_bias="0.9"
                         app:layout_constraintVertical_bias="0.9"
-                        app:srcCompat="@drawable/coin"/>
+                        />
 
                     <ImageView
                         android:id="@+id/Ico_5"
@@ -570,7 +571,7 @@
                         app:layout_constraintTop_toTopOf="@+id/exa_5"
                         app:layout_constraintHorizontal_bias="0.9"
                         app:layout_constraintVertical_bias="0.9"
-                        app:srcCompat="@drawable/coin"/>
+                        />
 
                     <ImageView
                         android:id="@+id/Ico_6"
@@ -582,7 +583,7 @@
                         app:layout_constraintTop_toTopOf="@+id/exa_6"
                         app:layout_constraintHorizontal_bias="0.9"
                         app:layout_constraintVertical_bias="0.9"
-                        app:srcCompat="@drawable/coin"/>
+                        />
 
                     <ImageView
                         android:id="@+id/Ico_7"
@@ -594,7 +595,7 @@
                         app:layout_constraintTop_toTopOf="@+id/exa_7"
                         app:layout_constraintHorizontal_bias="0.9"
                         app:layout_constraintVertical_bias="0.9"
-                        app:srcCompat="@drawable/coin"/>
+                        />
 
                     <ImageView
                         android:id="@+id/Ico_8"
@@ -606,7 +607,7 @@
                         app:layout_constraintTop_toTopOf="@+id/exa_8"
                         app:layout_constraintHorizontal_bias="0.9"
                         app:layout_constraintVertical_bias="0.9"
-                        app:srcCompat="@drawable/coin"/>
+                        />
 
                     <ImageView
                         android:id="@+id/Ico_9"
@@ -618,7 +619,7 @@
                         app:layout_constraintTop_toTopOf="@+id/exa_9"
                         app:layout_constraintHorizontal_bias="0.9"
                         app:layout_constraintVertical_bias="0.9"
-                        app:srcCompat="@drawable/coin"/>
+                        />
 
                     <ImageView
                         android:id="@+id/Ico_10"
@@ -630,7 +631,7 @@
                         app:layout_constraintTop_toTopOf="@+id/exa_10"
                         app:layout_constraintHorizontal_bias="0.9"
                         app:layout_constraintVertical_bias="0.9"
-                        app:srcCompat="@drawable/coin"/>
+                        />
 
                     <ImageView
                         android:id="@+id/Ico_11"
@@ -642,7 +643,7 @@
                         app:layout_constraintTop_toTopOf="@+id/exa_11"
                         app:layout_constraintHorizontal_bias="0.9"
                         app:layout_constraintVertical_bias="0.9"
-                        app:srcCompat="@drawable/coin"/>
+                        />
 
                     <ImageView
                         android:id="@+id/Ico_12"
@@ -654,7 +655,7 @@
                         app:layout_constraintTop_toTopOf="@+id/exa_12"
                         app:layout_constraintHorizontal_bias="0.9"
                         app:layout_constraintVertical_bias="0.9"
-                        app:srcCompat="@drawable/coin"/>
+                        />
 
                     <ImageView
                         android:id="@+id/Ico_13"
@@ -666,7 +667,7 @@
                         app:layout_constraintTop_toTopOf="@+id/exa_13"
                         app:layout_constraintHorizontal_bias="0.9"
                         app:layout_constraintVertical_bias="0.9"
-                        app:srcCompat="@drawable/coin"/>
+                        />
 
                     <ImageView
                         android:id="@+id/Ico_14"
@@ -678,7 +679,7 @@
                         app:layout_constraintTop_toTopOf="@+id/exa_14"
                         app:layout_constraintHorizontal_bias="0.9"
                         app:layout_constraintVertical_bias="0.9"
-                        app:srcCompat="@drawable/coin"/>
+                        />
 
                     <ImageView
                         android:id="@+id/Ico_15"
@@ -690,7 +691,7 @@
                         app:layout_constraintTop_toTopOf="@+id/exa_15"
                         app:layout_constraintHorizontal_bias="0.9"
                         app:layout_constraintVertical_bias="0.9"
-                        app:srcCompat="@drawable/coin"/>
+                        />
 
                     <ImageView
                         android:id="@+id/Ico_16"
@@ -702,7 +703,7 @@
                         app:layout_constraintTop_toTopOf="@+id/exa_16"
                         app:layout_constraintHorizontal_bias="0.9"
                         app:layout_constraintVertical_bias="0.9"
-                        app:srcCompat="@drawable/coin"/>
+                        />
                     <ImageView
                         android:id="@+id/Ico_17"
                         android:layout_width="15dp"
@@ -713,7 +714,7 @@
                         app:layout_constraintTop_toTopOf="@+id/exa_17"
                         app:layout_constraintHorizontal_bias="0.9"
                         app:layout_constraintVertical_bias="0.9"
-                        app:srcCompat="@drawable/coin"/>
+                        />
                     <ImageView
                         android:id="@+id/Ico_18"
                         android:layout_width="15dp"
@@ -724,7 +725,7 @@
                         app:layout_constraintTop_toTopOf="@+id/exa_18"
                         app:layout_constraintHorizontal_bias="0.9"
                         app:layout_constraintVertical_bias="0.9"
-                        app:srcCompat="@drawable/coin"/>
+                        />
                     <ImageView
                         android:id="@+id/Ico_19"
                         android:layout_width="15dp"
@@ -735,7 +736,7 @@
                         app:layout_constraintTop_toTopOf="@+id/exa_19"
                         app:layout_constraintHorizontal_bias="0.9"
                         app:layout_constraintVertical_bias="0.9"
-                        app:srcCompat="@drawable/coin"/>
+                        />
                     <ImageView
                         android:id="@+id/Ico_20"
                         android:layout_width="15dp"
@@ -746,7 +747,7 @@
                         app:layout_constraintTop_toTopOf="@+id/exa_20"
                         app:layout_constraintHorizontal_bias="0.9"
                         app:layout_constraintVertical_bias="0.9"
-                        app:srcCompat="@drawable/coin"/>
+                        />
                     <ImageView
                         android:id="@+id/Ico_21"
                         android:layout_width="15dp"
@@ -757,7 +758,7 @@
                         app:layout_constraintTop_toTopOf="@+id/exa_21"
                         app:layout_constraintHorizontal_bias="0.9"
                         app:layout_constraintVertical_bias="0.9"
-                        app:srcCompat="@drawable/coin"/>
+                        />
                     <ImageView
                         android:id="@+id/Ico_22"
                         android:layout_width="15dp"
@@ -768,7 +769,7 @@
                         app:layout_constraintTop_toTopOf="@+id/exa_22"
                         app:layout_constraintHorizontal_bias="0.9"
                         app:layout_constraintVertical_bias="0.9"
-                        app:srcCompat="@drawable/coin"/>
+                        />
                     <ImageView
                         android:id="@+id/Ico_23"
                         android:layout_width="15dp"
@@ -779,7 +780,7 @@
                         app:layout_constraintTop_toTopOf="@+id/exa_23"
                         app:layout_constraintHorizontal_bias="0.9"
                         app:layout_constraintVertical_bias="0.9"
-                        app:srcCompat="@drawable/coin"/>
+                        />
                     <ImageView
                         android:id="@+id/Ico_24"
                         android:layout_width="15dp"
@@ -790,7 +791,7 @@
                         app:layout_constraintTop_toTopOf="@+id/exa_24"
                         app:layout_constraintHorizontal_bias="0.9"
                         app:layout_constraintVertical_bias="0.9"
-                        app:srcCompat="@drawable/coin"/>
+                        />
                     <ImageView
                         android:id="@+id/Ico_25"
                         android:layout_width="15dp"
@@ -801,7 +802,7 @@
                         app:layout_constraintTop_toTopOf="@+id/exa_25"
                         app:layout_constraintHorizontal_bias="0.9"
                         app:layout_constraintVertical_bias="0.9"
-                        app:srcCompat="@drawable/coin"/>
+                        />
                     <ImageView
                         android:id="@+id/Ico_26"
                         android:layout_width="15dp"
@@ -812,7 +813,7 @@
                         app:layout_constraintTop_toTopOf="@+id/exa_26"
                         app:layout_constraintHorizontal_bias="0.9"
                         app:layout_constraintVertical_bias="0.9"
-                        app:srcCompat="@drawable/coin"/>
+                        />
                     <ImageView
                         android:id="@+id/Ico_27"
                         android:layout_width="15dp"
@@ -823,7 +824,7 @@
                         app:layout_constraintTop_toTopOf="@+id/exa_27"
                         app:layout_constraintHorizontal_bias="0.9"
                         app:layout_constraintVertical_bias="0.9"
-                        app:srcCompat="@drawable/coin"/>
+                        />
                     <ImageView
                         android:id="@+id/Ico_28"
                         android:layout_width="15dp"
@@ -834,7 +835,7 @@
                         app:layout_constraintTop_toTopOf="@+id/exa_28"
                         app:layout_constraintHorizontal_bias="0.9"
                         app:layout_constraintVertical_bias="0.9"
-                        app:srcCompat="@drawable/coin"/>
+                        />
                     <ImageView
                         android:id="@+id/Ico_29"
                         android:layout_width="15dp"
@@ -845,7 +846,7 @@
                         app:layout_constraintTop_toTopOf="@+id/exa_29"
                         app:layout_constraintHorizontal_bias="0.9"
                         app:layout_constraintVertical_bias="0.9"
-                        app:srcCompat="@drawable/coin"/>
+                        />
                     <ImageView
                         android:id="@+id/Ico_30"
                         android:layout_width="15dp"
@@ -856,7 +857,7 @@
                         app:layout_constraintTop_toTopOf="@+id/exa_30"
                         app:layout_constraintHorizontal_bias="0.9"
                         app:layout_constraintVertical_bias="0.9"
-                        app:srcCompat="@drawable/coin"/>
+                        />
 
                     <ImageView
                         android:id="@+id/Ico_31"
@@ -868,7 +869,7 @@
                         app:layout_constraintTop_toTopOf="@+id/exa_31"
                         app:layout_constraintHorizontal_bias="0.9"
                         app:layout_constraintVertical_bias="0.9"
-                        app:srcCompat="@drawable/coin"/>
+                        />
 
                     <ImageView
                         android:id="@+id/Ico_32"
@@ -880,7 +881,7 @@
                         app:layout_constraintTop_toTopOf="@+id/exa_32"
                         app:layout_constraintHorizontal_bias="0.9"
                         app:layout_constraintVertical_bias="0.9"
-                        app:srcCompat="@drawable/coin"/>
+                        />
 
                     <ImageView
                         android:id="@+id/Ico_33"
@@ -892,7 +893,7 @@
                         app:layout_constraintTop_toTopOf="@+id/exa_33"
                         app:layout_constraintHorizontal_bias="0.9"
                         app:layout_constraintVertical_bias="0.9"
-                        app:srcCompat="@drawable/coin"/>
+                        />
                     <ImageView
                         android:id="@+id/Ico_34"
                         android:layout_width="15dp"
@@ -903,7 +904,7 @@
                         app:layout_constraintTop_toTopOf="@+id/exa_34"
                         app:layout_constraintHorizontal_bias="0.9"
                         app:layout_constraintVertical_bias="0.9"
-                        app:srcCompat="@drawable/coin"/>
+                        />
 
                     <ImageView
                         android:id="@+id/Ico_35"
@@ -915,7 +916,7 @@
                         app:layout_constraintTop_toTopOf="@+id/exa_35"
                         app:layout_constraintHorizontal_bias="0.9"
                         app:layout_constraintVertical_bias="0.9"
-                        app:srcCompat="@drawable/coin"/>
+                        />
 
                     <ImageView
                         android:id="@+id/Ico_36"
@@ -927,7 +928,7 @@
                         app:layout_constraintTop_toTopOf="@+id/exa_36"
                         app:layout_constraintHorizontal_bias="0.9"
                         app:layout_constraintVertical_bias="0.9"
-                        app:srcCompat="@drawable/coin"/>
+                        />
                     <ImageView
                         android:id="@+id/Ico_37"
                         android:layout_width="15dp"
@@ -938,7 +939,7 @@
                         app:layout_constraintTop_toTopOf="@+id/exa_37"
                         app:layout_constraintHorizontal_bias="0.9"
                         app:layout_constraintVertical_bias="0.9"
-                        app:srcCompat="@drawable/coin"/>
+                        />
 
                     <ImageView
                         android:id="@+id/Ico_38"
@@ -950,7 +951,7 @@
                         app:layout_constraintTop_toTopOf="@+id/exa_38"
                         app:layout_constraintHorizontal_bias="0.9"
                         app:layout_constraintVertical_bias="0.9"
-                        app:srcCompat="@drawable/coin"/>
+                        />
 
                     <ImageView
                         android:id="@+id/Ico_39"
@@ -962,7 +963,7 @@
                         app:layout_constraintTop_toTopOf="@+id/exa_39"
                         app:layout_constraintHorizontal_bias="0.9"
                         app:layout_constraintVertical_bias="0.9"
-                        app:srcCompat="@drawable/coin"/>
+                        />
 
 
 
@@ -1108,7 +1109,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/money1"
                 app:layout_constraintTop_toBottomOf="@+id/name1"
-                app:srcCompat="?android:attr/textCursorDrawable" />
+                app:srcCompat="@drawable/_0" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -1150,7 +1151,7 @@
                 app:layout_constraintHorizontal_bias="0.542"
                 app:layout_constraintStart_toEndOf="@+id/money2"
                 app:layout_constraintTop_toBottomOf="@+id/name2"
-                app:srcCompat="@android:drawable/star_big_on" />
+                app:srcCompat="@drawable/_1" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -1191,7 +1192,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/money3"
                 app:layout_constraintTop_toBottomOf="@+id/name33"
-                app:srcCompat="@android:drawable/ic_input_add" />
+                app:srcCompat="@drawable/_2" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

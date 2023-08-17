@@ -2,6 +2,7 @@ package it.uniba.dib.sms222316;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.animation.Animator;
 import android.animation.ObjectAnimator;
@@ -20,6 +21,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -46,6 +48,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import it.uniba.dib.sms222316.Gameplay.Game;
 import it.uniba.dib.sms222316.Gameplay.Player;
@@ -93,9 +96,9 @@ public class GameActivity extends AppCompatActivity {
         playerNameTextView = findViewById(R.id.name1);findusername(FirebaseAuth.getInstance().getCurrentUser().getEmail());
         playerNameTextView2 = findViewById(R.id.name2);playerNameTextView2.setText("Guest 2");
         playerNameTextView3 = findViewById(R.id.name33);playerNameTextView3.setText("Guest 3");
-        players.add(new Player("Giocatore 1"));
-        players.add(new Player("Giocatore 2"));
-        players.add(new Player("Giocatore 3"));
+        players.add(new Player("Giocatore 1",0));
+        players.add(new Player("Giocatore 2", 1));
+        players.add(new Player("Giocatore 3", 2));
 
         //Lettura file JSON delle proprieta
         List<Property> properties = new ArrayList<>();
@@ -223,9 +226,7 @@ public class GameActivity extends AppCompatActivity {
         });
 
         endturn.setVisibility(View.INVISIBLE);
-        rollDice.setOnClickListener(new View.OnClickListener() {
-        @Override
-            public void onClick(View v) {
+        rollDice.setOnClickListener(v -> {
 
             //Lancio dei dadi
 
@@ -251,13 +252,10 @@ public class GameActivity extends AppCompatActivity {
                 Gif1.reset(); // Resetta la GIF all'inizio
                 Gif1.start(); // Inizia animazione GIF
                 Dice1.setImageDrawable(Gif1);
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        Gif2.reset(); // Resetta la GIF all'inizio
-                        Gif2.start(); // Inizia animazione GIF
-                        Dice2.setImageDrawable(Gif2);
-                    }
+                new Handler().postDelayed(() -> {
+                    Gif2.reset(); // Resetta la GIF all'inizio
+                    Gif2.start(); // Inizia animazione GIF
+                    Dice2.setImageDrawable(Gif2);
                 }, 200);
 
 
@@ -267,59 +265,73 @@ public class GameActivity extends AppCompatActivity {
                 path.moveTo(casella[position[currentPlayer]].getX(), casella[position[currentPlayer]].getY());
                 for (int i = 1; i <= (numeri[0] + numeri[1]); i++) {
                     position[currentPlayer]++;
-                    if (position[currentPlayer] == 40) position[currentPlayer] = 0;
+                    if (position[currentPlayer] == 40) {
+                        position[currentPlayer] = 0;
+                        players.get(currentPlayer).addMoney(100);
+                        /*To do alert that money has been added*/
+                    }
                     path.lineTo(casella[position[currentPlayer]].getX(), casella[position[currentPlayer]].getY());
                 }
 
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        ObjectAnimator animator = ObjectAnimator.ofFloat(pedina[currentPlayer], pedina[currentPlayer].X, pedina[currentPlayer].Y, path);
-                        animator.setDuration(2000);
-                        animator.start();
-                        Animator.AnimatorListener animatorListener = new Animator.AnimatorListener() {
-                            @Override
-                            public void onAnimationStart(@NonNull Animator animation) {
 
-                            }
+                new Handler().postDelayed(() -> {
+                    ObjectAnimator animator = ObjectAnimator.ofFloat(pedina[currentPlayer], pedina[currentPlayer].X, pedina[currentPlayer].Y, path);
+                    animator.setDuration(2000);
+                    animator.start();
+                    Animator.AnimatorListener animatorListener = new Animator.AnimatorListener() {
+                        @Override
+                        public void onAnimationStart(@NonNull Animator animation) {
 
-                            @Override
-                            public void onAnimationEnd(@NonNull Animator animation) {
-                                info.setVisibility(View.VISIBLE);
-                                endturn.setVisibility(View.VISIBLE);
-                                for (Property data : properties) {
-                                    if (data.getPosizione() == position[currentPlayer] && data.getGiocatore() == null)
-                                        buy.setVisibility(View.VISIBLE);
+                        }
+
+                        @Override
+                        public void onAnimationEnd(@NonNull Animator animation) {
+                            info.setVisibility(View.VISIBLE);
+                            endturn.setVisibility(View.VISIBLE);
+                            Optional<Property> currentProperty = properties.stream().filter(l->l.getPosizione()==position[currentPlayer]).findFirst();
+                            if(currentProperty.isPresent()){
+                                if(currentProperty.get().getGiocatore()==null) buy.setVisibility(View.VISIBLE);
+                                else{
+                                    game.gestisciPagamentoAffitto(currentProperty.get());
                                 }
                             }
+//                            for (Property prop : properties) {
+//                                if (prop.getPosizione() == position[currentPlayer] && prop.getGiocatore() == null)
+//                                    buy.setVisibility(View.VISIBLE);
+//                            }
+                        }
 
-                            @Override
-                            public void onAnimationCancel(@NonNull Animator animation) {
+                        @Override
+                        public void onAnimationCancel(@NonNull Animator animation) {
 
-                            }
+                        }
 
-                            @Override
-                            public void onAnimationRepeat(@NonNull Animator animation) {
+                        @Override
+                        public void onAnimationRepeat(@NonNull Animator animation) {
 
-                            }
-                        };
-                        animator.addListener(animatorListener);
-                    }
+                        }
+                    };
+                    animator.addListener(animatorListener);
                 }, 3500);
                 buy.setOnClickListener(new View.OnClickListener() {
+                    /**When you have no money should still be visible*/
                     @Override
                     public void onClick(View v) {
 
                         for (Property prop : properties) {
-                            if(prop.getTipo().equals("monument")) {
+                            //if(prop.getTipo().equals("monument")) { Puoi comprare anche i musei e le centrali, if inutile
                                 String name = prop.getNome();
 
                                 if (name.equals(casella[position[currentPlayer]].getContentDescription())) {
                                     game.gestisciAcquisto(players.get(currentPlayer),prop);
+                                    buy.setVisibility(View.INVISIBLE);
                                 }
+                            //}
+                            if(prop.getGiocatore() != null){
+                                updateUI(prop.getPosizione(),prop.getGiocatore().getIcon());
                             }
                         }
-                        //updateUI();
+
                     }
                 });
                 updateUI(players);
@@ -332,36 +344,41 @@ public class GameActivity extends AppCompatActivity {
                     }
                 });
                 players.get(currentPlayer).setPosition(position[currentPlayer]);
-            }
-
-        });
+            });
         endturn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 game.endTurn(players);
                 endturn.setVisibility(View.INVISIBLE);
                 info.setVisibility(View.INVISIBLE);
+                buy.setVisibility(View.INVISIBLE);
                 rollDice.setEnabled(true);
+                updateUI(players);
 
             }
         });
 
     }
 
+    private void updateUI(int Position, int playerIcon){
+        ConstraintLayout BloccoIcone = findViewById(R.id.Icons);
+        ImageView icona = (ImageView) BloccoIcone.getChildAt(Position+40);
+        int ImagePlayer = getResources().getIdentifier("_"+playerIcon, "drawable", getPackageName());
+        icona.setImageResource(ImagePlayer);
+    }
 
     private Player updateUI(List<Player> players) {
         Player currentPlayer = game.getCurrentPlayer();
-        players.get(0).removeMoney(1500);
-        players.get(1).removeMoney(400);
+
         int money1 = players.get(0).getMoney();
         int money2 = players.get(1).getMoney();
         int money3 = players.get(2).getMoney();
 
 
 
-        if (players.get(0).isBankrupt())playerScoreTextView.setText("BANCAROTTA");else playerScoreTextView.setText(String.valueOf(money1)+ "$");
-        if (players.get(1).isBankrupt())playerScoreTextView2.setText("BANCAROTTA");else playerScoreTextView2.setText(String.valueOf(money2)+ "$");
-        if (players.get(2).isBankrupt())playerScoreTextView3.setText("BANCAROTTA");else playerScoreTextView3.setText(String.valueOf(money3)+ "$");
+        if (players.get(0).isBankrupt())playerScoreTextView.setText("BANCAROTTA");else playerScoreTextView.setText(money1+ "$");
+        if (players.get(1).isBankrupt())playerScoreTextView2.setText("BANCAROTTA");else playerScoreTextView2.setText(money2+ "$");
+        if (players.get(2).isBankrupt())playerScoreTextView3.setText("BANCAROTTA");else playerScoreTextView3.setText(money3+ "$");
     return currentPlayer;
     }
 

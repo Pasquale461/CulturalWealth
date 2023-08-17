@@ -67,39 +67,23 @@ public class SplashActivity extends AppCompatActivity {
 
 
         // Start long running operation in a background thread
-       loading = new Thread(new Runnable() {
-            public void run() {
+       loading = new Thread(() -> {
 
+           // ottieni la directory di download predefinita dell'applicazione
+           while (progressStatus < 100) {
+               progressStatus += 3;
 
-
-
-
-
-
-
-                // ottieni la directory di download predefinita dell'applicazione
-
-
-
-                while (progressStatus < 100) {
-                    progressStatus += 3;
-
-                    // Update the progress bar and display the
-                    //current value in the text view
-                    handler.post(new Runnable() {
-                        public void run() {
-                            simpleProgressBar.setProgress(progressStatus);
-                        }
-                    });
-                    try {
-                        // Sleep for 200 milliseconds.
-                        Thread.sleep(200);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        });
+               // Update the progress bar and display the
+               //current value in the text view
+               handler.post(() -> simpleProgressBar.setProgress(progressStatus));
+               try {
+                   // Sleep for 200 milliseconds.
+                   Thread.sleep(200);
+               } catch (InterruptedException e) {
+                   e.printStackTrace();
+               }
+           }
+       });
         AssetsLoad();
         Backgroundloadscreen();
 
@@ -136,12 +120,9 @@ public class SplashActivity extends AppCompatActivity {
                     Log.d("for" , fileRef.getName());
 
                     // scarica il file nella directory di download
-                    fileRef.getFile(localFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
-                        @Override
-                        public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
-                            // file scaricato con successo
-                            Log.d("Successo" , "Successo");
-                        }
+                    fileRef.getFile(localFile).addOnSuccessListener(taskSnapshot -> {
+                        // file scaricato con successo
+                        Log.d("Successo" , "Successo");
                     }).addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
@@ -151,12 +132,9 @@ public class SplashActivity extends AppCompatActivity {
                     });
                 }
             }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                // gestisci eventuali errori nell'elencare i file nella cartella
-                Log.d("errori nell'elencare i file nella cartella" , "errori nell'elencare i file nella cartella");
-            }
+        }).addOnFailureListener(e -> {
+            // gestisci eventuali errori nell'elencare i file nella cartella
+            Log.d("errori nell'elencare i file nella cartella" , "errori nell'elencare i file nella cartella");
         });
     }
     void Backgroundloadscreen()

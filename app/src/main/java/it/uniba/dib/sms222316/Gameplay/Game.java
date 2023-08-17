@@ -1,19 +1,7 @@
 package it.uniba.dib.sms222316.Gameplay;
 
-import android.content.res.Resources;
-import android.util.Log;
 
-import androidx.appcompat.app.AppCompatActivity;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
 import java.util.List;
 
 public class Game {
@@ -34,16 +22,20 @@ public class Game {
     }
 
     public void endTurn(List<Player> players) {
-        int count =1;
-        Log.d("count" , ""+count);
-            for (Player app : players)
-            {
-                if (!app.isBankrupt())count+=1;
-                Log.d("count" , ""+count);
-            }
-            if (count == 1)terminaPartita();
-            if(players.get(currentPlayerIndex).getMoney() <= 0){players.get(currentPlayerIndex).setBankrupt(); currentPlayerIndex = (currentPlayerIndex + 1) % players.size();endTurn(players);}else
+
+        if (players.stream().filter(l-> !l.isBankrupt()).count()<=1) {
+            terminaPartita();
+        }
         currentPlayerIndex = (currentPlayerIndex + 1) % players.size();
+
+
+        if(players.get(currentPlayerIndex).isBankrupt()) endTurn(players);
+
+//
+//        if(players.get(currentPlayerIndex).isBankrupt() && players.stream().filter(l-> !l.isBankrupt()).count()>1){
+//            currentPlayerIndex = (currentPlayerIndex + 1) % players.size();
+//            endTurn(players);
+//        }
     }
 
     public int getCurrentPlayerIndex() {
@@ -60,31 +52,9 @@ public class Game {
         // Esegui le operazioni di pulizia o salvataggio dei dati alla fine della partita
     }
 
-    public void gestisciLancioDadi(Player player, int valoreDado1, int valoreDado2) {
-        if (!gameStarted) {
-
-        }
-
-        int sommaDadi = valoreDado1 + valoreDado2;
-        int nuovaPosizione = (player.getPosition() + sommaDadi) % properties.size();
-
-        //Il giocatore riceve 200
-        if (nuovaPosizione < player.getPosition()) {
-            player.addMoney(200);
-        }
-
-        player.setPosition(nuovaPosizione);
-        Property currentProperty = properties.get(nuovaPosizione);
-
-        if (currentProperty.isAvaible()) {
-            gestisciAcquisto(player, currentProperty);
-        } else if (currentProperty.getGiocatore() != player) {
-            gestisciPagamentoAffitto(player, currentProperty);
-        }
-
-    }
 
     public void gestisciAcquisto(Player player, Property property) {
+            /*To do alert when there is no money to buy*/
         int prezzoProprieta = property.getCosto();
         if (player.getMoney() >= prezzoProprieta) {
             //player.addProperty(property);     ridondante salvarsi la lista delle proprietà se il giocatore è salvato nelle proprietà
@@ -94,14 +64,16 @@ public class Game {
         }
     }
 
-    public void gestisciPagamentoAffitto(Player player, Property property) {
+    public void gestisciPagamentoAffitto( Property property) {
         int affitto = property.getAffitto(property.getPaints());
+        Player player = players.get(currentPlayerIndex);
+        property.getGiocatore().addMoney(affitto);
 
         if (player.getMoney() >= affitto) {
-            Player owner = property.getGiocatore();
             player.removeMoney(affitto);
-            owner.addMoney(affitto);
         } else {
+            player.setBankrupt();
+            /**To do manage mortage to sell*/
             // Il giocatore non ha abbastanza denaro per pagare l'affitto
             // ... gestisci la situazione di insolvenza del giocatore
         }
