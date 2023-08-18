@@ -23,6 +23,7 @@ public class Player {
         money = 1500;
         prison = false;
         turnPrison = 0;
+        prison = false;
     }
 
     public String getName() {return name;}

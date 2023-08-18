@@ -99,6 +99,7 @@ public class GameActivity extends AppCompatActivity {
         players.add(new Player("Giocatore 1",0));
         players.add(new Player("Giocatore 2", 1));
         players.add(new Player("Giocatore 3", 2));
+        players.get(2).setPrison(true);
 
         //Lettura file JSON delle proprieta
         List<Property> properties = new ArrayList<>();
@@ -246,6 +247,51 @@ public class GameActivity extends AppCompatActivity {
                 window.setGravity(Gravity.CENTER);
                 end.show();
             }
+            Log.d("Prison" , ""+game.getCurrentPlayer().isPrison());
+            if(game.getCurrentPlayer().isPrison())
+            {
+                int turno = game.getCurrentPlayer().getTurnPrison();
+
+                rollDice.setEnabled(false);
+
+                GifDrawable Gif1 = rollDice(numeri[0]);
+                GifDrawable Gif2 = rollDice(numeri[1]);
+                Gif1.reset(); // Resetta la GIF all'inizio
+                Gif1.start(); // Inizia animazione GIF
+                Dice1.setImageDrawable(Gif1);
+                new Handler().postDelayed(() -> {
+                    Gif2.reset(); // Resetta la GIF all'inizio
+                    Gif2.start(); // Inizia animazione GIF
+                    Dice2.setImageDrawable(Gif2);
+                }, 200);
+
+                if ( numeri[0] == numeri[1] )
+                {
+                    game.getCurrentPlayer().setPrison(false);
+                    game.getCurrentPlayer().setTurnPrison(0);
+                    new Handler().postDelayed(() -> {
+                        rollDice.callOnClick();
+                    }, 4500);
+
+
+                }
+                else {
+                    if ( turno > 2)
+                    {
+                        game.getCurrentPlayer().setPrison(false);
+                        game.getCurrentPlayer().setTurnPrison(0);
+                        endturn.setVisibility(View.VISIBLE);
+                    }
+                    else
+                    {
+                        game.getCurrentPlayer().setTurnPrison(game.getCurrentPlayer().getTurnPrison()+1);
+                        endturn.setVisibility(View.VISIBLE);
+
+                    }
+
+                }
+            }
+            else {
                 rollDice.setEnabled(false);
                 GifDrawable Gif1 = rollDice(numeri[0]);
                 GifDrawable Gif2 = rollDice(numeri[1]);
@@ -272,6 +318,11 @@ public class GameActivity extends AppCompatActivity {
                     }
                     path.lineTo(casella[position[currentPlayer]].getX(), casella[position[currentPlayer]].getY());
                 }
+                if (position[currentPlayer] == 30) {
+                    position[currentPlayer] = 10;
+                    game.getCurrentPlayer().setPrison(true);
+                    path.lineTo(casella[position[currentPlayer]].getX(), casella[position[currentPlayer]].getY());
+                }
 
 
                 new Handler().postDelayed(() -> {
@@ -288,10 +339,11 @@ public class GameActivity extends AppCompatActivity {
                         public void onAnimationEnd(@NonNull Animator animation) {
                             info.setVisibility(View.VISIBLE);
                             endturn.setVisibility(View.VISIBLE);
-                            Optional<Property> currentProperty = properties.stream().filter(l->l.getPosizione()==position[currentPlayer]).findFirst();
-                            if(currentProperty.isPresent()){
-                                if(currentProperty.get().getGiocatore()==null) buy.setVisibility(View.VISIBLE);
-                                else{
+                            Optional<Property> currentProperty = properties.stream().filter(l -> l.getPosizione() == position[currentPlayer]).findFirst();
+                            if (currentProperty.isPresent()) {
+                                if (currentProperty.get().getGiocatore() == null)
+                                    buy.setVisibility(View.VISIBLE);
+                                else {
                                     game.gestisciPagamentoAffitto(currentProperty.get());
                                 }
                             }
@@ -313,10 +365,13 @@ public class GameActivity extends AppCompatActivity {
                     };
                     animator.addListener(animatorListener);
                 }, 3500);
+
+            }
                 buy.setOnClickListener(new View.OnClickListener() {
                     /**When you have no money should still be visible*/
                     @Override
                     public void onClick(View v) {
+                        int currentPlayer = game.getCurrentPlayerIndex();
 
                         for (Property prop : properties) {
                             //if(prop.getTipo().equals("monument")) { Puoi comprare anche i musei e le centrali, if inutile
@@ -335,10 +390,11 @@ public class GameActivity extends AppCompatActivity {
                     }
                 });
                 updateUI(players);
-
+            int currentPlayer = game.getCurrentPlayerIndex();
                 info.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        int currentPlayer = game.getCurrentPlayerIndex();
                         field.InfoField(position[currentPlayer], properties);
                         field.show();
                     }

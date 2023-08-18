@@ -278,6 +278,15 @@
             "foto_path" : "/data/data/it.uniba.dib.sms222316/files/CulturalWealth/Monuments/TourEiffel.png"
         },
         {
+            "name": "Esilio",
+            "type": "Utility",
+            "description_it": "blabla",
+            "description_en": "blabla",
+            "sell_price": 140,
+            "position": 30,
+            "foto_path" : "/data/data/it.uniba.dib.sms222316/files/CulturalWealth/Monuments/TourEiffel.png"
+        },
+        {
             "name": "Christ the Redeemer",
             "type": "monument",
             "price": 300,
