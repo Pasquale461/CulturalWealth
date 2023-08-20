@@ -1,14 +1,12 @@
 package it.uniba.dib.sms222316;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.animation.Animator;
 import android.animation.ObjectAnimator;
 import android.content.Intent;
-import android.content.DialogInterface;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.Path;
@@ -17,19 +15,14 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.DisplayMetrics;
 import android.util.Log;
-import android.util.SparseBooleanArray;
 import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -37,7 +30,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -58,7 +50,6 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import it.uniba.dib.sms222316.Gameplay.Game;
 import it.uniba.dib.sms222316.Gameplay.Player;
@@ -78,13 +69,15 @@ public class GameActivity extends AppCompatActivity {
     private TextView playerScoreTextView2;
     private TextView playerScoreTextView3;
     Game game;
-    List<Property> properties;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
         setContentView(R.layout.activity_game);
+        Intent intent = getIntent();
+        int money = intent.getIntExtra("money", 1500);
+        int icon = intent.getIntExtra("puddle", 0);
         playerNameTextView = findViewById(R.id.name1);
         playerScoreTextView = findViewById(R.id.money1);
         playerScoreTextView2 = findViewById(R.id.money2);
@@ -95,24 +88,6 @@ public class GameActivity extends AppCompatActivity {
         info.setVisibility(View.INVISIBLE);
         buy.setVisibility(View.INVISIBLE);
 
-        Intent intent = getIntent();
-
-// Estrai il parametro utilizzando la chiave identificativa
-        int money = intent.getIntExtra("money", 1500);
-        int icon = intent.getIntExtra("puddle", 0);
-        ImageButton se = findViewById(R.id.savexit);
-        se.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //TODO  caricare oggetto
-                FirebaseFirestore db = FirebaseFirestore.getInstance();
-                DocumentReference usr = db.collection("Users").document(FirebaseAuth.getInstance().getCurrentUser().getUid());
-                String nuovoDocumentoId = "OAsoyWPGI2Q72hSAW50JOAsoyWPGI2Q72hSAW50J"; // Sostituisci con il tuo ID univoco o lascia vuoto per generare uno automaticamente
-                CollectionReference partiteCollection = db.collection("Users").document().collection("Games");
-                DocumentReference nuovoDocumentoRef = partiteCollection.document(nuovoDocumentoId);
-                nuovoDocumentoRef.set(game);
-            }
-        });
 
         int coordinate[] =new int[2];
         casella = caselle.setCasella(this);
@@ -139,7 +114,6 @@ public class GameActivity extends AppCompatActivity {
             case 5 :pedina1.setImageResource(R.drawable.japan_monument_svgrepo_com);break;
             default:pedina1.setImageResource(R.drawable.culture_japan_japanese_svgrepo_com);break;
         }
-
 
         //Lettura file JSON delle proprieta
         List<Property> properties = new ArrayList<>();
@@ -274,14 +248,6 @@ public class GameActivity extends AppCompatActivity {
 
                 if (game.getCurrentPlayer().getMoney() <= 0) {
                     players.get(game.getCurrentPlayerIndex()).setBankrupt();
-                    for (Property prop:properties) {
-                        if (prop.getGiocatore() == game.getCurrentPlayer() )
-                        {
-                            prop.setGiocatore(null);
-                            updateUI(prop.getPosizione() , -1);
-                        }
-
-                    }
                     updateUI(players);
                 }
 
@@ -315,8 +281,6 @@ public class GameActivity extends AppCompatActivity {
 
                 if ( numeri[0] == numeri[1] )
                 {
-                    game.getCurrentPlayer().point.doublejailexit();
-
                     game.getCurrentPlayer().setPrison(false);
                     game.getCurrentPlayer().setTurnPrison(0);
                     new Handler().postDelayed(() -> {
@@ -331,14 +295,11 @@ public class GameActivity extends AppCompatActivity {
                         game.getCurrentPlayer().setPrison(false);
                         game.getCurrentPlayer().setTurnPrison(0);
                         endturn.setVisibility(View.VISIBLE);
-                        game.getCurrentPlayer().point.injailpoint();
                     }
                     else
                     {
                         game.getCurrentPlayer().setTurnPrison(game.getCurrentPlayer().getTurnPrison()+1);
                         endturn.setVisibility(View.VISIBLE);
-                        game.getCurrentPlayer().point.injailpoint();
-
 
                     }
 
@@ -348,8 +309,6 @@ public class GameActivity extends AppCompatActivity {
                 rollDice.setEnabled(false);
                 GifDrawable Gif1 = rollDice(numeri[0]);
                 GifDrawable Gif2 = rollDice(numeri[1]);
-                game.getCurrentPlayer().point.Dicepoint(numeri[0], numeri[1]);
-
                 Gif1.reset(); // Resetta la GIF all'inizio
                 Gif1.start(); // Inizia animazione GIF
                 Dice1.setImageDrawable(Gif1);
@@ -400,8 +359,6 @@ public class GameActivity extends AppCompatActivity {
                                     buy.setVisibility(View.VISIBLE);
                                 else {
                                     game.gestisciPagamentoAffitto(currentProperty.get());
-                                    game.getCurrentPlayer().point.BuyPropPoints(Integer.parseInt(currentProperty.get().getGruppo()));
-                                    game.getCurrentPlayer().point.paypoints(currentProperty.get().getAffitto(1),game.HaveGroup(currentProperty.get().getGruppo() ,currentProperty.get().getGiocatore() ));
                                 }
                             }
 //                            for (Property prop : properties) {
@@ -436,7 +393,6 @@ public class GameActivity extends AppCompatActivity {
 
                                 if (name.equals(casella[position[currentPlayer]].getContentDescription())) {
                                     game.gestisciAcquisto(players.get(currentPlayer),prop);
-                                    game.getCurrentPlayer().point.BuyPropPoints(Integer.parseInt(prop.getGruppo()));
                                     buy.setVisibility(View.INVISIBLE);
                                 }
                             //}
@@ -457,21 +413,6 @@ public class GameActivity extends AppCompatActivity {
                         field.show();
                     }
                 });
-
-                ConstraintLayout Player = findViewById(R.id.players);
-                for(int i=0; i<players.size(); i++){
-                    if(i!=currentPlayer){
-                        ConstraintLayout rl = (ConstraintLayout) Player.getChildAt(i);
-                        int j=i;
-                        rl.setOnClickListener(v2 -> {
-                            TradeProposal(currentPlayer, j);
-                            rl.setOnClickListener(null);
-                        });
-
-                    }
-                }
-
-
                 players.get(currentPlayer).setPosition(position[currentPlayer]);
             });
         endturn.setOnClickListener(new View.OnClickListener() {
@@ -484,120 +425,11 @@ public class GameActivity extends AppCompatActivity {
                 rollDice.setEnabled(true);
                 updateUI(players);
 
+            }
         });
 
     }
 
-    public void TradeProposal(int offerer, int recipient){
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        LayoutInflater inflater = this.getLayoutInflater();
-        View dialogView = inflater.inflate(R.layout.trade_popup, null);
-        builder.setView(dialogView);
-
-        ListView listView1 = dialogView.findViewById(R.id.ListOfferer);
-        ListView listView2 = dialogView.findViewById(R.id.ListRecipient);
-
-
-        List<Player> players = game.getPlayers();
-        List<Property> properties = game.getProperties();
-
-        List<Property> items1 = properties.stream().filter(l -> {
-            if (l.getGiocatore() != null) return l.getGiocatore().equals(players.get(offerer));
-            return false;
-        }).collect(Collectors.toList());
-        List<Property> items2 = properties.stream().filter(l -> {
-            if (l.getGiocatore() != null) return l.getGiocatore().equals(players.get(recipient));
-            return false;
-        }).collect(Collectors.toList());
-
-
-        ArrayAdapter<String> adapter1 = new ArrayAdapter<>(this, android.R.layout.simple_list_item_multiple_choice, items1.stream().map(l -> l.getNome()).collect(Collectors.toList()));
-        ArrayAdapter<String> adapter2 = new ArrayAdapter<>(this, android.R.layout.simple_list_item_multiple_choice, items2.stream().map(l -> l.getNome()).collect(Collectors.toList()));
-
-
-
-        listView1.setAdapter(adapter1);
-        listView2.setAdapter(adapter2);
-
-        listView1.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
-        listView2.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
-        builder.setPositiveButton("OK", (dialog, which) -> {
-            SparseBooleanArray checked1 = listView1.getCheckedItemPositions();
-            SparseBooleanArray checked2 = listView2.getCheckedItemPositions();
-            List<Property> selectedItems1 = new ArrayList<>();
-            List<Property> selectedItems2 = new ArrayList<>();
-            for (int i = 0; i < checked1.size(); i++) {
-                if (checked1.valueAt(i)) {
-                    selectedItems1.add(items1.get(checked1.keyAt(i)));
-                }
-            }
-            for (int i = 0; i < checked2.size(); i++) {
-                if (checked2.valueAt(i)) {
-                    selectedItems2.add(items2.get(checked2.keyAt(i)));
-                }
-            }
-
-            TradeResponse(selectedItems1, selectedItems2);
-        });
-
-        builder.setNegativeButton("Annulla", (dialog, which) -> {
-            dialog.dismiss();
-        });
-
-        AlertDialog dialog = builder.create();
-        dialog.show();
-
-    }
-    public void TradeResponse(List<Property> OfferedProperty, List<Property> RequestedProperty){
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        LayoutInflater inflater = this.getLayoutInflater();
-        View dialogView = inflater.inflate(R.layout.trade_popup, null);
-        builder.setView(dialogView);
-        Player Offerer = OfferedProperty.get(0).getGiocatore();
-        Player Recipient = RequestedProperty.get(0).getGiocatore();
-        ListView listView1 = dialogView.findViewById(R.id.ListOfferer);
-        ListView listView2 = dialogView.findViewById(R.id.ListRecipient);
-
-
-
-        ArrayAdapter<String> adapter1 = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, OfferedProperty.stream().map(l -> l.getNome()).collect(Collectors.toList()));
-        ArrayAdapter<String> adapter2 = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, RequestedProperty.stream().map(l -> l.getNome()).collect(Collectors.toList()));
-
-
-        listView1.setAdapter(adapter1);
-        listView2.setAdapter(adapter2);
-
-        builder.setPositiveButton("Accept", (dialog, which) -> {
-            for (int i = 0; i < OfferedProperty.size(); i++) {
-                OfferedProperty.get(i).setGiocatore(Recipient);
-            }
-            for (int i = 0; i < RequestedProperty.size(); i++) {
-                RequestedProperty.get(i).setGiocatore(Offerer);
-            }
-            updateUI();
-        });
-
-        builder.setNegativeButton("Refuse", (dialog, which) -> {
-            dialog.dismiss();
-        });
-
-        AlertDialog dialog = builder.create();
-        dialog.show();
-    }
-    private void updateUI(){
-        ConstraintLayout BloccoIcone = findViewById(R.id.Icons);
-        List<Property> properties = game.getProperties();
-
-        for (Property prop:properties) {
-            int ImagePlayer;
-            ImageView icona = (ImageView) BloccoIcone.getChildAt(prop.getPosizione()+40);
-            if(prop.getGiocatore() != null)     ImagePlayer = getResources().getIdentifier("_"+prop.getGiocatore().getIcon(), "drawable", getPackageName());
-            else    ImagePlayer = getResources().getIdentifier("_-1", "drawable", getPackageName());
-            icona.setImageResource(ImagePlayer);
-        }
-
-    }
     private void updateUI(int Position, int playerIcon){
         ConstraintLayout BloccoIcone = findViewById(R.id.Icons);
         ImageView icona = (ImageView) BloccoIcone.getChildAt(Position+40);
@@ -659,10 +491,6 @@ public class GameActivity extends AppCompatActivity {
 
         return Gif;
     }
-
-
-
-
 
 
 }
