@@ -54,7 +54,7 @@ public class Game {
 
 
     public void gestisciAcquisto(Player player, Property property) {
-            /*To do alert when there is no money to buy*/
+            /**To do alert when there is no money to buy*/
         int prezzoProprieta = property.getCosto();
         if (player.getMoney() >= prezzoProprieta) {
             //player.addProperty(property);     ridondante salvarsi la lista delle proprietà se il giocatore è salvato nelle proprietà
@@ -133,6 +133,13 @@ public class Game {
         return this.players.size();
     }
 
+    public List<Property> getProperties() {
+        return properties;
+    }
+
+    public List<Player> getPlayers() {
+        return players;
+    }
 }
 
 

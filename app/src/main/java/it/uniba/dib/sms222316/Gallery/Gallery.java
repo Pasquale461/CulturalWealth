@@ -96,6 +96,7 @@ public class Gallery extends AppCompatActivity {
 
 
         btnMonuments.setOnClickListener(v -> {
+            btnMonuments.setEnabled(false);
             if(pressed != heritage.Monuments){
 
                 fullHrg.clear();
@@ -177,9 +178,11 @@ public class Gallery extends AppCompatActivity {
 
 
             }
+            btnMonuments.setEnabled(true);
         });
 
         btnPaintings.setOnClickListener(v -> {
+            btnPaintings.setEnabled(false);
             if(pressed != heritage.Paintings){
                 fullHrg.clear();
 
@@ -256,9 +259,11 @@ public class Gallery extends AppCompatActivity {
                 });
 
             }
+            btnPaintings.setEnabled(true);
         });
 
         btnCharacters.setOnClickListener(v -> {
+            btnCharacters.setEnabled(false);
             if(pressed != heritage.Characters){
 
 
@@ -340,6 +345,7 @@ public class Gallery extends AppCompatActivity {
 
 
             }
+            btnCharacters.setEnabled(true);
         });
     }
     protected void onResume() {

@@ -1,12 +1,14 @@
 package it.uniba.dib.sms222316;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.animation.Animator;
 import android.animation.ObjectAnimator;
 import android.content.Intent;
+import android.content.DialogInterface;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.Path;
@@ -15,15 +17,19 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.util.SparseBooleanArray;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -52,6 +58,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import it.uniba.dib.sms222316.Gameplay.Game;
 import it.uniba.dib.sms222316.Gameplay.Player;
@@ -135,7 +142,7 @@ public class GameActivity extends AppCompatActivity {
 
 
         //Lettura file JSON delle proprieta
-        properties = new ArrayList<>();
+        List<Property> properties = new ArrayList<>();
         Resources resources = getResources();
         int resourceId = resources.getIdentifier("property", "raw", getPackageName());
         InputStream inputStream = resources.openRawResource(resourceId);
@@ -216,6 +223,9 @@ public class GameActivity extends AppCompatActivity {
         pedina[0] = findViewById(R.id.pedina1);
         pedina[1] = findViewById(R.id.pedina2);
         pedina[2] = findViewById(R.id.pedina3);
+
+
+
 
 
         PopupField field = new PopupField(GameActivity.this, GameActivity.this);
@@ -415,7 +425,7 @@ public class GameActivity extends AppCompatActivity {
 
             }
                 buy.setOnClickListener(new View.OnClickListener() {
-
+                    /**When you have no money should still be visible*/
                     @Override
                     public void onClick(View v) {
                         int currentPlayer = game.getCurrentPlayerIndex();
@@ -447,6 +457,21 @@ public class GameActivity extends AppCompatActivity {
                         field.show();
                     }
                 });
+
+                ConstraintLayout Player = findViewById(R.id.players);
+                for(int i=0; i<players.size(); i++){
+                    if(i!=currentPlayer){
+                        ConstraintLayout rl = (ConstraintLayout) Player.getChildAt(i);
+                        int j=i;
+                        rl.setOnClickListener(v2 -> {
+                            TradeProposal(currentPlayer, j);
+                            rl.setOnClickListener(null);
+                        });
+
+                    }
+                }
+
+
                 players.get(currentPlayer).setPosition(position[currentPlayer]);
             });
         endturn.setOnClickListener(new View.OnClickListener() {
@@ -459,13 +484,120 @@ public class GameActivity extends AppCompatActivity {
                 rollDice.setEnabled(true);
                 updateUI(players);
 
-            }
         });
-
-
 
     }
 
+    public void TradeProposal(int offerer, int recipient){
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = this.getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.trade_popup, null);
+        builder.setView(dialogView);
+
+        ListView listView1 = dialogView.findViewById(R.id.ListOfferer);
+        ListView listView2 = dialogView.findViewById(R.id.ListRecipient);
+
+
+        List<Player> players = game.getPlayers();
+        List<Property> properties = game.getProperties();
+
+        List<Property> items1 = properties.stream().filter(l -> {
+            if (l.getGiocatore() != null) return l.getGiocatore().equals(players.get(offerer));
+            return false;
+        }).collect(Collectors.toList());
+        List<Property> items2 = properties.stream().filter(l -> {
+            if (l.getGiocatore() != null) return l.getGiocatore().equals(players.get(recipient));
+            return false;
+        }).collect(Collectors.toList());
+
+
+        ArrayAdapter<String> adapter1 = new ArrayAdapter<>(this, android.R.layout.simple_list_item_multiple_choice, items1.stream().map(l -> l.getNome()).collect(Collectors.toList()));
+        ArrayAdapter<String> adapter2 = new ArrayAdapter<>(this, android.R.layout.simple_list_item_multiple_choice, items2.stream().map(l -> l.getNome()).collect(Collectors.toList()));
+
+
+
+        listView1.setAdapter(adapter1);
+        listView2.setAdapter(adapter2);
+
+        listView1.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
+        listView2.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
+        builder.setPositiveButton("OK", (dialog, which) -> {
+            SparseBooleanArray checked1 = listView1.getCheckedItemPositions();
+            SparseBooleanArray checked2 = listView2.getCheckedItemPositions();
+            List<Property> selectedItems1 = new ArrayList<>();
+            List<Property> selectedItems2 = new ArrayList<>();
+            for (int i = 0; i < checked1.size(); i++) {
+                if (checked1.valueAt(i)) {
+                    selectedItems1.add(items1.get(checked1.keyAt(i)));
+                }
+            }
+            for (int i = 0; i < checked2.size(); i++) {
+                if (checked2.valueAt(i)) {
+                    selectedItems2.add(items2.get(checked2.keyAt(i)));
+                }
+            }
+
+            TradeResponse(selectedItems1, selectedItems2);
+        });
+
+        builder.setNegativeButton("Annulla", (dialog, which) -> {
+            dialog.dismiss();
+        });
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+
+    }
+    public void TradeResponse(List<Property> OfferedProperty, List<Property> RequestedProperty){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = this.getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.trade_popup, null);
+        builder.setView(dialogView);
+        Player Offerer = OfferedProperty.get(0).getGiocatore();
+        Player Recipient = RequestedProperty.get(0).getGiocatore();
+        ListView listView1 = dialogView.findViewById(R.id.ListOfferer);
+        ListView listView2 = dialogView.findViewById(R.id.ListRecipient);
+
+
+
+        ArrayAdapter<String> adapter1 = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, OfferedProperty.stream().map(l -> l.getNome()).collect(Collectors.toList()));
+        ArrayAdapter<String> adapter2 = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, RequestedProperty.stream().map(l -> l.getNome()).collect(Collectors.toList()));
+
+
+        listView1.setAdapter(adapter1);
+        listView2.setAdapter(adapter2);
+
+        builder.setPositiveButton("Accept", (dialog, which) -> {
+            for (int i = 0; i < OfferedProperty.size(); i++) {
+                OfferedProperty.get(i).setGiocatore(Recipient);
+            }
+            for (int i = 0; i < RequestedProperty.size(); i++) {
+                RequestedProperty.get(i).setGiocatore(Offerer);
+            }
+            updateUI();
+        });
+
+        builder.setNegativeButton("Refuse", (dialog, which) -> {
+            dialog.dismiss();
+        });
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+    private void updateUI(){
+        ConstraintLayout BloccoIcone = findViewById(R.id.Icons);
+        List<Property> properties = game.getProperties();
+
+        for (Property prop:properties) {
+            int ImagePlayer;
+            ImageView icona = (ImageView) BloccoIcone.getChildAt(prop.getPosizione()+40);
+            if(prop.getGiocatore() != null)     ImagePlayer = getResources().getIdentifier("_"+prop.getGiocatore().getIcon(), "drawable", getPackageName());
+            else    ImagePlayer = getResources().getIdentifier("_-1", "drawable", getPackageName());
+            icona.setImageResource(ImagePlayer);
+        }
+
+    }
     private void updateUI(int Position, int playerIcon){
         ConstraintLayout BloccoIcone = findViewById(R.id.Icons);
         ImageView icona = (ImageView) BloccoIcone.getChildAt(Position+40);
