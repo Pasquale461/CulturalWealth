@@ -1025,6 +1025,16 @@
                         app:layout_constraintEnd_toEndOf="@+id/dice2"
                         app:layout_constraintTop_toTopOf="@+id/dice2" />
 
+                    <ImageButton
+                        android:id="@+id/savexit"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:backgroundTint="#00B60000"
+                        android:foregroundTintMode="src_in"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@android:drawable/btn_dialog" />
+
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </ScrollView>
 

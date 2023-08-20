@@ -48,7 +48,7 @@ public class ranking_popup extends Dialog {
 
     public ranking_popup(Context context) {
         super(context);
-        context.setTheme(android.R.style.Theme_DeviceDefault_NoActionBar);
+       // context.setTheme(android.R.style.Theme_DeviceDefault_NoActionBar);
         getWindow().requestFeature(Window.FEATURE_NO_TITLE);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
@@ -67,7 +67,7 @@ public class ranking_popup extends Dialog {
                 for (QueryDocumentSnapshot document : task.getResult()) {
                     if(document.get("ProfilePic") == null)
                     {
-                        fullHrg.add(new Utente(document.getString("nome"), "" , "1000", empty));
+                        fullHrg.add(new Utente(document.getString("nome"), "" , "", empty));
                     }
                     else {
                         Log.d("documento" , document.getDocumentReference("ProfilePic").getPath());
@@ -76,7 +76,7 @@ public class ranking_popup extends Dialog {
 
                         // Utilizziamo la reference per prendere il nome dell'utente
                         userRef.get().addOnSuccessListener(documentSnapshot -> {
-                            fullHrg.add(new Utente(document.getString("nome"), "" , "1000", documentSnapshot.getString("Image")));
+                            fullHrg.add(new Utente(document.getString("nome"), "" , "", documentSnapshot.getString("Image")));
                             Log.d("documento" , documentSnapshot.getString("Image"));
 
                             data = new ArrayList<>(fullHrg);

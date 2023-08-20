@@ -2,6 +2,7 @@ package it.uniba.dib.sms222316;
 
 import static it.uniba.dib.sms222316.Utility.showToast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.cardview.widget.CardView;
@@ -12,6 +13,7 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
@@ -25,6 +27,8 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -41,7 +45,8 @@ import it.uniba.dib.sms222316.Goals.GoalsPopup;
 import it.uniba.dib.sms222316.Rank.ranking_popup;
 
 public class Home extends AppCompatActivity {
-    Button Play, usrbtn, rankbutton, Disconnect;
+    Button  usrbtn, rankbutton, Disconnect;
+    CardView Play;
     ImageButton Settings,italianButton,englishButton;
     MediaPlayer effect;
     SwitchCompat mVolume,eVolume;
@@ -152,6 +157,7 @@ public class Home extends AppCompatActivity {
             posseduti.add(def);
             Map Us = new HashMap<>();
             Us.put("email", Accountstring);
+            Us.put("points", 0);
             Us.put("nome",usrtext.getText().toString());
             Us.put("friend_code",getRandomHexString(5));
             //Us.put("Posseduti",posseduti);
@@ -239,10 +245,36 @@ public class Home extends AppCompatActivity {
         //Bottone Della disconnessione
         Disconnect = popupSettings.findViewById(R.id.disconnetti);
         Disconnect.setOnClickListener(v -> {
+
+            GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                    .requestIdToken(getString(R.string.default_web_client_id))
+                    .requestEmail()
+                    .build();
+
+            GoogleSignInClient googleSignInClient = GoogleSignIn.getClient(this, gso);
+
+            googleSignInClient.revokeAccess().addOnCompleteListener(this,
+                    new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            // Callback after access is revoked
+                            if (task.isSuccessful()) {
+                                // Successfully revoked access to Google API
+                            } else {
+                                // Handle error
+                            }
+                        }
+                    });
             FirebaseAuth.getInstance().signOut();
             finish();
             Intent intent = new Intent(Home.this, Login.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
+
+
+
+
+
         });
 
         //Gestione ost del gioco
@@ -252,7 +284,7 @@ public class Home extends AppCompatActivity {
 
 
 
-        Play = findViewById(R.id.play);
+        Play = findViewById(R.id.Newdgame);
         Play.setOnClickListener(v -> {
             if(eVolume.isChecked()) {
                 effect.start();
@@ -271,12 +303,14 @@ public class Home extends AppCompatActivity {
 
         findusername(Accountstring);
 
-        Button play = findViewById(R.id.play);
+        CardView play = findViewById(R.id.Newdgame);
         play.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                PopupPlay playpopup = new PopupPlay(Home.this);
+                playpopup.show();
                 Intent i = new Intent(Home.this, GameActivity.class);
-                startActivity(i);
+                //startActivity(i);
             }
         });
     }
@@ -347,6 +381,9 @@ public class Home extends AppCompatActivity {
 
             }
         });
+
+
+
 
 
 

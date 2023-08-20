@@ -65,8 +65,12 @@ public class Game {
     }
 
     public void gestisciPagamentoAffitto( Property property) {
+
+
         int affitto = property.getAffitto(property.getPaints());
+
         Player player = players.get(currentPlayerIndex);
+        if (HaveGroup(property.getGruppo() , player))affitto*=2;
         property.getGiocatore().addMoney(affitto);
 
         if (player.getMoney() >= affitto) {
@@ -79,6 +83,18 @@ public class Game {
         }
     }
 
+    public boolean HaveGroup(String Group , Player player)
+    {
+
+        boolean flag = false;
+        for ( Property prop:
+                properties)
+        {
+            if (prop.getGruppo().equals(Group) && prop.getGiocatore().equals(player) )flag = true;
+            else flag = false;
+        }
+        return  flag;
+    }
     public void prossimoTurno() {
         if (!gameStarted) {
             //

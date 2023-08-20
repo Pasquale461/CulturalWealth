@@ -3,6 +3,8 @@ package it.uniba.dib.sms222316.Gameplay;
 
 import java.util.List;
 
+import it.uniba.dib.sms222316.Rank.Points;
+
 
 public class Player {
     private String name;
@@ -13,14 +15,16 @@ public class Player {
     private boolean prison;
     private boolean bankrupt;
     private int turnPrison;
+    public Points point;
 
 
-    public Player(String name, int icon) {
+    public Player(String name, int icon,int  money) {
+        this.point = new Points();
         bankrupt = false;
         this.name = name;
         this.icon = icon;
-        score = 0;
-        money = 1500;
+        score = 10;
+        this.money = money;
         prison = false;
         turnPrison = 0;
         prison = false;
@@ -30,7 +34,8 @@ public class Player {
 
     public int getScore() {return score;}
 
-    public void addScore(int points) {score += points;}
+    //TODO usa questa funzione prima di caricare i dati in database
+    public void addScore() {score += point.getpoints();}
 
     public void setPosition(int position) {this.position = position;}
 
@@ -68,6 +73,9 @@ public class Player {
     public void removeMoney(int money) {this.money -= money;}
 
     public void removeTurn() {turnPrison--;}
-    public void setBankrupt() {this.bankrupt = true;}
+    public void setBankrupt()
+    {
+        this.bankrupt = true;
+    }
     public boolean isBankrupt() {return bankrupt;}
 }

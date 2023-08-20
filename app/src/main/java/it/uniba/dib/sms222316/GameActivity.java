@@ -6,6 +6,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.animation.Animator;
 import android.animation.ObjectAnimator;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.Path;
@@ -20,6 +21,7 @@ import android.view.ViewTreeObserver;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -29,6 +31,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -68,6 +71,7 @@ public class GameActivity extends AppCompatActivity {
     private TextView playerScoreTextView2;
     private TextView playerScoreTextView3;
     Game game;
+    List<Property> properties;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,6 +88,24 @@ public class GameActivity extends AppCompatActivity {
         info.setVisibility(View.INVISIBLE);
         buy.setVisibility(View.INVISIBLE);
 
+        Intent intent = getIntent();
+
+// Estrai il parametro utilizzando la chiave identificativa
+        int money = intent.getIntExtra("money", 1500);
+        int icon = intent.getIntExtra("puddle", 0);
+        ImageButton se = findViewById(R.id.savexit);
+        se.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //TODO  caricare oggetto
+                FirebaseFirestore db = FirebaseFirestore.getInstance();
+                DocumentReference usr = db.collection("Users").document(FirebaseAuth.getInstance().getCurrentUser().getUid());
+                String nuovoDocumentoId = "OAsoyWPGI2Q72hSAW50JOAsoyWPGI2Q72hSAW50J"; // Sostituisci con il tuo ID univoco o lascia vuoto per generare uno automaticamente
+                CollectionReference partiteCollection = db.collection("Users").document().collection("Games");
+                DocumentReference nuovoDocumentoRef = partiteCollection.document(nuovoDocumentoId);
+                nuovoDocumentoRef.set(game);
+            }
+        });
 
         int coordinate[] =new int[2];
         casella = caselle.setCasella(this);
@@ -96,13 +118,24 @@ public class GameActivity extends AppCompatActivity {
         playerNameTextView = findViewById(R.id.name1);findusername(FirebaseAuth.getInstance().getCurrentUser().getEmail());
         playerNameTextView2 = findViewById(R.id.name2);playerNameTextView2.setText("Guest 2");
         playerNameTextView3 = findViewById(R.id.name33);playerNameTextView3.setText("Guest 3");
-        players.add(new Player("Giocatore 1",0));
-        players.add(new Player("Giocatore 2", 1));
-        players.add(new Player("Giocatore 3", 2));
-        players.get(2).setPrison(true);
+        players.add(new Player("Giocatore 1",0, money));
+        players.add(new Player("Giocatore 2", 1, money));
+        players.add(new Player("Giocatore 3", 2, money));
+
+        ImageView pedina1 = findViewById(R.id.pedina1);
+        switch (icon)
+        {
+            case 1 :pedina1.setImageResource(R.drawable.culture_japan_japanese_svgrepo_com);break;
+            case 2 :pedina1.setImageResource(R.drawable.abstract_painting_ic_national_culture_paris_svgrepo_com);break;
+            case 3 :pedina1.setImageResource(R.drawable.moai_svgrepo_com);break;
+            case 4 :pedina1.setImageResource(R.drawable.icon_rank_149);break;
+            case 5 :pedina1.setImageResource(R.drawable.japan_monument_svgrepo_com);break;
+            default:pedina1.setImageResource(R.drawable.culture_japan_japanese_svgrepo_com);break;
+        }
+
 
         //Lettura file JSON delle proprieta
-        List<Property> properties = new ArrayList<>();
+        properties = new ArrayList<>();
         Resources resources = getResources();
         int resourceId = resources.getIdentifier("property", "raw", getPackageName());
         InputStream inputStream = resources.openRawResource(resourceId);
@@ -185,9 +218,6 @@ public class GameActivity extends AppCompatActivity {
         pedina[2] = findViewById(R.id.pedina3);
 
 
-
-
-
         PopupField field = new PopupField(GameActivity.this, GameActivity.this);
         Button rollDice = findViewById(R.id.dado);
 
@@ -234,6 +264,14 @@ public class GameActivity extends AppCompatActivity {
 
                 if (game.getCurrentPlayer().getMoney() <= 0) {
                     players.get(game.getCurrentPlayerIndex()).setBankrupt();
+                    for (Property prop:properties) {
+                        if (prop.getGiocatore() == game.getCurrentPlayer() )
+                        {
+                            prop.setGiocatore(null);
+                            updateUI(prop.getPosizione() , -1);
+                        }
+
+                    }
                     updateUI(players);
                 }
 
@@ -267,6 +305,8 @@ public class GameActivity extends AppCompatActivity {
 
                 if ( numeri[0] == numeri[1] )
                 {
+                    game.getCurrentPlayer().point.doublejailexit();
+
                     game.getCurrentPlayer().setPrison(false);
                     game.getCurrentPlayer().setTurnPrison(0);
                     new Handler().postDelayed(() -> {
@@ -281,11 +321,14 @@ public class GameActivity extends AppCompatActivity {
                         game.getCurrentPlayer().setPrison(false);
                         game.getCurrentPlayer().setTurnPrison(0);
                         endturn.setVisibility(View.VISIBLE);
+                        game.getCurrentPlayer().point.injailpoint();
                     }
                     else
                     {
                         game.getCurrentPlayer().setTurnPrison(game.getCurrentPlayer().getTurnPrison()+1);
                         endturn.setVisibility(View.VISIBLE);
+                        game.getCurrentPlayer().point.injailpoint();
+
 
                     }
 
@@ -295,6 +338,8 @@ public class GameActivity extends AppCompatActivity {
                 rollDice.setEnabled(false);
                 GifDrawable Gif1 = rollDice(numeri[0]);
                 GifDrawable Gif2 = rollDice(numeri[1]);
+                game.getCurrentPlayer().point.Dicepoint(numeri[0], numeri[1]);
+
                 Gif1.reset(); // Resetta la GIF all'inizio
                 Gif1.start(); // Inizia animazione GIF
                 Dice1.setImageDrawable(Gif1);
@@ -345,6 +390,8 @@ public class GameActivity extends AppCompatActivity {
                                     buy.setVisibility(View.VISIBLE);
                                 else {
                                     game.gestisciPagamentoAffitto(currentProperty.get());
+                                    game.getCurrentPlayer().point.BuyPropPoints(Integer.parseInt(currentProperty.get().getGruppo()));
+                                    game.getCurrentPlayer().point.paypoints(currentProperty.get().getAffitto(1),game.HaveGroup(currentProperty.get().getGruppo() ,currentProperty.get().getGiocatore() ));
                                 }
                             }
 //                            for (Property prop : properties) {
@@ -368,7 +415,7 @@ public class GameActivity extends AppCompatActivity {
 
             }
                 buy.setOnClickListener(new View.OnClickListener() {
-                    /**When you have no money should still be visible*/
+
                     @Override
                     public void onClick(View v) {
                         int currentPlayer = game.getCurrentPlayerIndex();
@@ -379,6 +426,7 @@ public class GameActivity extends AppCompatActivity {
 
                                 if (name.equals(casella[position[currentPlayer]].getContentDescription())) {
                                     game.gestisciAcquisto(players.get(currentPlayer),prop);
+                                    game.getCurrentPlayer().point.BuyPropPoints(Integer.parseInt(prop.getGruppo()));
                                     buy.setVisibility(View.INVISIBLE);
                                 }
                             //}
@@ -413,6 +461,8 @@ public class GameActivity extends AppCompatActivity {
 
             }
         });
+
+
 
     }
 
@@ -477,6 +527,10 @@ public class GameActivity extends AppCompatActivity {
 
         return Gif;
     }
+
+
+
+
 
 
 }

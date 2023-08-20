@@ -38,7 +38,7 @@ public class Login extends AppCompatActivity {
     GoogleSignInClient gsc;
     FirebaseUser user, mUser;
     FirebaseAuth firebaseAuth;
-
+    GoogleSignInAccount account;
 
 
     @Override
@@ -71,7 +71,7 @@ public class Login extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance();
         mUser=firebaseAuth.getCurrentUser();
 
-        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
+        account = GoogleSignIn.getLastSignedInAccount(this);
 
 
         //Creazione trigger  onclick
@@ -104,6 +104,11 @@ public class Login extends AppCompatActivity {
 
     //funzionew che gestire il Guest user
     private void signInAnonymously() {
+
+        account = null;
+        FirebaseAuth.getInstance().signOut();
+
+
         firebaseAuth.signInAnonymously()
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override

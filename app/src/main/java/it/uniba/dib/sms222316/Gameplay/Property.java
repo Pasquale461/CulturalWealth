@@ -118,4 +118,5 @@ public class Property
 
     public String getphoto() {return photo;
     }
+
 }
