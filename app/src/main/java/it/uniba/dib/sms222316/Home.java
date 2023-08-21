@@ -30,6 +30,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -172,6 +173,28 @@ public class Home extends AppCompatActivity {
                     .addOnSuccessListener(aVoid -> {
                         //aggiunto
                         showToast(Home.this, "aggiunto");
+                        CollectionReference Game = db.collection("Games");
+
+
+
+                        DocumentReference parentDocRef = db.document("Users/"+FirebaseAuth.getInstance().getCurrentUser().getUid());
+
+
+                        CollectionReference GamesCollectionRef = parentDocRef.collection("Games");
+                        Map M = new HashMap<>();
+                        M.put("a", 1);
+                        GamesCollectionRef.add(M);
+                        M.clear();
+                        //Map M = new HashMap<>();
+                        DocumentReference colRef = db.collection("Missions").document("Gioca Una Partita");
+                        //colRef.document("Gioca Una Partita");
+                        M.put("Base",  colRef );
+                        M.put("Progress", 0);
+                        DocumentReference missionsCollectionRef = parentDocRef.collection("Missions").document("M1");
+                        missionsCollectionRef.set(M);
+
+
+
                         findusername(Accountstring);
 
                     })

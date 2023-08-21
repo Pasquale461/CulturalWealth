@@ -90,8 +90,11 @@ public class Game {
         for ( Property prop:
                 properties)
         {
-            if (prop.getGruppo().equals(Group) && prop.getGiocatore().equals(player) )flag = true;
-            else flag = false;
+            if (prop.getTipo().equals("monument")) {
+                if (prop.getGruppo().equals(Group) && prop.getGiocatore().equals(player))
+                    flag = true;
+                else flag = false;
+            }
         }
         return  flag;
     }

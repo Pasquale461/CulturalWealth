@@ -39,7 +39,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import it.uniba.dib.sms222316.Rank.ranking_popup;
-import it.uniba.dib.sms222316.databinding.EndgamePopupBinding;
+
 import pl.droidsonroids.gif.GifDrawable;
 import pl.droidsonroids.gif.GifImageView;
 
@@ -58,7 +58,9 @@ import it.uniba.dib.sms222316.Gameplay.Property;
 public class GameActivity extends AppCompatActivity {
 
     int start=0;
-
+    int terzo = 0;
+    int secondo = 0;
+    int primo = 0;
     Caselle caselle = new Caselle();
     ImageView[] casella;
     boolean isViewCreated = false;
@@ -68,6 +70,12 @@ public class GameActivity extends AppCompatActivity {
     private TextView playerScoreTextView;
     private TextView playerScoreTextView2;
     private TextView playerScoreTextView3;
+    private TextView pprimo ;
+    private TextView psecondo;
+    private TextView pterzo;
+    private TextView nprimo ;
+    private TextView nsecondo ;
+    private TextView nterzo ;
     Game game;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,7 +105,7 @@ public class GameActivity extends AppCompatActivity {
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
 
 
-        playerNameTextView = findViewById(R.id.name1);findusername(FirebaseAuth.getInstance().getCurrentUser().getEmail());
+        playerNameTextView = findViewById(R.id.name1);findusername(FirebaseAuth.getInstance().getCurrentUser().getEmail() , playerNameTextView);
         playerNameTextView2 = findViewById(R.id.name2);playerNameTextView2.setText("Guest 2");
         playerNameTextView3 = findViewById(R.id.name33);playerNameTextView3.setText("Guest 3");
         players.add(new Player("Giocatore 1",0, money));
@@ -249,18 +257,51 @@ public class GameActivity extends AppCompatActivity {
                 if (game.getCurrentPlayer().getMoney() <= 0) {
                     players.get(game.getCurrentPlayerIndex()).setBankrupt();
                     updateUI(players);
+                    if (terzo != 0)terzo =game.getCurrentPlayerIndex();
+                    else secondo = game.getCurrentPlayerIndex();
+
                 }
 
                 int[] numeri = game.dadi();
             if(!game.isGameStarted())
             {
-                endgame_popup end = new endgame_popup(GameActivity.this);
+                primo = game.getCurrentPlayerIndex();
+
                 //popup classifica
-                Window window = end.getWindow();
-                window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                window.setGravity(Gravity.CENTER);
-                end.show();
+
+
+                pprimo = findViewById(R.id.firstpoints);
+                 psecondo = findViewById(R.id.secondpoints);
+                 pterzo = findViewById(R.id.thirdpoints);
+                 nprimo = findViewById(R.id.firstname);
+                 nsecondo = findViewById(R.id.secondname);
+                 nterzo = findViewById(R.id.thirdname);
+                int punteggioprimo = players.get(primo).getScore();
+                      int   punteggiosecondo= players.get(secondo).getScore();
+                               int  punteggioterzo = players.get(terzo).getScore();
+                               String nomeprimo = players.get(primo).getName();
+                String nomesecondo = players.get(secondo).getName();
+                String nometerzo = players.get(terzo).getName();
+
+                Intent i = new Intent(GameActivity.this, endgame_popup.class);
+                i.putExtra("punteggioprimo", punteggioprimo);
+                i.putExtra("punteggiosecondo", punteggiosecondo);
+                i.putExtra("punteggioterzo", punteggioterzo);
+                i.putExtra("nomeprimo", nomeprimo);
+                i.putExtra("nomesecondo", nomesecondo);
+                i.putExtra("nometerzo", nometerzo);
+                startActivity(i);
+
+
+
+
+
+
+
             }
+            players.get(1).setBankrupt();
+            players.get(0).setBankrupt();
+            //players.get(2).setBankrupt();
             Log.d("Prison" , ""+game.getCurrentPlayer().isPrison());
             if(game.getCurrentPlayer().isPrison())
             {
@@ -452,7 +493,7 @@ public class GameActivity extends AppCompatActivity {
     return currentPlayer;
     }
 
-    private void findusername(String Accountstring)
+    private void findusername(String Accountstring , TextView v)
     {
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -461,7 +502,7 @@ public class GameActivity extends AppCompatActivity {
                 .get()
                 .addOnSuccessListener(queryDocumentSnapshots -> {
                     for (QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
-                        playerNameTextView.setText(documentSnapshot.getString("nome"));
+                        v.setText(documentSnapshot.getString("nome"));
 
                     }
                 });
