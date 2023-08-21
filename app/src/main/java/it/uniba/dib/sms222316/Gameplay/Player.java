@@ -6,12 +6,11 @@ import java.util.List;
 import it.uniba.dib.sms222316.Rank.Points;
 
 
-public class Player {
+public class Player implements Cloneable {
     private String name;
     private int score, money;
     private int position;
     private int icon;
-    private List<Property> properties;
     private boolean prison;
     private boolean bankrupt;
     private int turnPrison;
@@ -28,6 +27,21 @@ public class Player {
         prison = false;
         turnPrison = 0;
         prison = false;
+        this.position=0;
+    }
+    public Player() {
+    }
+    @Override
+    public Player clone() {
+        Player clonedPlayer = new Player(this.name, this.icon, this.money);
+        clonedPlayer.point = new Points(this.score);
+        clonedPlayer.score = this.score;
+        clonedPlayer.position = this.position;
+        clonedPlayer.prison = this.prison;
+        clonedPlayer.bankrupt = this.bankrupt;
+        clonedPlayer.turnPrison = this.turnPrison;
+
+        return clonedPlayer;
     }
 
     public String getName() {return name;}
@@ -45,15 +59,10 @@ public class Player {
         return money;
     }
 
-    public List<Property> getProperties() {
-        return properties;
+    public void setMoney(int money) {
+        this.money = money;
     }
 
-
-    public void removeProperty(Property property) {
-        property.setGiocatore(null);
-        properties.remove(property);
-    }
 
     public boolean isPrison() {return prison;}
 
@@ -73,9 +82,6 @@ public class Player {
     public void removeMoney(int money) {this.money -= money;}
 
     public void removeTurn() {turnPrison--;}
-    public void setBankrupt()
-    {
-        this.bankrupt = true;
-    }
+    public void setBankrupt() {this.bankrupt = true;}
     public boolean isBankrupt() {return bankrupt;}
 }

@@ -1,19 +1,22 @@
 package it.uniba.dib.sms222316.Gameplay;
 
-public class Property
-{
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
+public class Property{
         private String nome , tipo , gruppo;
         private int costo , costoQuadro , prezzoVendita;
         private int posizione;
         private String photo;
-        private int affitto[];
+        private final List<Integer> affitto;
         private int paints;
-
         private String descrizione;
         private Player Giocatore;
 
         //Costruttore per l'inizio della partita
-        public Property(String nome,  String tipo, String gruppo,  String descrizione , int costo, int affitto[], int costoQuadro , int prezzoVendita , int posizione, String photo) {
+        public Property(String nome,  String tipo, String gruppo,  String descrizione , int costo, List<Integer> affitto, int costoQuadro , int prezzoVendita , int posizione, String photo) {
             this.nome = nome;
             this.costo = costo;
             this.affitto = affitto;
@@ -23,38 +26,22 @@ public class Property
             this.costoQuadro = costoQuadro;
             this.prezzoVendita = prezzoVendita;
             this.posizione = posizione;
-            this.paints =0;
+            this.paints = 0;
             this.photo = photo;
             this.Giocatore = null;
         }
-
-        //Costruttore per il caricamento partita
-        public Property(String nome, int costo, int affitto[], String tipo , String gruppo , String descrizione , int costoQuadro , int prezzoVendita , int posizione , int paints , Player Giocatore) {
-            this.nome = nome;
-            this.costo = costo;
-            this.affitto = affitto;
-            this.tipo = tipo;
-            this.gruppo = gruppo;
-            this.descrizione = descrizione;
-            this.costoQuadro = costoQuadro;
-            this.prezzoVendita = prezzoVendita;
-            this.posizione = posizione;
-            this.paints = paints;
-            this.Giocatore = Giocatore;
+        public Property() {
+            this.affitto = new ArrayList<>();
         }
+        @Override
+        public Property clone() {
 
-        public Property(String nome, String tipo, String descrizione , int costo, int affitto[], int prezzoVendita , int posizione){
-            this.nome = nome;
-            this.costo = costo;
-            this.affitto = affitto;
-            this.tipo = tipo;
-            this.descrizione = descrizione;
-            this.prezzoVendita = prezzoVendita;
-            this.posizione = posizione;
-            this.paints =0;
-            this.Giocatore = null;
+                Property clonedProperty = new Property(this.nome,this.tipo, this.gruppo, this.descrizione, this.costo, this.affitto, this.costoQuadro, this.prezzoVendita, this.posizione, this.photo);
+                clonedProperty.photo = this.photo;
+                if(this.Giocatore!=null) clonedProperty.Giocatore = this.Giocatore.clone();
+                else clonedProperty.Giocatore = null;
+            return clonedProperty;
         }
-
 
 
         public String getNome() {
@@ -68,7 +55,7 @@ public class Property
         }
 
         public int getAffitto(int paint) {
-            return affitto[paint];
+            return affitto.get(paint);
         }
 
         public String getGruppo() {
@@ -83,7 +70,7 @@ public class Property
             return prezzoVendita;
         }
 
-        public int[] getAffitto() {
+        public List<Integer> getAffitto() {
             return affitto;
         }
 

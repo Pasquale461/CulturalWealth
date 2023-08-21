@@ -98,7 +98,7 @@ public class PopupField extends Dialog {
                         Description.setText(description);
                         int sell_price = properties.get(i).getCostoVendita();
                         Sell_Price.setText("Vendita:" + sell_price);
-                        int[] rentarray = properties.get(i).getAffitto();
+                        int[] rentarray = properties.get(i).getAffitto().stream().mapToInt(l->l).toArray();
                         int[] rent = new int[rentarray.length];
                         for (int j = 0; j < rentarray.length; j++) {
                             rent[j] = rentarray[j];
@@ -122,7 +122,7 @@ public class PopupField extends Dialog {
                         Description.setText(description);
                         int sell_price = properties.get(i).getCostoVendita();
                         Sell_Price.setText("Vendita:" + sell_price);
-                        int[] rentarray = properties.get(i).getAffitto();
+                        int[] rentarray = properties.get(i).getAffitto().stream().mapToInt(l->l).toArray();
                         int[] rent = new int[rentarray.length];
                         for (int j = 0; j < rentarray.length; j++) {
                             rent[j] = rentarray[j];
@@ -144,7 +144,7 @@ public class PopupField extends Dialog {
                         Description.setText(description);
                         int sell_price = properties.get(i).getCostoVendita();
                         Sell_Price.setText("Vendita:" + sell_price);
-                        int[] rentarray = properties.get(i).getAffitto();
+                        int[] rentarray = properties.get(i).getAffitto().stream().mapToInt(l->l).toArray();
                         int[] rent = new int[rentarray.length];
                         for (int j = 0; j < rentarray.length; j++) {
                             rent[j] = rentarray[j];

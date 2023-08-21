@@ -10,6 +10,11 @@ public class Points {
         this.punteggio =0;
         this.increment =1;
     }
+    public Points (int punteggio)
+    {
+        this.punteggio = punteggio;
+        this.increment =1;
+    }
 
     public int getpoints()
     {
