@@ -10,8 +10,6 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 
-import java.util.concurrent.atomic.AtomicInteger;
-
 public class PopupPlay extends Dialog {
 
     private final String[] titles = new String[]{getContext().getString(R.string.achievements), getContext().getString(R.string.missions)};
@@ -22,7 +20,7 @@ public class PopupPlay extends Dialog {
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
         setContentView(R.layout.play_popup);
-        ImageButton Playbutton = findViewById(R.id.playbutton);
+        ImageButton Playbutton = findViewById(R.id.endconfirm);
         ImageView icon1 = findViewById(R.id.icon1);
         ImageView icon2 = findViewById(R.id.icon2);
         ImageView icon3 = findViewById(R.id.icon3);
@@ -91,6 +89,7 @@ public class PopupPlay extends Dialog {
                 i.putExtra("money", 1500);
                 i.putExtra("puddle", selected);
                 context.startActivity(i);
+                this.hide();
 
             }
             else
@@ -100,6 +99,7 @@ public class PopupPlay extends Dialog {
                 i.putExtra("money", 5000);
                 i.putExtra("puddle", selected);
                 context.startActivity(i);
+                this.hide();
             }
 
         });

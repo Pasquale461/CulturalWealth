@@ -250,7 +250,7 @@
         app:srcCompat="@android:drawable/presence_invisible" />
 
     <ImageButton
-        android:id="@+id/playbutton"
+        android:id="@+id/endconfirm"
         android:layout_width="45dp"
         android:layout_height="49dp"
         android:backgroundTint="#00FFFFFF"
