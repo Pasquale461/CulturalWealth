@@ -2,12 +2,16 @@ package it.uniba.dib.sms222316.Gameplay;
 
 
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class Game {
+public class Game implements Cloneable {
         private final List<Player> players;
         private final List<Property> properties;
-        private int currentPlayerIndex;
+
+
+
+    private int currentPlayerIndex;
         private boolean gameStarted;
 
         public Game(List<Player> players, List<Property> properties) {
@@ -16,11 +20,34 @@ public class Game {
             currentPlayerIndex = 0;
             gameStarted = false;
         }
+        public Game() {
+            this.players = new ArrayList<>();
+            this.properties = new ArrayList<>();
+        }
+        @Override
+        public Game clone() {
+            List<Player> clonedPlayers = new ArrayList<>();
+            for (Player player : players) {
+                clonedPlayers.add(player.clone()); // Assuming Player class implements Cloneable
+            }
+
+            List<Property> clonedProperties = new ArrayList<>();
+            for (Property property : properties) {
+                clonedProperties.add(property.clone()); // Assuming Property class implements Cloneable
+            }
+
+            Game clonedGame = new Game(clonedPlayers, clonedProperties);
+            clonedGame.setCurrentPlayerIndex(this.currentPlayerIndex);
+            clonedGame.setGameStarted(this.gameStarted);
+
+            return clonedGame;
+        }
+
 
     public Player getCurrentPlayer() {
         return players.get(currentPlayerIndex);
     }
-
+    public void setCurrentPlayerIndex(int currentPlayerIndex) { this.currentPlayerIndex = currentPlayerIndex; }
     public void endTurn(List<Player> players) {
 
         if (players.stream().filter(l-> !l.isBankrupt()).count()<=1) {
@@ -121,9 +148,6 @@ public class Game {
     public boolean isPartitaFinita() {
         return !gameStarted;
     }
-
-    // Altri metodi getter/setter e metodi ausiliari
-
     public boolean isGameStarted() {
         return gameStarted;
     }
@@ -143,6 +167,9 @@ public class Game {
     public List<Player> getPlayers() {
         return players;
     }
+
+
+
 }
 
 

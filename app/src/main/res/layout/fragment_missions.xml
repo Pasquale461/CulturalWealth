@@ -4,11 +4,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/rounded_corners_fragment"
+    android:backgroundTint="@color/Periwinkie"
     tools:context=".Goals.FragmentMissions">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/MissionsRecycler"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent" />
 
 </FrameLayout>

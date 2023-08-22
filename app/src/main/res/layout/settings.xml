@@ -1,22 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/opzioni"
     android:layout_width="390dp"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
-    android:background="#3F51B5">
+    android:background="@color/Jodie_Blue">
 
     <Button
         android:id="@+id/disconnetti"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="116dp"
+        android:layout_height="42dp"
         android:layout_marginBottom="16dp"
+        android:background="@drawable/rounded_border"
+        android:backgroundTint="@color/Redwood"
         android:text="@string/log_out"
+        android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.057"
+        app:layout_constraintHorizontal_bias="0.058"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView2"
         app:layout_constraintVertical_bias="1.0" />
@@ -41,8 +44,8 @@
 
     <Button
         android:id="@+id/esci"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
+        android:layout_width="36dp"
+        android:layout_height="38dp"
         android:background="@android:drawable/ic_menu_close_clear_cancel"
         android:contentDescription="@android:string/cancel"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -156,6 +159,7 @@
         android:contentDescription="@android:string/untitled"
         android:minWidth="48dp"
         android:minHeight="48dp"
+        android:tint="#64DD17"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.93"

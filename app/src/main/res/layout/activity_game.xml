@@ -5,7 +5,7 @@
     android:id="@+id/name3"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/sfondo_tabellone"
+    android:background="@drawable/sfondo_serio"
     tools:context=".GameActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -23,10 +23,13 @@
 
         <HorizontalScrollView
             android:id="@+id/horizontalScrollView"
-            android:layout_width="500dp"
-            android:layout_height="match_parent"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="?android:attr/autofilledHighlight"
+            android:backgroundTint="#812B2B2B"
             android:scrollbars="none"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/players"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
@@ -397,7 +400,7 @@
                         app:layout_constraintStart_toStartOf="@+id/exa_1"
                         app:layout_constraintTop_toTopOf="@+id/exa_1"
                         app:srcCompat="@drawable/casella"
-                        app:tint="#3E9A9A9A" />
+                        app:tint="#FFFFFF" />
 
                     <ImageView
                         android:id="@+id/exa_39"
@@ -1002,6 +1005,113 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         app:srcCompat="@android:drawable/btn_dialog" />
+
+                    <ImageView
+                        android:id="@+id/imageView25"
+                        android:layout_width="34dp"
+                        android:layout_height="27dp"
+                        app:layout_constraintBottom_toBottomOf="@+id/exa_2"
+                        app:layout_constraintEnd_toEndOf="@+id/exa_2"
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintStart_toEndOf="@+id/Ico_3"
+                        app:layout_constraintTop_toTopOf="@+id/exa_2"
+                        app:srcCompat="@drawable/money_loss" />
+
+                    <ImageView
+                        android:id="@+id/imageView29"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        app:layout_constraintBottom_toBottomOf="@+id/exa_4"
+                        app:layout_constraintEnd_toEndOf="@+id/exa_4"
+                        app:layout_constraintHorizontal_bias="0.35"
+                        app:layout_constraintStart_toEndOf="@+id/Ico_5"
+                        app:layout_constraintTop_toTopOf="@+id/exa_4"
+                        app:srcCompat="@drawable/bag" />
+
+                    <ImageView
+                        android:id="@+id/imageView30"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        app:layout_constraintBottom_toTopOf="@+id/exa_9"
+                        app:layout_constraintEnd_toEndOf="@+id/exa_10"
+                        app:layout_constraintStart_toStartOf="@+id/exa_10"
+                        app:layout_constraintTop_toBottomOf="@+id/exa_11"
+                        app:srcCompat="@drawable/exile" />
+
+                    <ImageView
+                        android:id="@+id/imageView32"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        app:layout_constraintBottom_toBottomOf="@+id/exa_17"
+                        app:layout_constraintEnd_toEndOf="@+id/exa_17"
+                        app:layout_constraintStart_toStartOf="@+id/exa_17"
+                        app:layout_constraintTop_toTopOf="@+id/exa_17"
+                        app:srcCompat="@drawable/bag" />
+
+                    <ImageView
+                        android:id="@+id/imageView33"
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        app:layout_constraintBottom_toBottomOf="@+id/exa_20"
+                        app:layout_constraintEnd_toStartOf="@+id/exa_21"
+                        app:layout_constraintHorizontal_bias="0.6"
+                        app:layout_constraintStart_toEndOf="@+id/exa_19"
+                        app:layout_constraintTop_toTopOf="@+id/exa_20"
+                        app:srcCompat="@drawable/money_loss" />
+
+                    <ImageView
+                        android:id="@+id/imageView34"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        app:layout_constraintBottom_toBottomOf="@+id/exa_22"
+                        app:layout_constraintEnd_toEndOf="@+id/exa_22"
+                        app:layout_constraintHorizontal_bias="0.67"
+                        app:layout_constraintStart_toStartOf="@+id/exa_22"
+                        app:layout_constraintTop_toTopOf="@+id/exa_22"
+                        app:srcCompat="@drawable/bag" />
+
+                    <ImageView
+                        android:id="@+id/imageView35"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        app:layout_constraintBottom_toTopOf="@+id/exa_34"
+                        app:layout_constraintEnd_toEndOf="@+id/exa_33"
+                        app:layout_constraintHorizontal_bias="0.6"
+                        app:layout_constraintStart_toStartOf="@+id/exa_33"
+                        app:layout_constraintTop_toTopOf="@+id/exa_33"
+                        app:layout_constraintVertical_bias="0.63"
+                        app:srcCompat="@drawable/money_loss" />
+
+                    <ImageView
+                        android:id="@+id/imageView37"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        app:layout_constraintBottom_toBottomOf="@+id/exa_36"
+                        app:layout_constraintEnd_toEndOf="@+id/exa_36"
+                        app:layout_constraintStart_toStartOf="@+id/exa_36"
+                        app:layout_constraintTop_toTopOf="@+id/exa_36"
+                        app:srcCompat="@drawable/bag" />
+
+                    <ImageView
+                        android:id="@+id/imageView38"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        app:layout_constraintBottom_toBottomOf="@+id/exa_38"
+                        app:layout_constraintEnd_toEndOf="@+id/exa_38"
+                        app:layout_constraintHorizontal_bias="0.58"
+                        app:layout_constraintStart_toStartOf="@+id/exa_38"
+                        app:layout_constraintTop_toTopOf="@+id/exa_38"
+                        app:srcCompat="@drawable/money_loss" />
+
+                    <ImageView
+                        android:id="@+id/imageView39"
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        app:layout_constraintBottom_toTopOf="@+id/exa_31"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="@+id/exa_30"
+                        app:layout_constraintTop_toBottomOf="@+id/exa_29"
+                        app:srcCompat="@drawable/wagon" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </ScrollView>

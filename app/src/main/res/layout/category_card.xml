@@ -1,19 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:cardElevation="0dp"
-    app:cardCornerRadius="0dp">
+    android:background="@color/Jodie_Blue"
+    app:cardCornerRadius="0dp"
+    app:cardElevation="0dp">
 
     <RelativeLayout
         android:id="@+id/padre"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="@color/Jodie_Blue">
+
         <RelativeLayout
             android:id="@+id/Cat"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
+
             <View
                 android:id="@+id/dividerStart"
                 android:layout_width="15dp"
@@ -29,14 +33,15 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="10dp"
                 android:layout_marginBottom="10dp"
-                android:textSize="17sp"/>
-        <View
-            android:id="@+id/dividerEnd"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_toEndOf="@+id/CategoryName"
-            android:layout_centerVertical="true"
-            android:background="?android:attr/listDivider" />
+                android:textSize="17sp" />
+
+            <View
+                android:id="@+id/dividerEnd"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_centerVertical="true"
+                android:layout_toEndOf="@+id/CategoryName"
+                android:background="?android:attr/listDivider" />
         </RelativeLayout>
 
 

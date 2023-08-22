@@ -1,6 +1,7 @@
 package it.uniba.dib.sms222316;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
@@ -13,24 +14,22 @@ import android.graphics.Path;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.DisplayMetrics;
-import android.util.Log;
+import android.util.SparseBooleanArray;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
@@ -48,8 +47,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import it.uniba.dib.sms222316.Gameplay.Game;
 import it.uniba.dib.sms222316.Gameplay.Player;
@@ -161,7 +162,7 @@ public class GameActivity extends AppCompatActivity {
                 int sell_price = jsonObject.getInt("sell_price");
                 int posizione = jsonObject.getInt("position");
                 String foto = jsonObject.getString("foto_path");
-                Property property = new Property(name,type,group,description,price,rent,paintCost,sell_price,posizione,foto);
+                Property property = new Property(name,type,group,description,price,Arrays.stream(rent).boxed().collect(Collectors.toList()),paintCost,sell_price,posizione,foto);
                 properties.add(property);
                 }
                 if(jsonObject.getString("type").equals("museum") || jsonObject.getString("type").equals("utility")){
@@ -180,7 +181,7 @@ public class GameActivity extends AppCompatActivity {
                     int posizione = jsonObject.getInt("position");
                     String foto = "";
 
-                    Property property = new Property(name,type,group,description,price,rent,paintCost,sell_price,posizione,foto);
+                    Property property = new Property(name,type,group,description,price,Arrays.stream(rent).boxed().collect(Collectors.toList()),paintCost,sell_price,posizione,foto);
                     properties.add(property);
                 }
             }
@@ -188,14 +189,75 @@ public class GameActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        for (Property data : properties) {
-            String peni = data.getNome()+"-"+data.getTipo();
-            Log.d("GameActivity", peni);
-        }
+
+
+
 
         //Instanza oggetto partita
-        game = new Game(players , properties);
-        game.iniziaPartita();
+        /**to delete nese ka load bej load perndryshe bej loj te re*/
+        if(true){
+            Player tempPlayer = new Player("Luke",1,5000);
+            players.set(0,tempPlayer);
+            players.get(0).setPosition(5);
+            players.get(0).addMoney(1000);
+            properties.get(8).setGiocatore(players.get(0));
+
+
+
+            game = new Game(players , properties);
+            game.iniziaPartita();
+
+            Game GameToSave = game.clone();
+
+            FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+            /** Funzione Per salvare la partita
+            db.collection("Users")
+                    .document(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                    .collection("Games")
+                    .add(GameToSave)
+                    .addOnSuccessListener(documentReference -> {
+                        //Successo: Oggetto aggiunto con successo
+                    })
+                    .addOnFailureListener(e -> {
+                        //Errore: L'aggiunta dell'oggetto non è riuscita
+                    });
+            */
+
+
+                    db.collection("Users")
+                    .document(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                    .collection("Games")
+                    .get()
+                    .addOnSuccessListener(querySnapshot -> {
+                        // Elabora gli oggetti recuperati
+                        for (QueryDocumentSnapshot documentSnapshot : querySnapshot) {
+                            // Converto il documento in un oggetto della tua classe MyObject
+                            game = documentSnapshot.toObject(Game.class);
+
+                        }
+                    })
+                    .addOnFailureListener(e -> {
+                        // Errore: Impossibile recuperare gli oggetti
+                    });
+
+
+
+
+
+
+
+
+
+
+            updateUI();
+
+        }else{
+            game = new Game(players , properties);
+            game.iniziaPartita();
+
+        }
+
         updateUI(players);
 
 
@@ -205,6 +267,11 @@ public class GameActivity extends AppCompatActivity {
         pedina[0] = findViewById(R.id.pedina1);
         pedina[1] = findViewById(R.id.pedina2);
         pedina[2] = findViewById(R.id.pedina3);
+
+        /**To do check added on testing*/
+        for (int i=0;i<players.size();i++) position[i]=players.get(i).getPosition();
+
+
 
 
 
@@ -232,10 +299,10 @@ public class GameActivity extends AppCompatActivity {
                 // Verifica se la vista è stata già creata
                 if (!isViewCreated) {
 
-                    casella[start].getLocationInWindow(coordinate);
-                    //Posizionamento delle pedine sul Via
-                    for (int i=0;i < game.getNumberOfPlayers();i++)
-                    {
+                    /**to do refactorize player.size() use position array instead*/
+                    for (int i = 0; i<position.length;i++){
+                        casella[position[i]].getLocationInWindow(coordinate);
+
                         pedina[i].setX(coordinate[0]);
                         pedina[i].setY(coordinate[1]);
                     }
@@ -299,10 +366,6 @@ public class GameActivity extends AppCompatActivity {
 
 
             }
-            players.get(1).setBankrupt();
-            players.get(0).setBankrupt();
-            //players.get(2).setBankrupt();
-            Log.d("Prison" , ""+game.getCurrentPlayer().isPrison());
             if(game.getCurrentPlayer().isPrison())
             {
                 int turno = game.getCurrentPlayer().getTurnPrison();
@@ -396,7 +459,7 @@ public class GameActivity extends AppCompatActivity {
                             endturn.setVisibility(View.VISIBLE);
                             Optional<Property> currentProperty = properties.stream().filter(l -> l.getPosizione() == position[currentPlayer]).findFirst();
                             if (currentProperty.isPresent()) {
-                                if (currentProperty.get().getGiocatore() == null)
+                                if (currentProperty.get().isAvaible())
                                     buy.setVisibility(View.VISIBLE);
                                 else {
                                     game.gestisciPagamentoAffitto(currentProperty.get());
@@ -420,7 +483,6 @@ public class GameActivity extends AppCompatActivity {
                     };
                     animator.addListener(animatorListener);
                 }, 3500);
-
             }
                 buy.setOnClickListener(new View.OnClickListener() {
                     /**When you have no money should still be visible*/
@@ -437,7 +499,7 @@ public class GameActivity extends AppCompatActivity {
                                     buy.setVisibility(View.INVISIBLE);
                                 }
                             //}
-                            if(prop.getGiocatore() != null){
+                            if(!prop.isAvaible()){
                                 updateUI(prop.getPosizione(),prop.getGiocatore().getIcon());
                             }
                         }
@@ -446,31 +508,151 @@ public class GameActivity extends AppCompatActivity {
                 });
                 updateUI(players);
             int currentPlayer = game.getCurrentPlayerIndex();
-                info.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        int currentPlayer = game.getCurrentPlayerIndex();
-                        field.InfoField(position[currentPlayer], properties);
-                        field.show();
-                    }
+                info.setOnClickListener(v1 -> {
+                    field.InfoField(position[currentPlayer], properties);
+                    field.show();
                 });
+
+                ConstraintLayout Player = findViewById(R.id.players);
+                for(int i=0; i<players.size(); i++){
+                    if(i!=currentPlayer){
+                        ConstraintLayout rl = (ConstraintLayout) Player.getChildAt(i);
+                        int j=i;
+                        rl.setOnClickListener(v2 -> {
+                            TradeProposal(currentPlayer, j);
+                            rl.setOnClickListener(null);
+                        });
+
+                    }
+                }
+
+
                 players.get(currentPlayer).setPosition(position[currentPlayer]);
             });
-        endturn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                game.endTurn(players);
-                endturn.setVisibility(View.INVISIBLE);
-                info.setVisibility(View.INVISIBLE);
-                buy.setVisibility(View.INVISIBLE);
-                rollDice.setEnabled(true);
-                updateUI(players);
+        endturn.setOnClickListener(v -> {
+            game.endTurn(players);
+            ConstraintLayout Player = findViewById(R.id.players);
+            for(int i=0; i<players.size(); i++)     Player.getChildAt(i).setOnClickListener(null);
+            endturn.setVisibility(View.INVISIBLE);
+            info.setVisibility(View.INVISIBLE);
+            buy.setVisibility(View.INVISIBLE);
+            rollDice.setEnabled(true);
+            updateUI(players);
 
-            }
         });
 
     }
 
+    public void TradeProposal(int offerer, int recipient){
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = this.getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.trade_popup, null);
+        builder.setView(dialogView);
+
+        ListView listView1 = dialogView.findViewById(R.id.ListOfferer);
+        ListView listView2 = dialogView.findViewById(R.id.ListRecipient);
+
+
+        List<Player> players = game.getPlayers();
+        List<Property> properties = game.getProperties();
+
+        List<Property> items1 = properties.stream().filter(l -> {
+            if (!l.isAvaible()) return l.getGiocatore().equals(players.get(offerer));
+            return false;
+        }).collect(Collectors.toList());
+        List<Property> items2 = properties.stream().filter(l -> {
+            if (!l.isAvaible()) return l.getGiocatore().equals(players.get(recipient));
+            return false;
+        }).collect(Collectors.toList());
+
+
+        ArrayAdapter<String> adapter1 = new ArrayAdapter<>(this, android.R.layout.simple_list_item_multiple_choice, items1.stream().map(l -> l.getNome()).collect(Collectors.toList()));
+        ArrayAdapter<String> adapter2 = new ArrayAdapter<>(this, android.R.layout.simple_list_item_multiple_choice, items2.stream().map(l -> l.getNome()).collect(Collectors.toList()));
+
+
+
+        listView1.setAdapter(adapter1);
+        listView2.setAdapter(adapter2);
+
+        listView1.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
+        listView2.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
+        builder.setPositiveButton("OK", (dialog, which) -> {
+            SparseBooleanArray checked1 = listView1.getCheckedItemPositions();
+            SparseBooleanArray checked2 = listView2.getCheckedItemPositions();
+            List<Property> selectedItems1 = new ArrayList<>();
+            List<Property> selectedItems2 = new ArrayList<>();
+            for (int i = 0; i < checked1.size(); i++) {
+                if (checked1.valueAt(i)) {
+                    selectedItems1.add(items1.get(checked1.keyAt(i)));
+                }
+            }
+            for (int i = 0; i < checked2.size(); i++) {
+                if (checked2.valueAt(i)) {
+                    selectedItems2.add(items2.get(checked2.keyAt(i)));
+                }
+            }
+
+            TradeResponse(selectedItems1, selectedItems2);
+        });
+
+        builder.setNegativeButton("Annulla", (dialog, which) -> {
+            dialog.dismiss();
+        });
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+
+    }
+    public void TradeResponse(List<Property> OfferedProperty, List<Property> RequestedProperty){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = this.getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.trade_popup, null);
+        builder.setView(dialogView);
+        Player Offerer = OfferedProperty.get(0).getGiocatore();
+        Player Recipient = RequestedProperty.get(0).getGiocatore();
+        ListView listView1 = dialogView.findViewById(R.id.ListOfferer);
+        ListView listView2 = dialogView.findViewById(R.id.ListRecipient);
+
+
+
+        ArrayAdapter<String> adapter1 = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, OfferedProperty.stream().map(l -> l.getNome()).collect(Collectors.toList()));
+        ArrayAdapter<String> adapter2 = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, RequestedProperty.stream().map(l -> l.getNome()).collect(Collectors.toList()));
+
+
+        listView1.setAdapter(adapter1);
+        listView2.setAdapter(adapter2);
+
+        builder.setPositiveButton("Accept", (dialog, which) -> {
+            for (int i = 0; i < OfferedProperty.size(); i++) {
+                OfferedProperty.get(i).setGiocatore(Recipient);
+            }
+            for (int i = 0; i < RequestedProperty.size(); i++) {
+                RequestedProperty.get(i).setGiocatore(Offerer);
+            }
+            updateUI();
+        });
+
+        builder.setNegativeButton("Refuse", (dialog, which) -> {
+            dialog.dismiss();
+        });
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+    private void updateUI(){
+        ConstraintLayout BloccoIcone = findViewById(R.id.Icons);
+        List<Property> properties = game.getProperties();
+
+        for (Property prop:properties) {
+            int ImagePlayer;
+            ImageView icona = (ImageView) BloccoIcone.getChildAt(prop.getPosizione()+40);
+            if(!prop.isAvaible())     ImagePlayer = getResources().getIdentifier("_"+prop.getGiocatore().getIcon(), "drawable", getPackageName());
+            else    ImagePlayer = getResources().getIdentifier("_-1", "drawable", getPackageName());
+            icona.setImageResource(ImagePlayer);
+        }
+
+    }
     private void updateUI(int Position, int playerIcon){
         ConstraintLayout BloccoIcone = findViewById(R.id.Icons);
         ImageView icona = (ImageView) BloccoIcone.getChildAt(Position+40);
