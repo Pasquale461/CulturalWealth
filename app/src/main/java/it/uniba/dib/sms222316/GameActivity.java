@@ -14,6 +14,7 @@ import android.graphics.Path;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -29,9 +30,13 @@ import android.widget.TextView;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -50,6 +55,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.Callable;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
 
 import it.uniba.dib.sms222316.Gameplay.Game;
@@ -91,14 +103,10 @@ public class GameActivity extends AppCompatActivity {
         playerScoreTextView = findViewById(R.id.money1);
         playerScoreTextView2 = findViewById(R.id.money2);
         playerScoreTextView3 = findViewById(R.id.money3);
-        Button endturn = findViewById(R.id.endTurn);
-        Button info = findViewById(R.id.Info);
-        Button buy = findViewById(R.id.buy);
-        info.setVisibility(View.INVISIBLE);
-        buy.setVisibility(View.INVISIBLE);
 
 
-        int coordinate[] =new int[2];
+
+
         casella = caselle.setCasella(this);
 
         //Creazione lista Giocatori
@@ -195,23 +203,23 @@ public class GameActivity extends AppCompatActivity {
 
         //Instanza oggetto partita
         /**to delete nese ka load bej load perndryshe bej loj te re*/
-        if(true){
-            Player tempPlayer = new Player("Luke",1,5000);
+        if(false){
+            /*Player tempPlayer = new Player("Luke",1,5000);
             players.set(0,tempPlayer);
             players.get(0).setPosition(5);
             players.get(0).addMoney(1000);
             properties.get(8).setGiocatore(players.get(0));
+*/
 
 
 
-            game = new Game(players , properties);
-            game.iniziaPartita();
 
-            Game GameToSave = game.clone();
+
 
             FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-            /** Funzione Per salvare la partita
+            /*/ Funzione Per salvare la partita
+            Game GameToSave = game.clone();
             db.collection("Users")
                     .document(FirebaseAuth.getInstance().getCurrentUser().getUid())
                     .collection("Games")
@@ -225,7 +233,7 @@ public class GameActivity extends AppCompatActivity {
             */
 
 
-                    db.collection("Users")
+            db.collection("Users")
                     .document(FirebaseAuth.getInstance().getCurrentUser().getUid())
                     .collection("Games")
                     .get()
@@ -234,14 +242,18 @@ public class GameActivity extends AppCompatActivity {
                         for (QueryDocumentSnapshot documentSnapshot : querySnapshot) {
                             // Converto il documento in un oggetto della tua classe MyObject
                             game = documentSnapshot.toObject(Game.class);
-
+                            game.iniziaPartita();
+                            gioco();
                         }
+
                     })
                     .addOnFailureListener(e -> {
                         // Errore: Impossibile recuperare gli oggetti
                     });
 
 
+/*            loadData().thenApplyAsync(dataSnapShot->{
+                Log.d("Taging",dataSnapShot.toString());
 
 
 
@@ -250,14 +262,34 @@ public class GameActivity extends AppCompatActivity {
 
 
 
-            updateUI();
+
+                updateUI();
+                return null;
+            });
+
+            game.iniziaPartita();
+            updateUI();*/
 
         }else{
             game = new Game(players , properties);
             game.iniziaPartita();
-
+            gioco();
         }
 
+    }
+    public void gioco(){
+
+        Button endturn = findViewById(R.id.endTurn);
+        Button info = findViewById(R.id.Info);
+        Button buy = findViewById(R.id.buy);
+        info.setVisibility(View.INVISIBLE);
+        buy.setVisibility(View.INVISIBLE);
+
+        int coordinate[] = new int[2];
+        List<Player> players = game.getPlayers();
+        List<Property> properties = game.getProperties();
+
+        updateUI();
         updateUI(players);
 
 
@@ -269,12 +301,7 @@ public class GameActivity extends AppCompatActivity {
         pedina[2] = findViewById(R.id.pedina3);
 
         /**To do check added on testing*/
-        for (int i=0;i<players.size();i++) position[i]=players.get(i).getPosition();
-
-
-
-
-
+        for (int i = 0; i < players.size(); i++) position[i] = players.get(i).getPosition();
 
 
         PopupField field = new PopupField(GameActivity.this, GameActivity.this);
@@ -299,8 +326,7 @@ public class GameActivity extends AppCompatActivity {
                 // Verifica se la vista è stata già creata
                 if (!isViewCreated) {
 
-                    /**to do refactorize player.size() use position array instead*/
-                    for (int i = 0; i<position.length;i++){
+                    for (int i = 0; i < position.length; i++) {
                         casella[position[i]].getLocationInWindow(coordinate);
 
                         pedina[i].setX(coordinate[0]);
@@ -321,32 +347,29 @@ public class GameActivity extends AppCompatActivity {
             //Lancio dei dadi
 
 
-                if (game.getCurrentPlayer().getMoney() <= 0) {
-                    players.get(game.getCurrentPlayerIndex()).setBankrupt();
-                    updateUI(players);
-                    if (terzo != 0)terzo =game.getCurrentPlayerIndex();
-                    else secondo = game.getCurrentPlayerIndex();
+            if (game.getCurrentPlayer().getMoney() <= 0) {
+                players.get(game.getCurrentPlayerIndex()).setBankrupt();
+                updateUI(players);
+                if (terzo != 0) terzo = game.getCurrentPlayerIndex();
+                else secondo = game.getCurrentPlayerIndex();
 
-                }
+            }
 
-                int[] numeri = game.dadi();
-            if(!game.isGameStarted())
-            {
+            int[] numeri = game.dadi();
+            if (!game.isGameStarted()) {
                 primo = game.getCurrentPlayerIndex();
 
                 //popup classifica
-
-
                 pprimo = findViewById(R.id.firstpoints);
-                 psecondo = findViewById(R.id.secondpoints);
-                 pterzo = findViewById(R.id.thirdpoints);
-                 nprimo = findViewById(R.id.firstname);
-                 nsecondo = findViewById(R.id.secondname);
-                 nterzo = findViewById(R.id.thirdname);
+                psecondo = findViewById(R.id.secondpoints);
+                pterzo = findViewById(R.id.thirdpoints);
+                nprimo = findViewById(R.id.firstname);
+                nsecondo = findViewById(R.id.secondname);
+                nterzo = findViewById(R.id.thirdname);
                 int punteggioprimo = players.get(primo).getScore();
-                      int   punteggiosecondo= players.get(secondo).getScore();
-                               int  punteggioterzo = players.get(terzo).getScore();
-                               String nomeprimo = players.get(primo).getName();
+                int punteggiosecondo = players.get(secondo).getScore();
+                int punteggioterzo = players.get(terzo).getScore();
+                String nomeprimo = players.get(primo).getName();
                 String nomesecondo = players.get(secondo).getName();
                 String nometerzo = players.get(terzo).getName();
 
@@ -360,14 +383,8 @@ public class GameActivity extends AppCompatActivity {
                 startActivity(i);
 
 
-
-
-
-
-
             }
-            if(game.getCurrentPlayer().isPrison())
-            {
+            if (game.getCurrentPlayer().isPrison()) {
                 int turno = game.getCurrentPlayer().getTurnPrison();
 
                 rollDice.setEnabled(false);
@@ -383,8 +400,7 @@ public class GameActivity extends AppCompatActivity {
                     Dice2.setImageDrawable(Gif2);
                 }, 200);
 
-                if ( numeri[0] == numeri[1] )
-                {
+                if (numeri[0] == numeri[1]) {
                     game.getCurrentPlayer().setPrison(false);
                     game.getCurrentPlayer().setTurnPrison(0);
                     new Handler().postDelayed(() -> {
@@ -392,24 +408,19 @@ public class GameActivity extends AppCompatActivity {
                     }, 4500);
 
 
-                }
-                else {
-                    if ( turno > 2)
-                    {
+                } else {
+                    if (turno > 2) {
                         game.getCurrentPlayer().setPrison(false);
                         game.getCurrentPlayer().setTurnPrison(0);
                         endturn.setVisibility(View.VISIBLE);
-                    }
-                    else
-                    {
-                        game.getCurrentPlayer().setTurnPrison(game.getCurrentPlayer().getTurnPrison()+1);
+                    } else {
+                        game.getCurrentPlayer().setTurnPrison(game.getCurrentPlayer().getTurnPrison() + 1);
                         endturn.setVisibility(View.VISIBLE);
 
                     }
 
                 }
-            }
-            else {
+            } else {
                 rollDice.setEnabled(false);
                 GifDrawable Gif1 = rollDice(numeri[0]);
                 GifDrawable Gif2 = rollDice(numeri[1]);
@@ -484,55 +495,62 @@ public class GameActivity extends AppCompatActivity {
                     animator.addListener(animatorListener);
                 }, 3500);
             }
-                buy.setOnClickListener(new View.OnClickListener() {
-                    /**When you have no money should still be visible*/
-                    @Override
-                    public void onClick(View v) {
-                        int currentPlayer = game.getCurrentPlayerIndex();
+            buy.setOnClickListener(new View.OnClickListener() {
+                /**
+                 * When you have no money should still be visible
+                 */
+                @Override
+                public void onClick(View v) {
+                    int currentPlayer = game.getCurrentPlayerIndex();
 
-                        for (Property prop : properties) {
-                            //if(prop.getTipo().equals("monument")) { Puoi comprare anche i musei e le centrali, if inutile
-                                String name = prop.getNome();
+                    for (Property prop : properties) {
+                        //if(prop.getTipo().equals("monument")) { Puoi comprare anche i musei e le centrali, if inutile
+                        String name = prop.getNome();
 
-                                if (name.equals(casella[position[currentPlayer]].getContentDescription())) {
-                                    game.gestisciAcquisto(players.get(currentPlayer),prop);
-                                    buy.setVisibility(View.INVISIBLE);
-                                }
-                            //}
-                            if(!prop.isAvaible()){
-                                updateUI(prop.getPosizione(),prop.getGiocatore().getIcon());
-                            }
+                        if (name.equals(casella[position[currentPlayer]].getContentDescription())) {
+                            game.gestisciAcquisto(players.get(currentPlayer), prop);
+                            buy.setVisibility(View.INVISIBLE);
                         }
-
+                        //}
+                        if (!prop.isAvaible()) {
+                            updateUI(prop.getPosizione(), prop.getGiocatore().getIcon());
+                        }
                     }
-                });
-                updateUI(players);
-            int currentPlayer = game.getCurrentPlayerIndex();
-                info.setOnClickListener(v1 -> {
-                    field.InfoField(position[currentPlayer], properties);
-                    field.show();
-                });
 
-                ConstraintLayout Player = findViewById(R.id.players);
-                for(int i=0; i<players.size(); i++){
-                    if(i!=currentPlayer){
-                        ConstraintLayout rl = (ConstraintLayout) Player.getChildAt(i);
-                        int j=i;
-                        rl.setOnClickListener(v2 -> {
-                            TradeProposal(currentPlayer, j);
-                            rl.setOnClickListener(null);
-                        });
-
-                    }
                 }
-
-
-                players.get(currentPlayer).setPosition(position[currentPlayer]);
             });
+            updateUI(players);
+            int currentPlayer = game.getCurrentPlayerIndex();
+            info.setOnClickListener(v1 -> {
+                field.InfoField(position[currentPlayer], properties);
+                field.show();
+            });
+
+            ConstraintLayout Player = findViewById(R.id.players);
+            for (int i = 0; i < players.size(); i++) {
+                ConstraintLayout rl = (ConstraintLayout) Player.getChildAt(i);
+                if (i != currentPlayer) {
+
+                    int j = i;
+                    rl.setOnClickListener(v2 -> {
+                        TradeProposal(currentPlayer, j);
+                        rl.setOnClickListener(null);
+                    });
+                } else {
+                    rl.setBackgroundResource(R.drawable.currentplayer_focus);
+                }
+            }
+
+
+            players.get(currentPlayer).setPosition(position[currentPlayer]);
+        });
         endturn.setOnClickListener(v -> {
             game.endTurn(players);
             ConstraintLayout Player = findViewById(R.id.players);
-            for(int i=0; i<players.size(); i++)     Player.getChildAt(i).setOnClickListener(null);
+            for (int i = 0; i < players.size(); i++) {
+                Player.getChildAt(i).setOnClickListener(null);
+                Player.getChildAt(i).setBackgroundResource(R.drawable.rounded_corners);
+            }
             endturn.setVisibility(View.INVISIBLE);
             info.setVisibility(View.INVISIBLE);
             buy.setVisibility(View.INVISIBLE);
@@ -540,7 +558,6 @@ public class GameActivity extends AppCompatActivity {
             updateUI(players);
 
         });
-
     }
 
     public void TradeProposal(int offerer, int recipient){
@@ -716,4 +733,23 @@ public class GameActivity extends AppCompatActivity {
     }
 
 
+    /**To do to be deleted**/
+    private CompletableFuture<QuerySnapshot> loadData(){
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        Task<QuerySnapshot> task = db.collection("Users")
+                .document(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                .collection("Games")
+                .get();
+
+        CompletableFuture<QuerySnapshot> future = CompletableFuture.supplyAsync(() -> {
+            try {
+                return Tasks.await(task);
+            } catch (Exception e) {
+                throw new RuntimeException(e); // Wrap the exception
+            }
+        });
+        return future;
+    }
 }

@@ -43,8 +43,6 @@ public class GalleryHeritage extends AppCompatActivity {
 
         //Button back
         btnBack.setOnClickListener(v -> {
-            Intent i = new Intent(GalleryHeritage.this, Gallery.class);
-            startActivity(i);
             finish();
         });
 
