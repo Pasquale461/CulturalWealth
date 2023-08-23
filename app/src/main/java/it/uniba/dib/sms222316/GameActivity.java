@@ -30,6 +30,7 @@ import android.widget.TextView;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.games.Players;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.auth.FirebaseAuth;
@@ -421,6 +422,8 @@ public class GameActivity extends AppCompatActivity {
 
                 }
             } else {
+                players.get(1).setBankrupt();
+                players.get(0).setBankrupt();
                 rollDice.setEnabled(false);
                 GifDrawable Gif1 = rollDice(numeri[0]);
                 GifDrawable Gif2 = rollDice(numeri[1]);
@@ -445,6 +448,11 @@ public class GameActivity extends AppCompatActivity {
                         players.get(currentPlayer).addMoney(100);
                         /*To do alert that money has been added*/
                     }
+                    path.lineTo(casella[position[currentPlayer]].getX(), casella[position[currentPlayer]].getY());
+                }
+                if (position[currentPlayer] == 30) {
+                    position[currentPlayer] = 10;
+                    game.getCurrentPlayer().setPrison(true);
                     path.lineTo(casella[position[currentPlayer]].getX(), casella[position[currentPlayer]].getY());
                 }
                 if (position[currentPlayer] == 30) {

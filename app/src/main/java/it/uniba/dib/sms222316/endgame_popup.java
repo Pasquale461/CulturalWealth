@@ -10,11 +10,19 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class endgame_popup extends AppCompatActivity {
 
@@ -44,10 +52,7 @@ public class endgame_popup extends AppCompatActivity {
         TextView nsecondo = findViewById(R.id.secondname);
         TextView nterzo = findViewById(R.id.thirdname);
         ImageView continu = findViewById(R.id.continu);
-        continu.setOnClickListener(v -> {
-            Intent i = new Intent(endgame_popup.this, Home.class);
-            startActivity(i);
-        });
+
 
 
         pprimo.setText(""+punteggioprimo);
@@ -55,18 +60,24 @@ public class endgame_popup extends AppCompatActivity {
         pterzo.setText(""+punteggioterzo);
 
         if (nomeprimo.equals("Giocatore 1")) {
-            findusername(FirebaseAuth.getInstance().getCurrentUser().getEmail(), nprimo);
+            findusername(Home.Guest, nprimo);
             nsecondo.setText(nomesecondo);
             nterzo.setText(nometerzo);
         } else if (nomesecondo.equals("Giocatore 1")) {
-            findusername(FirebaseAuth.getInstance().getCurrentUser().getEmail(), nsecondo);
+            findusername(Home.Guest, nsecondo);
             nprimo.setText(nomeprimo);
             nterzo.setText(nometerzo);
         } else if (nometerzo.equals("Giocatore 1")) {
-            findusername(FirebaseAuth.getInstance().getCurrentUser().getEmail(), nterzo);
+            findusername(Home.Guest, nterzo);
             nsecondo.setText(nomesecondo);
             nprimo.setText(nomeprimo);
         }
+
+        continu.setOnClickListener(v -> {
+            Intent i = new Intent(endgame_popup.this, Home.class);
+            Addpoints(punteggioprimo);
+            startActivity(i);
+        });
 
 
 
@@ -74,19 +85,79 @@ public class endgame_popup extends AppCompatActivity {
 
     }
 
-    private void findusername(String Accountstring , TextView v)
+    private void findusername(Boolean Guest , TextView v)
+    {
+        FirebaseAuth fb = FirebaseAuth.getInstance();
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("Users")
+                .document(!Guest?fb.getUid():"Guest")
+                .get()
+                .addOnSuccessListener(queryDocumentSnapshots -> {
+
+                    v.setText(queryDocumentSnapshots.getString("nome"));
+
+                });
+
+
+    }
+
+    //TODO Spostare questo concetto nelle missioni quando saranno state teorizzate
+    private void Addpoints(int Points)
     {
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection("Users")
-                .whereEqualTo("email", Accountstring)
-                .get()
-                .addOnSuccessListener(queryDocumentSnapshots -> {
-                    for (QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
-                        v.setText(documentSnapshot.getString("nome"));
+        DocumentReference documentRef = db.collection("Users").document(FirebaseAuth.getInstance().getUid());
+        documentRef.get()
+                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        if (documentSnapshot.exists()) {
+                            // Il documento esiste
 
+                            // Ottenere il valore del campo "nomeCampo"
+                            Map<String, Long> campoAnnidato = (Map<String, Long>) documentSnapshot.get("Achievements");
+                            Long punti = campoAnnidato.get("Punti");
+                            punti+= Points;
+                            campoAnnidato.remove("Punti");
+                            campoAnnidato.put("Punti" , punti);
+                            documentRef.update("Achievements",campoAnnidato)     .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
+                                            // Il documento è stato aggiornato con successo
+                                        }
+                                    })
+                                    .addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            // Gestisci l'errore in caso di fallimento dell'aggiornamento
+                                        }
+                                    });
+
+                            documentRef.update("points",punti)     .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
+                                            // Il documento è stato aggiornato con successo
+                                        }
+                                    })
+                                    .addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            // Gestisci l'errore in caso di fallimento dell'aggiornamento
+                                        }
+                                    });
+
+                        } else {
+                            // Il documento non esiste
+                        }
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        // Gestisci l'errore in caso di fallimento del recupero del documento
                     }
                 });
+
 
 
     }

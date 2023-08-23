@@ -61,13 +61,14 @@ public class ranking_popup extends Dialog {
         String empty = "AdaLovelace.png";
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         CollectionReference reference = db.collection("Users");
-        Query query = reference.orderBy("email", Query.Direction.ASCENDING);
+        Query query = reference.orderBy("points", Query.Direction.DESCENDING);
         query.get().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 for (QueryDocumentSnapshot document : task.getResult()) {
                     if(document.get("ProfilePic") == null)
                     {
-                        fullHrg.add(new Utente(document.getString("nome"), "" , "", empty));
+                        fullHrg.add(new Utente(document.getString("nome"), "" ,  document.getLong("points"), empty));
+
                     }
                     else {
                         Log.d("documento" , document.getDocumentReference("ProfilePic").getPath());
@@ -76,27 +77,28 @@ public class ranking_popup extends Dialog {
 
                         // Utilizziamo la reference per prendere il nome dell'utente
                         userRef.get().addOnSuccessListener(documentSnapshot -> {
-                            fullHrg.add(new Utente(document.getString("nome"), "" , "", documentSnapshot.getString("Image")));
+                            fullHrg.add(new Utente(document.getString("nome"), "" , document.getLong("points"), documentSnapshot.getString("Image")));
                             Log.d("documento" , documentSnapshot.getString("Image"));
 
-                            data = new ArrayList<>(fullHrg);
 
-                            RecyclerView myrv = findViewById(R.id.recicler_ranking);
-
-
-                            DisplayMetrics displayMetrics = new DisplayMetrics();
-                            getContext().getResources().getDisplayMetrics();
-                            float RecyclerWidth = (displayMetrics.widthPixels / displayMetrics.density) - 300; //larghezza sezione bottoni
-                            int spanCount = (int) (RecyclerWidth / 100) - 1;
-
-
-                            RecyclerViewUtente myAdapter = new RecyclerViewUtente(context, data);
-
-                            myrv.setLayoutManager(new LinearLayoutManager(context));
-
-                            myrv.setAdapter(myAdapter);
                         }).addOnFailureListener(e -> Log.d("documento" , "AAAAA"));
                     }
+                    data = new ArrayList<>(fullHrg);
+
+                    RecyclerView myrv = findViewById(R.id.recicler_ranking);
+
+
+                    DisplayMetrics displayMetrics = new DisplayMetrics();
+                    getContext().getResources().getDisplayMetrics();
+                    float RecyclerWidth = (displayMetrics.widthPixels / displayMetrics.density) - 300; //larghezza sezione bottoni
+                    int spanCount = (int) (RecyclerWidth / 100) - 1;
+
+                    Log.d("Entra" , "ewww");
+                    RecyclerViewUtente myAdapter = new RecyclerViewUtente(context, data);
+
+                    myrv.setLayoutManager(new LinearLayoutManager(context));
+
+                    myrv.setAdapter(myAdapter);
                     for (Utente element : fullHrg) {
                         Log.d("documentos" , element.getName()+"  "+element.getProfilePic());
                     }

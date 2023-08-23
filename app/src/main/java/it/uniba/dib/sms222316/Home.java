@@ -58,11 +58,15 @@ public class Home extends AppCompatActivity {
     Audio audio;
     PopupSettings popupSettings;
     TextView profilename;
+    public static Boolean Guest;
     ArrayList<String> Owned = new ArrayList<>();
     private long backPressed;
     private static final int TIME_INTERVALL = 2000;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Intent i = getIntent();
+        Guest = FirebaseAuth.getInstance().getCurrentUser().isAnonymous();
+
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         super.onCreate(savedInstanceState);
         LanguageManager lang = new LanguageManager(this);
@@ -207,7 +211,7 @@ public class Home extends AppCompatActivity {
 
 
 
-                                    findusername(Accountstring);
+                                    findusername(Guest);
 
                                 })
                                 .addOnFailureListener(e ->
@@ -250,18 +254,21 @@ public class Home extends AppCompatActivity {
 
         //ricerca dell'utente
         //FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection("Users")
-                .whereEqualTo("email", Accountstring)
-                .get()
-                .addOnSuccessListener(queryDocumentSnapshots -> {
-                    if (!queryDocumentSnapshots.isEmpty()) {
+        if (!Guest) {
+            db.collection("Users")
+                    .whereEqualTo("email", Accountstring)
+                    .get()
+                    .addOnSuccessListener(queryDocumentSnapshots -> {
+                        if (queryDocumentSnapshots.isEmpty()) {
 
-                    } else {
-                        //APRIRE popup
-                        popupDialog.show();
-                    }
-                })
-                .addOnFailureListener(e -> showToast(Home.this , "errore db"));
+
+                            popupDialog.show();
+
+
+                        }
+                    })
+                    .addOnFailureListener(e -> showToast(Home.this, "errore db"));
+        }
 
 
         //creo instanza popupsettings
@@ -346,7 +353,7 @@ public class Home extends AppCompatActivity {
         closer = popupSettings.findViewById(R.id.esci);
         closer.setOnClickListener(view -> popupSettings.hide());
 
-        findusername(Accountstring);
+        findusername(Guest);
 
         CardView play = findViewById(R.id.Newdgame);
         play.setOnClickListener(new View.OnClickListener() {
@@ -386,18 +393,17 @@ public class Home extends AppCompatActivity {
         return sb.toString().substring(0, numchars);
     }
 
-    private void findusername(String Accountstring)
+    private void findusername(Boolean Guest)
     {
-
+FirebaseAuth fb = FirebaseAuth.getInstance();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("Users")
-                .whereEqualTo("email", Accountstring)
+                .document(!Guest?fb.getUid():"Guest")
                 .get()
                 .addOnSuccessListener(queryDocumentSnapshots -> {
-                    for (QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
-                        profilename.setText(documentSnapshot.getString("nome")+"#"+documentSnapshot.getString("friend_code"));
 
-                    }
+                        profilename.setText(queryDocumentSnapshots.getString("nome")+"#"+queryDocumentSnapshots.getString("friend_code"));
+
                 });
 
 

@@ -14,12 +14,12 @@ public class Utente {
     private String email;
     private String friend_code;
     private String name;
-    private String points;
+    private Long points;
 
 
 
 
-    public Utente(String name,String email, String points, String ProfilePic ){
+    public Utente(String name,String email, Long points, String ProfilePic ){
         this.name = name;
         this.email = email;
         this.points = points;
@@ -31,7 +31,7 @@ public class Utente {
     public String getName(){
         return name;
     }
-    public String getScore(){
+    public Long getScore(){
         return points;
     }
 

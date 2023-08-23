@@ -115,7 +115,11 @@ public class Login extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             Log.d("AnonymousLogin", "signInAnonymously:success");
-                            HomeActivity();
+
+                            Intent intent = new Intent(Login.this,Home.class);
+                            intent.putExtra("Guest" , true);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+                            startActivity(intent);
                         } else {
                             Log.w("AnonymousLogin", "signInAnonymously:failure", task.getException());
                         }

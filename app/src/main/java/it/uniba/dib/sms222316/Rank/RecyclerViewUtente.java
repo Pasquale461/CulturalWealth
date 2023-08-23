@@ -52,7 +52,7 @@ public class RecyclerViewUtente extends RecyclerView.Adapter<RecyclerViewUtente.
         Bitmap bitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
         holder.img.setImageBitmap(bitmap);
         Log.d("image", uData.get(position).getProfilePic());
-        holder.points.setText(uData.get(position).getScore());
+        holder.points.setText(""+uData.get(position).getScore());
 
     }
 
