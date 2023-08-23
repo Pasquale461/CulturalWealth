@@ -35,6 +35,7 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -157,50 +158,71 @@ public class Home extends AppCompatActivity {
            // def.set("Heritage/GalileoGalilei");
             posseduti.add(def);
             Map Us = new HashMap<>();
-            Us.put("email", Accountstring);
-            Us.put("points", 0);
-            Us.put("nome",usrtext.getText().toString());
-            Us.put("friend_code",getRandomHexString(5));
-            //Us.put("Posseduti",posseduti);
-            DocumentReference Defaultpg;
+            Map Achievements = new HashMap<>();
+            CollectionReference achievementsCollection = db.collection("Achievements");
 
-            Defaultpg = db.collection("Heritage").document("Cleopatra");
-            List<DocumentReference> referenceArray = new ArrayList<>();
-            referenceArray.add(Defaultpg);
-            Us.put("Posseduti",referenceArray);
-            db.collection("Users").document(FirebaseAuth.getInstance().getCurrentUser().getUid()).set(Us) //NULL POINTER
+            achievementsCollection.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                    if (task.isSuccessful()) {
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            Achievements.put(document.getId(), 0);
+                        }
+                        Us.put("Achievements" , Achievements);
+                        Us.put("email", Accountstring);
+                        Us.put("points", 0);
+                        Us.put("nome",usrtext.getText().toString());
+                        Us.put("friend_code",getRandomHexString(5));
+                        //Us.put("Posseduti",posseduti);
+                        DocumentReference Defaultpg;
 
-                    .addOnSuccessListener(aVoid -> {
-                        //aggiunto
-                        showToast(Home.this, "aggiunto");
-                        CollectionReference Game = db.collection("Games");
+                        Defaultpg = db.collection("Heritage").document("Cleopatra");
+                        List<DocumentReference> referenceArray = new ArrayList<>();
+                        referenceArray.add(Defaultpg);
+                        Us.put("Posseduti",referenceArray);
+                        db.collection("Users").document(FirebaseAuth.getInstance().getCurrentUser().getUid()).set(Us) //NULL POINTER
 
-
-
-                        DocumentReference parentDocRef = db.document("Users/"+FirebaseAuth.getInstance().getCurrentUser().getUid());
-
-
-                        CollectionReference GamesCollectionRef = parentDocRef.collection("Games");
-                        Map M = new HashMap<>();
-                        M.put("a", 1);
-                        GamesCollectionRef.add(M);
-                        M.clear();
-                        //Map M = new HashMap<>();
-                        DocumentReference colRef = db.collection("Missions").document("Gioca Una Partita");
-                        //colRef.document("Gioca Una Partita");
-                        M.put("Base",  colRef );
-                        M.put("Progress", 0);
-                        DocumentReference missionsCollectionRef = parentDocRef.collection("Missions").document("M1");
-                        missionsCollectionRef.set(M);
+                                .addOnSuccessListener(aVoid -> {
+                                    //aggiunto
+                                    showToast(Home.this, "aggiunto");
+                                    CollectionReference Game = db.collection("Games");
 
 
 
-                        findusername(Accountstring);
+                                    DocumentReference parentDocRef = db.document("Users/"+FirebaseAuth.getInstance().getCurrentUser().getUid());
 
-                    })
-                    .addOnFailureListener(e ->
-                            showToast(Home.this, "non aggiunto"));
-                    popupDialog.dismiss();
+
+                                    CollectionReference GamesCollectionRef = parentDocRef.collection("Games");
+                                    Map M = new HashMap<>();
+                                    M.put("a", 1);
+                                    GamesCollectionRef.add(M);
+                                    M.clear();
+                                    //Map M = new HashMap<>();
+                                    DocumentReference colRef = db.collection("Missions").document("Gioca Una Partita");
+                                    //colRef.document("Gioca Una Partita");
+                                    M.put("Base",  colRef );
+                                    M.put("Progress", 0);
+                                    DocumentReference missionsCollectionRef = parentDocRef.collection("Missions").document("M1");
+                                    missionsCollectionRef.set(M);
+
+
+
+                                    findusername(Accountstring);
+
+                                })
+                                .addOnFailureListener(e ->
+                                        showToast(Home.this, "non aggiunto"));
+                        popupDialog.dismiss();
+
+                        // Ora puoi procedere con qualsiasi altra operazione che richiede i dati degli Achievements
+                    } else {
+                        // Gestisci eventuali errori qui
+                        Log.w("TAG", "Error getting documents.", task.getException());
+                    }
+                }
+            });
+
+
         });
 
 
