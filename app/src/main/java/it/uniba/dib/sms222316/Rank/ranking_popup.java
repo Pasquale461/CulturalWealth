@@ -20,6 +20,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -31,7 +32,11 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import it.uniba.dib.sms222316.Gallery.Heritage;
 import it.uniba.dib.sms222316.R;
@@ -60,53 +65,54 @@ public class ranking_popup extends Dialog {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         CollectionReference reference = db.collection("Users");
         Query query = reference.orderBy("points", Query.Direction.DESCENDING);
-        query.get().addOnCompleteListener(task -> {
-            if (task.isSuccessful()) {
-                for (QueryDocumentSnapshot document : task.getResult()) {
-                    if (!document.getId().equals("Guest")) {
+        ExecutorService executorService = Executors.newFixedThreadPool(1); // Puoi regolare il numero di thread a seconda delle tue esigenze
+
+
+        query.get().addOnSuccessListener(querySnapshot -> {
+            List<CompletableFuture<Void>> futures = new ArrayList<>();
+
+            for (QueryDocumentSnapshot document : querySnapshot) {
+                if (!document.getId().equals("Guest")) {
+                    CompletableFuture<Void> future = CompletableFuture.runAsync(() -> {
                         if (document.get("Profilepic") == null) {
                             fullHrg.add(new Utente(document.getString("nome"), "", document.getLong("points"), empty));
-
                         } else {
                             DocumentReference userRef = db.document(document.getDocumentReference("Profilepic").getPath());
 
-
-                            // Utilizziamo la reference per prendere il nome dell'utente
-                            userRef.get().addOnSuccessListener(documentSnapshot -> {
-                                fullHrg.add(new Utente(document.getString("nome"), "", document.getLong("points"), documentSnapshot.getString("Image")));
-                                Log.d("documento", documentSnapshot.getString("Image"));
-
-
-                            }).addOnFailureListener(e -> Log.d("documento", "AAAAA"));
+                            try {
+                                DocumentSnapshot userSnapshot = Tasks.await(userRef.get());
+                                fullHrg.add(new Utente(document.getString("nome"), "", document.getLong("points"), userSnapshot.getString("Image")));
+                                Log.d("documento", userSnapshot.getString("Image"));
+                            } catch (Exception e) {
+                                Log.d("documento", "AAAAA");
+                            }
                         }
-                    }
+                    }, executorService);
+
+                    futures.add(future);
                 }
-                    data = new ArrayList<>(fullHrg);
-
-                    RecyclerView myrv = findViewById(R.id.recicler_ranking);
-
-
-                    /*DisplayMetrics displayMetrics = new DisplayMetrics();
-                    getContext().getResources().getDisplayMetrics();
-                    float RecyclerWidth = (displayMetrics.widthPixels / displayMetrics.density) - 300; //larghezza sezione bottoni
-                    int spanCount = (int) (RecyclerWidth / 100) - 1;*/
-
-                    RecyclerViewUtente myAdapter = new RecyclerViewUtente(context, data);
-
-                    myrv.setLayoutManager(new LinearLayoutManager(context));
-
-                    myrv.setAdapter(myAdapter);
-                    for (Utente element : fullHrg) {
-                        Log.d("documentoss", element.getName() + "  " + element.getProfilePic());
-                    }
-
-            } else {
-                Log.e("Query-ranking", "Not found query");
-
             }
 
+            CompletableFuture<Void> allOf = CompletableFuture.allOf(futures.toArray(new CompletableFuture[0]));
 
+            allOf.thenRun(() -> {
+                // Ora puoi eseguire il codice successivo una volta che tutte le operazioni sono state completate
+                data = new ArrayList<>(fullHrg);
+                RecyclerView myrv = findViewById(R.id.recicler_ranking);
+                RecyclerViewUtente myAdapter = new RecyclerViewUtente(context, data);
+                myrv.setLayoutManager(new LinearLayoutManager(context));
+                myrv.setAdapter(myAdapter);
+                for (Utente element : fullHrg) {
+                    Log.d("documentoss", element.getName() + "  " + element.getProfilePic());
+                }
+            });
+
+        }).addOnFailureListener(e -> {
+            Log.e("Query-ranking", "Not found query", e);
         });
+
+
+
 
     }
 

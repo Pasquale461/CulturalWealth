@@ -422,10 +422,11 @@ public class GameActivity extends AppCompatActivity {
                     game.getCurrentPlayer().setPrison(true);
                     path.lineTo(casella[position[currentPlayer]].getX(), casella[position[currentPlayer]].getY());
                 }
-                if (position[currentPlayer] == 30) {
-                    position[currentPlayer] = 10;
-                    game.getCurrentPlayer().setPrison(true);
-                    path.lineTo(casella[position[currentPlayer]].getX(), casella[position[currentPlayer]].getY());
+                if (position[currentPlayer] == 2 || position[currentPlayer] == 20 || position[currentPlayer] == 33 || position[currentPlayer] == 38 ) {
+                    game.getCurrentPlayer().removeMoney(100);
+                }
+                if (position[currentPlayer] == 4 || position[currentPlayer] == 17 || position[currentPlayer] == 22 || position[currentPlayer] == 36  ) {
+                    game.getCurrentPlayer().addMoney(100);
                 }
 
 

@@ -102,6 +102,7 @@ public class Home extends AppCompatActivity {
         window.setGravity(Gravity.CENTER);
 
 
+
         //popup username
         PopupDialog popupDialog = new PopupDialog(Home.this, Home.this);
         popupDialog.setCanceledOnTouchOutside(false);
