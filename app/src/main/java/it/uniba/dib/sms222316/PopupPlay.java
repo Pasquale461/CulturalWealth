@@ -22,7 +22,7 @@ public class PopupPlay extends Dialog {
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
         setContentView(R.layout.play_popup);
-        ImageButton Playbutton = findViewById(R.id.endconfirm);
+        ImageButton Playbutton = findViewById(R.id.continu);
         ImageView icon1 = findViewById(R.id.icon1);
         ImageView icon2 = findViewById(R.id.icon2);
         ImageView icon3 = findViewById(R.id.icon3);

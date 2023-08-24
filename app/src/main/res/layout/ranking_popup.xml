@@ -10,11 +10,12 @@
     android:backgroundTint="#00FFFFFF">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/linearLayout5"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="100dp"
+        android:layout_marginEnd="100dp"
         android:background="@drawable/rounded_corners"
-        android:backgroundTint="@color/marrone"
+        android:backgroundTint="#00FFFFFF"
         android:foregroundGravity="center"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -27,10 +28,8 @@
             android:id="@+id/constraintLayout5"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginStart="64dp"
             android:layout_marginTop="8dp"
-            android:layout_marginEnd="64dp"
-            android:layout_marginBottom="50dp"
+            android:layout_marginBottom="24dp"
             android:background="@drawable/pressed"
             android:backgroundTint="@color/pink_rose"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -60,7 +59,7 @@
                 android:id="@+id/linearLayout3"
                 android:layout_width="match_parent"
                 android:layout_height="20dp"
-                android:background="@drawable/pressed"
+                android:background="@drawable/topcorners"
                 android:backgroundTint="@color/new_orleans"
                 android:baselineAligned="true"
                 android:orientation="horizontal"
@@ -94,93 +93,6 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/frameLayout3"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginBottom="16dp"
-            android:background="@drawable/pressed"
-            android:backgroundTint="@color/new_orleans"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/constraintLayout5"
-            app:layout_constraintStart_toStartOf="@+id/constraintLayout5"
-            app:layout_constraintTop_toBottomOf="@+id/constraintLayout5"
-            app:layout_constraintVertical_bias="0.0">
-
-            <ImageView
-                android:id="@+id/user_icon1"
-                android:layout_width="45dp"
-                android:layout_height="40dp"
-                android:background="#00FFFFFF"
-                android:src="@drawable/coin"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/user_name1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/RankName"
-                android:textSize="20sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.079"
-                app:layout_constraintStart_toEndOf="@+id/user_icon1"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/position"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/RankPositions"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.863"
-                app:layout_constraintStart_toEndOf="@+id/user_score"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.533" />
-
-            <TextView
-                android:id="@+id/user_score"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/RankPoints"
-                android:textSize="16sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.397"
-                app:layout_constraintStart_toEndOf="@+id/user_name1"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.571" />
-
-            <androidx.constraintlayout.helper.widget.Layer
-                android:id="@+id/layer"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:constraint_referenced_ids="frameLayout3"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <Button
-            android:id="@+id/closerankpopup"
-            style="@style/Widget.AppCompat.Button.Colored"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:background="@android:drawable/ic_menu_close_clear_cancel"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.972"
-            app:layout_constraintStart_toEndOf="@+id/textView8"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0" />
-
         <TextView
             android:id="@+id/textView8"
             android:layout_width="wrap_content"
@@ -190,7 +102,9 @@
             android:layout_marginEnd="32dp"
             android:text="@string/RankTitle"
             android:textAlignment="center"
+            android:textColor="@color/pink_rose"
             android:textSize="20sp"
+            android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.503"
             app:layout_constraintStart_toStartOf="parent"

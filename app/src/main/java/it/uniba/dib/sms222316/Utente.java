@@ -15,6 +15,7 @@ public class Utente {
     private String friend_code;
     private String name;
     private Long points;
+    private boolean me;
 
 
 
@@ -24,6 +25,16 @@ public class Utente {
         this.email = email;
         this.points = points;
         this.ProfilePic = ProfilePic;
+        this.me = false;
+
+
+    }
+    public Utente(String name,String email, Long points, String ProfilePic , boolean me){
+        this.name = name;
+        this.email = email;
+        this.points = points;
+        this.ProfilePic = ProfilePic;
+        this.me = me;
 
 
     }
@@ -42,6 +53,7 @@ public class Utente {
         return ProfilePic;
     }
 
-
-
+    public boolean isMe() {
+        return me;
+    }
 }

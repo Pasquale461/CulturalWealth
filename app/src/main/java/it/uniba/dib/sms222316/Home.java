@@ -146,8 +146,7 @@ public class Home extends AppCompatActivity {
         });
 
         //Close Popup Goals
-        Button closer = goalsPopup.findViewById(R.id.closerGoals);
-        closer.setOnClickListener(view -> goalsPopup.hide());
+
 
         profilename = findViewById(R.id.profile_name);
 
@@ -233,8 +232,7 @@ public class Home extends AppCompatActivity {
 
 
         rankbutton.setOnClickListener(view -> ranking_popup.show());
-        closer = ranking_popup.findViewById(R.id.closerankpopup);
-        closer.setOnClickListener(view -> ranking_popup.hide());
+
 
         //Settings
         Settings = findViewById(R.id.settings);
@@ -370,8 +368,7 @@ public class Home extends AppCompatActivity {
         });
 
         //Close Popup Setting
-        closer = popupSettings.findViewById(R.id.esci);
-        closer.setOnClickListener(view -> popupSettings.hide());
+
 
         findusername();
 

@@ -21,6 +21,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -75,13 +76,15 @@ public class ranking_popup extends Dialog {
                 if (!document.getId().equals("Guest")) {
                     CompletableFuture<Void> future = CompletableFuture.runAsync(() -> {
                         if (document.get("Profilepic") == null) {
-                            fullHrg.add(new Utente(document.getString("nome"), "", document.getLong("points"), empty));
+                            if (document.getId().equals(FirebaseAuth.getInstance().getUid()))fullHrg.add(new Utente(document.getString("nome"), "", document.getLong("points"), empty , true));
+                            else fullHrg.add(new Utente(document.getString("nome"), "", document.getLong("points"), empty));
                         } else {
                             DocumentReference userRef = db.document(document.getDocumentReference("Profilepic").getPath());
 
                             try {
                                 DocumentSnapshot userSnapshot = Tasks.await(userRef.get());
-                                fullHrg.add(new Utente(document.getString("nome"), "", document.getLong("points"), userSnapshot.getString("Image")));
+                                if (document.getId().equals(FirebaseAuth.getInstance().getUid()))fullHrg.add(new Utente(document.getString("nome"), "", document.getLong("points"), userSnapshot.getString("Image"), true));
+                                else fullHrg.add(new Utente(document.getString("nome"), "", document.getLong("points"), userSnapshot.getString("Image")));
                                 Log.d("documento", userSnapshot.getString("Image"));
                             } catch (Exception e) {
                                 Log.d("documento", "AAAAA");
