@@ -53,7 +53,8 @@ import it.uniba.dib.sms222316.Goals.GoalsPopup;
 import it.uniba.dib.sms222316.Rank.ranking_popup;
 
 public class Home extends AppCompatActivity {
-    Button  usrbtn, rankbutton, Disconnect;
+    Button  usrbtn, Disconnect;
+    CardView rankbutton;
     ImageButton ProfilePic;
     CardView Play;
     ImageButton Settings,italianButton,englishButton;
@@ -267,6 +268,8 @@ public class Home extends AppCompatActivity {
                 .get()
                 .addOnSuccessListener(DocumentSnapshot -> {
                     ProfilePic = findViewById(R.id.ProfilePic);
+                    TextView point = findViewById(R.id.points);
+                    point.setText(DocumentSnapshot.get("points").toString());
                     DocumentReference immagine = (DocumentReference) DocumentSnapshot.get("Profilepic");
                     if(immagine != null)
                     immagine.get().addOnSuccessListener(Document -> {

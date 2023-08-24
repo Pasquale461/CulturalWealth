@@ -73,15 +73,6 @@
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/galileo_galilei"/>
 
-        <Button
-            android:id="@+id/rankbutton"
-            android:layout_width="54dp"
-            android:layout_height="51dp"
-            android:background="@drawable/icon_rank_149"
-            android:contentDescription="@string/BtnRank"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/settings"
-            app:layout_constraintTop_toTopOf="parent" />
 
         <Button
             android:id="@+id/goals_btn"
@@ -90,7 +81,7 @@
             android:background="@drawable/goals"
             android:contentDescription="@string/BtnGoals"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/rankbutton"
+            app:layout_constraintEnd_toStartOf="@+id/settings"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@android:drawable/btn_star_big_on" />
 
@@ -105,10 +96,63 @@
         android:backgroundTint="@color/pink_rose"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/Navbar"
         app:layout_constraintVertical_bias="0.0">
+
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/rankbutton"
+            android:layout_width="120dp"
+            android:layout_height="35dp"
+            android:background="@drawable/rounded_border"
+            android:backgroundTint="#a17563"
+            android:contentDescription="@string/BtnRank"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:clickable="true"
+            app:cardCornerRadius="15dp"
+            app:cardElevation="5dp"
+            app:layout_constraintBottom_toTopOf="@+id/Gallery"
+            app:layout_constraintEnd_toEndOf="@+id/Gallery"
+            app:layout_constraintHorizontal_bias="0.15"
+            app:layout_constraintStart_toStartOf="@+id/Gallery"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:id="@+id/Rank"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_toStartOf="@+id/points"
+                    android:layout_centerVertical="true"
+                    app:srcCompat="@drawable/rank" />
+
+                <TextView
+                    android:id="@+id/points"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="1852"
+                    android:textColor="@color/pink_rose"
+                    android:textSize="18sp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/Rank"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+            </RelativeLayout>
+
+
+        </androidx.cardview.widget.CardView>
+
+
+
 
 
         <androidx.cardview.widget.CardView
