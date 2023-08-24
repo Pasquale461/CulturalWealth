@@ -51,4 +51,8 @@
     <!-- RecyclerView Gallery -->
     <string name="loading">Caricamento...</string>
 
+    <!-- Game Activity -->
+    <string name="exit">Esci</string>
+    <string name="esci">Vuoi uscire dal gioco?</string>
+    <string name="save">Esci&amp;Save</string>
 </resources>

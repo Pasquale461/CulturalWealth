@@ -1,5 +1,6 @@
 package it.uniba.dib.sms222316.Goals;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -17,15 +19,18 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import it.uniba.dib.sms222316.Home;
 import it.uniba.dib.sms222316.R;
 
 public class RecyclerCategoryAdapter extends RecyclerView.Adapter<RecyclerCategoryAdapter.MyViewHolder>{
 
     private final List<Category> cData;
     private ViewGroup Padre;
+    List<DocumentReference> Posseduti;
 
     public RecyclerCategoryAdapter(List<Category> cData) {
         this.cData = cData;
@@ -43,14 +48,21 @@ public class RecyclerCategoryAdapter extends RecyclerView.Adapter<RecyclerCatego
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerCategoryAdapter.MyViewHolder holder, int position) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        DocumentReference ref =  db.collection("Users").document("Guest");
+        ref.get().addOnCompleteListener(task -> {
+            if(task.isSuccessful()){
+                DocumentSnapshot document = task.getResult();
+                Log.d("categoria", document.get("Achievements").toString());
+            }
+        });
+
         //Set nome e container Category
         holder.category.setText(cData.get(position).getCategory());
 
         //Set recycler Achievements
-        List<Achievements> goals;
-        goals = new ArrayList<>();
+        List<Achievements> goals = new ArrayList<>();
 
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
         CollectionReference reference = db.collection("Achievements");
         Query query = reference.whereEqualTo(FieldPath.documentId(), cData.get(position).getCategory()).orderBy(FieldPath.documentId(), Query.Direction.ASCENDING);
 
@@ -64,7 +76,26 @@ public class RecyclerCategoryAdapter extends RecyclerView.Adapter<RecyclerCatego
                         Map<String, Object> obb = (Map<String, Object>) entry.getValue();
 
                         if(!obb.isEmpty()){
+
                             DocumentReference reward = (DocumentReference) obb.get("Reward");
+                            //add reward
+                            /*
+                            DocumentReference uRef = db.collection("Users").document(!Home.Guest?FirebaseAuth.getInstance().getCurrentUser().getUid():"Guest");
+                            uRef.get()
+                                    .addOnCompleteListener(task1 -> {
+                                        if(task1.isSuccessful()){
+                                            DocumentSnapshot Utente = task1.getResult();
+                                            HashMap<String,Long> Achiv = (HashMap<String,Long>) Utente.get("Achievements");
+                                            Posseduti = (List<DocumentReference>) Utente.get("Posseduti");
+                                            if(Achiv.get(cData.get(position).getCategory())>=(Long) obb.get("Target")) {
+                                                Posseduti.add((DocumentReference) obb.get("Reward"));
+                                                uRef.set(new HashMap<String, Object>() {{
+                                                    put("Posseduti", Posseduti);
+                                                }});
+                                            }
+                                        }
+                                    });*/
+                            //add Achievements on the view
                             reward.get().addOnCompleteListener(task1 -> {
                                 if(task1.isSuccessful()){
                                     DocumentSnapshot rew = task1.getResult();

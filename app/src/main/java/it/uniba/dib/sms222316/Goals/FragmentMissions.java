@@ -24,6 +24,8 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import it.uniba.dib.sms222316.Home;
 import it.uniba.dib.sms222316.R;
 
 public class FragmentMissions extends Fragment {
@@ -49,7 +51,8 @@ public class FragmentMissions extends Fragment {
         DailyMissions = new ArrayList<>();
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        CollectionReference reference = db.collection("Users").document(FirebaseAuth.getInstance().getCurrentUser().getUid()).collection("DailyMissions");//TODO: userID da oggetto utente
+        String currentId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        CollectionReference reference = db.collection("Users").document(!Home.Guest?currentId:"Guest").collection("DailyMissions");//TODO: userID da oggetto utente
         Query query = reference.orderBy(FieldPath.documentId(), Query.Direction.ASCENDING);
 
         query.get().addOnCompleteListener(task -> {

@@ -69,42 +69,29 @@ public class Registration extends AppCompatActivity {
         changeInProgress(true);
         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
         firebaseAuth.createUserWithEmailAndPassword(Email,Password_local).addOnCompleteListener(
-                new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        Log.d("current",  "inizio");
-                        if(task.isSuccessful()){
-                            //acc is done
+                task -> {
+                    if(task.isSuccessful()){
+                        //acc is done
 
-                            //firebaseAuth.getCurrentUser().sendEmailVerification();
-                            Log.d("current",  firebaseAuth.getCurrentUser().toString());
-                            //firebaseAuth.signOut();
-                            String UID = firebaseAuth.getCurrentUser().getUid();
-                            Log.e("a", "entrato");
-                            Map<String, Object> Users = new HashMap<>();
-                            Users.put("UID", UID);
-                            Users.put("email", Email);
-                            Users.put("nome", name);
+                        //firebaseAuth.getCurrentUser().sendEmailVerification();
 
-                            showToast(Registration.this, "Successo nome");
-                            FirebaseFirestore.getInstance().collection("Users").document(UID)
-                                    .set(Users).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                        @Override
-                                        public void onSuccess(Void unused) {
-                                            showToast(Registration.this, "Successo");
-                                        }
-                                    })
-                                    .addOnFailureListener(new OnFailureListener() {
-                                        @Override
-                                        public void onFailure(@NonNull Exception e) {
-                                            showToast(Registration.this, "Fallito");
-                                        }
-                                    });
-                            Toast.makeText(Registration.this,"Account creato correttamente",Toast.LENGTH_SHORT).show();
-                        }else{
-                            //fail
-                            Toast.makeText(Registration.this,task.getException().getLocalizedMessage(),Toast.LENGTH_SHORT).show();
-                        }
+                        //firebaseAuth.signOut();
+                        /*
+                        String UID = firebaseAuth.getCurrentUser().getUid();
+                        Log.e("a", "entrato");
+                        Map<String, Object> Users = new HashMap<>();
+                        Users.put("UID", UID);
+                        Users.put("email", Email);
+                        Users.put("nome", name);
+
+                        showToast(Registration.this, "Successo nome");
+                        FirebaseFirestore.getInstance().collection("Users").document(UID)
+                                .set(Users).addOnSuccessListener(unused -> showToast(Registration.this, "Successo"))
+                                .addOnFailureListener(e -> showToast(Registration.this, "Fallito"));*/
+                        Toast.makeText(Registration.this,"Account creato correttamente",Toast.LENGTH_SHORT).show();
+                    }else{
+                        //fail
+                        Toast.makeText(Registration.this,task.getException().getLocalizedMessage(),Toast.LENGTH_SHORT).show();
                     }
                 }
         );

@@ -18,6 +18,7 @@ import com.wajahatkarim3.easyflipview.EasyFlipView;
 
 import java.util.List;
 
+import it.uniba.dib.sms222316.Gameplay.GameActivity;
 import it.uniba.dib.sms222316.Gameplay.Property;
 
 public class PopupField extends Dialog {

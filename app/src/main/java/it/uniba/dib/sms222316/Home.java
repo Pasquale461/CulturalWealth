@@ -43,6 +43,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+import it.uniba.dib.sms222316.Gameplay.Game;
+import it.uniba.dib.sms222316.Gameplay.GameActivity;
 import it.uniba.dib.sms222316.Goals.GoalsPopup;
 import it.uniba.dib.sms222316.Rank.ranking_popup;
 
@@ -150,14 +152,10 @@ public class Home extends AppCompatActivity {
 
         //open gallery
         CardView Gallery = findViewById(R.id.Gallery);
-        Gallery.setOnClickListener(v -> {
-            loadprop();
-
-        });
+        Gallery.setOnClickListener(v -> loadprop()); //LoadPropertiesAndStartActivity
         usrbtn.setOnClickListener(v -> {
-
             //FirebaseFirestore db = FirebaseFirestore.getInstance();
-            List<DocumentReference> posseduti = new ArrayList<DocumentReference>();
+            List<DocumentReference> posseduti = new ArrayList<>();
             DocumentReference def = db.collection("Heritage").document();
            // def.set("Heritage/GalileoGalilei");
             posseduti.add(def);
@@ -189,29 +187,28 @@ public class Home extends AppCompatActivity {
                                 .addOnSuccessListener(aVoid -> {
                                     //aggiunto
                                     showToast(Home.this, "aggiunto");
-                                    CollectionReference Game = db.collection("Games");
 
 
 
                                     DocumentReference parentDocRef = db.document("Users/"+FirebaseAuth.getInstance().getCurrentUser().getUid());
 
 
-                                    CollectionReference GamesCollectionRef = parentDocRef.collection("Games");
+                                    DocumentReference GamesCollectionRef = parentDocRef.collection("Games").document("creation");
                                     Map M = new HashMap<>();
                                     M.put("a", 1);
-                                    GamesCollectionRef.add(M);
+                                    GamesCollectionRef.set(M);
                                     M.clear();
                                     //Map M = new HashMap<>();
                                     DocumentReference colRef = db.collection("Missions").document("Gioca Una Partita");
                                     //colRef.document("Gioca Una Partita");
                                     M.put("Base",  colRef );
                                     M.put("Progress", 0);
-                                    DocumentReference missionsCollectionRef = parentDocRef.collection("Missions").document("M1");
+                                    DocumentReference missionsCollectionRef = parentDocRef.collection("DailyMissions").document("M1");
                                     missionsCollectionRef.set(M);
 
 
 
-                                    findusername(Guest);
+                                    findusername();
 
                                 })
                                 .addOnFailureListener(e ->
@@ -230,9 +227,7 @@ public class Home extends AppCompatActivity {
         });
 
 
-        rankbutton.setOnClickListener(view -> {
-            ranking_popup.show();
-        });
+        rankbutton.setOnClickListener(view -> ranking_popup.show());
         closer = ranking_popup.findViewById(R.id.closerankpopup);
         closer.setOnClickListener(view -> ranking_popup.hide());
 
@@ -256,16 +251,10 @@ public class Home extends AppCompatActivity {
         //FirebaseFirestore db = FirebaseFirestore.getInstance();
         if (!Guest) {
             db.collection("Users")
-                    .whereEqualTo("email", Accountstring)
+                    .document(FirebaseAuth.getInstance().getUid())
                     .get()
-                    .addOnSuccessListener(queryDocumentSnapshots -> {
-                        if (queryDocumentSnapshots.isEmpty()) {
-
-
-                            popupDialog.show();
-
-
-                        }
+                    .addOnSuccessListener(DocumentSnapshot -> {
+                            if(!DocumentSnapshot.exists())   popupDialog.show();
                     })
                     .addOnFailureListener(e -> showToast(Home.this, "errore db"));
         }
@@ -353,17 +342,14 @@ public class Home extends AppCompatActivity {
         closer = popupSettings.findViewById(R.id.esci);
         closer.setOnClickListener(view -> popupSettings.hide());
 
-        findusername(Guest);
+        findusername();
 
         CardView play = findViewById(R.id.Newdgame);
-        play.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                PopupPlay playpopup = new PopupPlay(Home.this);
-                playpopup.show();
-                Intent i = new Intent(Home.this, GameActivity.class);
-                //startActivity(i);
-            }
+        play.setOnClickListener(v -> {
+            PopupPlay playpopup = new PopupPlay(Home.this);
+            playpopup.show();
+            Intent i1 = new Intent(Home.this, GameActivity.class);
+            //startActivity(i);
         });
     }
     @Override
@@ -393,7 +379,7 @@ public class Home extends AppCompatActivity {
         return sb.toString().substring(0, numchars);
     }
 
-    private void findusername(Boolean Guest)
+    private void findusername()
     {
 FirebaseAuth fb = FirebaseAuth.getInstance();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -411,33 +397,27 @@ FirebaseAuth fb = FirebaseAuth.getInstance();
 
     public void loadprop(){
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-
-        DocumentReference OwnRef = db.collection("Users").document(FirebaseAuth.getInstance().getCurrentUser().getUid());
-        OwnRef.get().addOnCompleteListener(task1 -> {
-            if (task1.isSuccessful()) {
-                ArrayList<DocumentReference> OwnList = (ArrayList<DocumentReference>) task1.getResult().get("Posseduti");
-                OwnList.forEach(ownList -> {
-                    ownList.get().addOnCompleteListener(task2 -> {
+        if(!Guest) {
+            DocumentReference OwnRef = db.collection("Users").document(FirebaseAuth.getInstance().getCurrentUser().getUid());
+            OwnRef.get().addOnCompleteListener(task1 -> {
+                if (task1.isSuccessful()) {
+                    ArrayList<DocumentReference> OwnList = (ArrayList<DocumentReference>) task1.getResult().get("Posseduti");
+                    OwnList.forEach(ownList -> ownList.get().addOnCompleteListener(task2 -> {
                         if (task2.isSuccessful()) {
-
                             DocumentSnapshot ownTitle = task2.getResult();
                             Owned.add(ownTitle.get("Title").toString());
                             Intent i = new Intent(Home.this, it.uniba.dib.sms222316.Gallery.Gallery.class);
                             i.putExtra("Owned", Owned);
                             startActivity(i);
                         }
-                    });
-                });
-
-
-            }
-        });
-
-
-
-
-
-
+                    }));
+                }
+            });
+        }else{
+            Intent i = new Intent(Home.this, it.uniba.dib.sms222316.Gallery.Gallery.class);
+            i.putExtra("Owned", Owned);
+            startActivity(i);
+        }
     }
 
     @Override

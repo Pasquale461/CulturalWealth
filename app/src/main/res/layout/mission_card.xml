@@ -4,8 +4,9 @@
     android:layout_width="match_parent"
     android:layout_height="120dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:cardElevation="0dp"
-    app:cardCornerRadius="0dp">
+    android:backgroundTint="@color/Periwinkie"
+    app:cardCornerRadius="0dp"
+    app:cardElevation="0dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout6"
@@ -18,6 +19,7 @@
 
     <TextView
         android:id="@+id/TitleMission"
+        android:textColor="@color/pink_rose"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
@@ -27,6 +29,7 @@
 
         <TextView
             android:id="@+id/ProgressNumber"
+            android:textColor="@color/pink_rose"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="17sp"
@@ -45,6 +48,7 @@
 
         <TextView
             android:id="@+id/Rewards"
+            android:textColor="@color/pink_rose"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="17sp"

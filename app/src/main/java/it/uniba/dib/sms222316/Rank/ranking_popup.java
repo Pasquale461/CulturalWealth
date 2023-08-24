@@ -54,8 +54,6 @@ public class ranking_popup extends Dialog {
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
         setContentView(R.layout.ranking_popup);
 
-        Log.d("TAG", "Questo è un messaggio di debug");
-
 
 
         String empty = "AdaLovelace.png";
@@ -65,48 +63,43 @@ public class ranking_popup extends Dialog {
         query.get().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 for (QueryDocumentSnapshot document : task.getResult()) {
-                    if(document.get("ProfilePic") == null)
-                    {
-                        fullHrg.add(new Utente(document.getString("nome"), "" ,  document.getLong("points"), empty));
+                    if (!document.getId().equals("Guest")) {
+                        if (document.get("Profilepic") == null) {
+                            fullHrg.add(new Utente(document.getString("nome"), "", document.getLong("points"), empty));
 
+                        } else {
+                            DocumentReference userRef = db.document(document.getDocumentReference("Profilepic").getPath());
+
+
+                            // Utilizziamo la reference per prendere il nome dell'utente
+                            userRef.get().addOnSuccessListener(documentSnapshot -> {
+                                fullHrg.add(new Utente(document.getString("nome"), "", document.getLong("points"), documentSnapshot.getString("Image")));
+                                Log.d("documento", documentSnapshot.getString("Image"));
+
+
+                            }).addOnFailureListener(e -> Log.d("documento", "AAAAA"));
+                        }
                     }
-                    else {
-                        Log.d("documento" , document.getDocumentReference("ProfilePic").getPath());
-                        DocumentReference userRef = db.document(document.getDocumentReference("ProfilePic").getPath());
-
-
-                        // Utilizziamo la reference per prendere il nome dell'utente
-                        userRef.get().addOnSuccessListener(documentSnapshot -> {
-                            fullHrg.add(new Utente(document.getString("nome"), "" , document.getLong("points"), documentSnapshot.getString("Image")));
-                            Log.d("documento" , documentSnapshot.getString("Image"));
-
-
-                        }).addOnFailureListener(e -> Log.d("documento" , "AAAAA"));
-                    }
+                }
                     data = new ArrayList<>(fullHrg);
 
                     RecyclerView myrv = findViewById(R.id.recicler_ranking);
 
 
-                    DisplayMetrics displayMetrics = new DisplayMetrics();
+                    /*DisplayMetrics displayMetrics = new DisplayMetrics();
                     getContext().getResources().getDisplayMetrics();
                     float RecyclerWidth = (displayMetrics.widthPixels / displayMetrics.density) - 300; //larghezza sezione bottoni
-                    int spanCount = (int) (RecyclerWidth / 100) - 1;
+                    int spanCount = (int) (RecyclerWidth / 100) - 1;*/
 
-                    Log.d("Entra" , "ewww");
                     RecyclerViewUtente myAdapter = new RecyclerViewUtente(context, data);
 
                     myrv.setLayoutManager(new LinearLayoutManager(context));
 
                     myrv.setAdapter(myAdapter);
                     for (Utente element : fullHrg) {
-                        Log.d("documentos" , element.getName()+"  "+element.getProfilePic());
+                        Log.d("documentoss", element.getName() + "  " + element.getProfilePic());
                     }
 
-
-
-
-                }
             } else {
                 Log.e("Query-ranking", "Not found query");
 

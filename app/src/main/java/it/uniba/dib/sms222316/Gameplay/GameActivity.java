@@ -1,4 +1,4 @@
-package it.uniba.dib.sms222316;
+package it.uniba.dib.sms222316.Gameplay;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -9,32 +9,29 @@ import android.animation.Animator;
 import android.animation.ObjectAnimator;
 import android.content.Intent;
 import android.content.res.Resources;
-import android.graphics.Color;
 import android.graphics.Path;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.util.SparseBooleanArray;
-import android.view.Gravity;
+import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewTreeObserver;
-import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.google.android.gms.games.Players;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -43,8 +40,12 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import it.uniba.dib.sms222316.Rank.ranking_popup;
+import it.uniba.dib.sms222316.Caselle;
+import it.uniba.dib.sms222316.Home;
+import it.uniba.dib.sms222316.PopupField;
+import it.uniba.dib.sms222316.R;
 
+import it.uniba.dib.sms222316.endgame_popup;
 import pl.droidsonroids.gif.GifDrawable;
 import pl.droidsonroids.gif.GifImageView;
 
@@ -56,18 +57,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
-import java.util.concurrent.Callable;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
-import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
-
-import it.uniba.dib.sms222316.Gameplay.Game;
-import it.uniba.dib.sms222316.Gameplay.Player;
-import it.uniba.dib.sms222316.Gameplay.Property;
 
 public class GameActivity extends AppCompatActivity {
 
@@ -114,8 +105,8 @@ public class GameActivity extends AppCompatActivity {
         List<Player> players = new ArrayList<>();
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
 
-
-        playerNameTextView = findViewById(R.id.name1);findusername(FirebaseAuth.getInstance().getCurrentUser().getEmail() , playerNameTextView);
+        String  currentId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        playerNameTextView = findViewById(R.id.name1);findusername(!Home.Guest?currentId:"Guest" , playerNameTextView);
         playerNameTextView2 = findViewById(R.id.name2);playerNameTextView2.setText("Guest 2");
         playerNameTextView3 = findViewById(R.id.name33);playerNameTextView3.setText("Guest 3");
         players.add(new Player("Giocatore 1",0, money));
@@ -130,7 +121,7 @@ public class GameActivity extends AppCompatActivity {
             case 3 :pedina1.setImageResource(R.drawable.moai_svgrepo_com);break;
             case 4 :pedina1.setImageResource(R.drawable.icon_rank_149);break;
             case 5 :pedina1.setImageResource(R.drawable.japan_monument_svgrepo_com);break;
-            default:pedina1.setImageResource(R.drawable.culture_japan_japanese_svgrepo_com);break;
+            default:pedina1.setImageResource(R.drawable.japan_monument_svgrepo_com);break;
         }
 
         //Lettura file JSON delle proprieta
@@ -205,35 +196,9 @@ public class GameActivity extends AppCompatActivity {
         //Instanza oggetto partita
         /**to delete nese ka load bej load perndryshe bej loj te re*/
         if(false){
-            /*Player tempPlayer = new Player("Luke",1,5000);
-            players.set(0,tempPlayer);
-            players.get(0).setPosition(5);
-            players.get(0).addMoney(1000);
-            properties.get(8).setGiocatore(players.get(0));
-*/
-
-
-
-
-
 
             FirebaseFirestore db = FirebaseFirestore.getInstance();
-
-            /*/ Funzione Per salvare la partita
-            Game GameToSave = game.clone();
-            db.collection("Users")
-                    .document(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                    .collection("Games")
-                    .add(GameToSave)
-                    .addOnSuccessListener(documentReference -> {
-                        //Successo: Oggetto aggiunto con successo
-                    })
-                    .addOnFailureListener(e -> {
-                        //Errore: L'aggiunta dell'oggetto non è riuscita
-                    });
-            */
-
-
+            //controllo guest, guest non dovrebbe neanche arrivare a questo punto. Possibilità di carica partita gia bloccate dal bottone
             db.collection("Users")
                     .document(FirebaseAuth.getInstance().getCurrentUser().getUid())
                     .collection("Games")
@@ -283,6 +248,8 @@ public class GameActivity extends AppCompatActivity {
         Button endturn = findViewById(R.id.endTurn);
         Button info = findViewById(R.id.Info);
         Button buy = findViewById(R.id.buy);
+        ImageButton exit = findViewById(R.id.btnBack);
+
         info.setVisibility(View.INVISIBLE);
         buy.setVisibility(View.INVISIBLE);
 
@@ -341,7 +308,7 @@ public class GameActivity extends AppCompatActivity {
                 view.getViewTreeObserver().removeOnGlobalLayoutListener(this);
             }
         });
-
+        exit.setOnClickListener(v1 -> Exit());
         endturn.setVisibility(View.INVISIBLE);
         rollDice.setOnClickListener(v -> {
 
@@ -570,7 +537,7 @@ public class GameActivity extends AppCompatActivity {
 
     public void TradeProposal(int offerer, int recipient){
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(this, R.style.CustomAlertDialogStyle));
         LayoutInflater inflater = this.getLayoutInflater();
         View dialogView = inflater.inflate(R.layout.trade_popup, null);
         builder.setView(dialogView);
@@ -617,8 +584,8 @@ public class GameActivity extends AppCompatActivity {
                     selectedItems2.add(items2.get(checked2.keyAt(i)));
                 }
             }
-
-            TradeResponse(selectedItems1, selectedItems2);
+            if(selectedItems1.size()>0 && selectedItems2.size()>0)  TradeResponse(selectedItems1, selectedItems2);
+            else Toast.makeText(this, "Serve almeno una proprietà per giocatore",Toast.LENGTH_SHORT).show();
         });
 
         builder.setNegativeButton("Annulla", (dialog, which) -> {
@@ -626,11 +593,12 @@ public class GameActivity extends AppCompatActivity {
         });
 
         AlertDialog dialog = builder.create();
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
         dialog.show();
 
     }
     public void TradeResponse(List<Property> OfferedProperty, List<Property> RequestedProperty){
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(this, R.style.CustomAlertDialogStyle));
         LayoutInflater inflater = this.getLayoutInflater();
         View dialogView = inflater.inflate(R.layout.trade_popup, null);
         builder.setView(dialogView);
@@ -663,6 +631,45 @@ public class GameActivity extends AppCompatActivity {
         });
 
         AlertDialog dialog = builder.create();
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        dialog.show();
+    }
+    public void Exit(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(this, R.style.CustomAlertDialogStyle));
+        LayoutInflater inflater = this.getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.save, null);
+
+        builder.setView(dialogView);
+
+
+        builder.setPositiveButton(R.string.save, (dialog, which) -> {
+            FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+            // Funzione Per salvare la partita
+            Game GameToSave = game.clone();
+            if(!Home.Guest) {
+                db.collection("Users")
+                        .document(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                        .collection("Games")
+                        .add(GameToSave)
+                        .addOnSuccessListener(documentReference -> {
+                            finish();
+                        })
+                        .addOnFailureListener(e -> {
+                            //Errore: L'aggiunta dell'oggetto non è riuscita
+                        });
+            }else{
+                Toast.makeText(this, "Guest cant save a game",Toast.LENGTH_SHORT).show();
+
+            }
+        });
+
+        builder.setNegativeButton(R.string.exit, (dialog, which) -> {
+            finish();
+        });
+
+        AlertDialog dialog = builder.create();
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
         dialog.show();
     }
     private void updateUI(){
@@ -700,18 +707,14 @@ public class GameActivity extends AppCompatActivity {
     return currentPlayer;
     }
 
-    private void findusername(String Accountstring , TextView v)
+    private void findusername(String DocId , TextView v)
     {
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection("Users")
-                .whereEqualTo("email", Accountstring)
+        db.collection("Users").document(DocId)
                 .get()
                 .addOnSuccessListener(queryDocumentSnapshots -> {
-                    for (QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
-                        v.setText(documentSnapshot.getString("nome"));
-
-                    }
+                        v.setText(queryDocumentSnapshots.getString("nome"));
                 });
 
 
@@ -741,23 +744,4 @@ public class GameActivity extends AppCompatActivity {
     }
 
 
-    /**To do to be deleted**/
-    private CompletableFuture<QuerySnapshot> loadData(){
-
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-
-        Task<QuerySnapshot> task = db.collection("Users")
-                .document(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                .collection("Games")
-                .get();
-
-        CompletableFuture<QuerySnapshot> future = CompletableFuture.supplyAsync(() -> {
-            try {
-                return Tasks.await(task);
-            } catch (Exception e) {
-                throw new RuntimeException(e); // Wrap the exception
-            }
-        });
-        return future;
-    }
 }

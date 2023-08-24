@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/sfondo_serio"
-    tools:context=".GameActivity">
+    tools:context=".Gameplay.GameActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/relativeLayout"
@@ -997,14 +997,17 @@
                         app:layout_constraintTop_toTopOf="@+id/dice2" />
 
                     <ImageButton
-                        android:id="@+id/savexit"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:backgroundTint="#00B60000"
-                        android:foregroundTintMode="src_in"
+                        android:id="@+id/btnBack"
+                        android:layout_width="45dp"
+                        android:layout_height="35dp"
+                        android:layout_marginStart="6dp"
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/defaultbtn"
+                        android:backgroundTint="@color/pink_rose"
+                        android:contentDescription="@string/back"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:srcCompat="@android:drawable/btn_dialog" />
+                        app:srcCompat="?attr/homeAsUpIndicator" />
 
                     <ImageView
                         android:id="@+id/imageView25"
@@ -1167,6 +1170,7 @@
             android:id="@+id/players"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 

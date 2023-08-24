@@ -10,6 +10,8 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 
+import it.uniba.dib.sms222316.Gameplay.GameActivity;
+
 public class PopupPlay extends Dialog {
 
     private final String[] titles = new String[]{getContext().getString(R.string.achievements), getContext().getString(R.string.missions)};
