@@ -7,6 +7,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.cardview.widget.CardView;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.media.MediaPlayer;
@@ -37,12 +39,14 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+import it.uniba.dib.sms222316.Gallery.GalleryHeritage;
 import it.uniba.dib.sms222316.Gameplay.Game;
 import it.uniba.dib.sms222316.Gameplay.GameActivity;
 import it.uniba.dib.sms222316.Goals.GoalsPopup;
@@ -50,6 +54,7 @@ import it.uniba.dib.sms222316.Rank.ranking_popup;
 
 public class Home extends AppCompatActivity {
     Button  usrbtn, rankbutton, Disconnect;
+    ImageButton ProfilePic;
     CardView Play;
     ImageButton Settings,italianButton,englishButton;
     MediaPlayer effect;
@@ -66,7 +71,6 @@ public class Home extends AppCompatActivity {
     private static final int TIME_INTERVALL = 2000;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Intent i = getIntent();
         Guest = FirebaseAuth.getInstance().getCurrentUser().isAnonymous();
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -259,6 +263,32 @@ public class Home extends AppCompatActivity {
                     .addOnFailureListener(e -> showToast(Home.this, "errore db"));
         }
 
+        db.collection("Users")
+                .document(!Guest?FirebaseAuth.getInstance().getUid():"Guest")
+                .get()
+                .addOnSuccessListener(DocumentSnapshot -> {
+                    ProfilePic = findViewById(R.id.ProfilePic);
+                    DocumentReference immagine = (DocumentReference) DocumentSnapshot.get("Profilepic");
+                    if(immagine != null)
+                    immagine.get().addOnSuccessListener(Document -> {
+
+                        File Monuments;
+                        if(Document.exists()){
+                            Monuments = new File(this.getFilesDir() ,"CulturalWealth/ProfilesPictures/" + Document.get("Image"));
+
+                        }else{
+                            Monuments = new File(this.getFilesDir() ,"CulturalWealth/ProfilesPictures/" + "Cleopatra.png");
+                        }
+                        Bitmap bitmapMonuments = BitmapFactory.decodeFile(Monuments.getAbsolutePath());
+                        ProfilePic.setImageBitmap(bitmapMonuments);
+                    });
+                    else{
+                        File Monuments = new File(this.getFilesDir() ,"CulturalWealth/ProfilesPictures/" + "Cleopatra.png");
+                        Bitmap bitmapMonuments = BitmapFactory.decodeFile(Monuments.getAbsolutePath());
+                        ProfilePic.setImageBitmap(bitmapMonuments);
+                    }
+                })
+                .addOnFailureListener(e -> showToast(Home.this, "errore db"));
 
         //creo instanza popupsettings
         Settings = findViewById(R.id.settings);

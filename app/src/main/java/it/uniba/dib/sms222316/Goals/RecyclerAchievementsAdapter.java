@@ -3,6 +3,9 @@ package it.uniba.dib.sms222316.Goals;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.ColorFilter;
+import android.graphics.ColorMatrix;
+import android.graphics.ColorMatrixColorFilter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,7 +49,20 @@ public class RecyclerAchievementsAdapter extends RecyclerView.Adapter<RecyclerAc
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         bitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
         bitmap.compress(Bitmap.CompressFormat.JPEG, 0, outputStream);
+        if (!mData.get(position).isOwn()) {
 
+            ColorMatrix colorMatrix = new ColorMatrix();
+            colorMatrix.setSaturation(0);
+            ColorFilter colorFilter = new ColorMatrixColorFilter(colorMatrix);
+
+            holder.img.setColorFilter(colorFilter);
+
+        }
+        else
+        {
+            holder.img.invalidate();
+            holder.img.setColorFilter(null);
+        }
 
         holder.TargetPoint.setText(mData.get(position).getTargetPoint());
         holder.Relic.setText(mData.get(position).getRelic()); //TODO aggiustare il titolo degli obiettivi/vecchio ragionamento nome relic - path

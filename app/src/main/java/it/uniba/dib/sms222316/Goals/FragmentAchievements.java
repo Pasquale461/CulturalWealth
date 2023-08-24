@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -39,13 +40,14 @@ public class FragmentAchievements extends Fragment {
 
         return inflater.inflate(R.layout.fragment_achievements, container, false);
     }
-
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        UpdateAchivements(view);
+    }
 
-        List<Category> Category;
-        Category = new ArrayList<>();
+    private void UpdateAchivements(View view){
+        List<Category> Category = new ArrayList<>();
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         CollectionReference reference = db.collection("Achievements");
@@ -72,4 +74,5 @@ public class FragmentAchievements extends Fragment {
             }
         });
     }
+
 }

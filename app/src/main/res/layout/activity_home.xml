@@ -52,27 +52,26 @@
             android:layout_width="217dp"
             android:layout_height="36dp"
             android:layout_marginLeft="5dp"
-            android:textColor="@color/white"
+            android:textColor="@color/pink_rose"
             android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/imageButton3"
+            app:layout_constraintStart_toEndOf="@+id/ProfilePic"
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageButton
-            android:id="@+id/imageButton3"
+            android:id="@+id/ProfilePic"
             style="@android:style/Widget.Holo.ImageButton"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_marginLeft="15dp"
-            android:background="#00FFFFFF"
             android:contentDescription="@string/Avatar"
             android:scaleType="centerCrop"
             android:scrollbarStyle="outsideInset"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/galileo_galilei" />
+            app:srcCompat="@drawable/galileo_galilei"/>
 
         <Button
             android:id="@+id/rankbutton"
