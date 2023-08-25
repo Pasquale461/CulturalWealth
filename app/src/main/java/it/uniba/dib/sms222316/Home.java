@@ -65,6 +65,7 @@ public class Home extends AppCompatActivity {
     EditText usrtext;
     Audio audio;
     PopupSettings popupSettings;
+    PopupLoad load;
     TextView profilename;
     public static Boolean Guest;
     ArrayList<String> Owned = new ArrayList<>();
@@ -365,6 +366,13 @@ public class Home extends AppCompatActivity {
         });
 
 
+        load = new PopupLoad(Home.this);
+        CardView Saved = findViewById(R.id.Loadgame);
+        Saved.setOnClickListener(v -> {
+            //APRIRE popup carica partita
+            load.show();
+        });
+
         Settings.setOnClickListener(v -> {
             //APRIRE popup impostazioni
             popupSettings.show();
@@ -383,6 +391,9 @@ public class Home extends AppCompatActivity {
             //startActivity(i);
         });
     }
+
+
+
     @Override
     protected void onPause() {
         super.onPause();
@@ -454,9 +465,20 @@ FirebaseAuth fb = FirebaseAuth.getInstance();
     @Override
     protected void onResume() {
         super.onResume();
+        load = new PopupLoad(Home.this);
+
+        CardView Saved = findViewById(R.id.Loadgame);
+        Saved.setOnClickListener(v -> {
+            //APRIRE popup carica partita
+            load.show();
+        });
+
         if(mVolume.isChecked()){
             popupSettings.SoundSwitchM();
         }
+
+
     }
+
 }
 

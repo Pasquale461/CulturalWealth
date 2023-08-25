@@ -2,19 +2,23 @@ package it.uniba.dib.sms222316.Gameplay;
 
 
 
+import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class Game implements Cloneable {
         private final List<Player> players;
         private final List<Property> properties;
-
-
+        private Date Date;
+        private int TurnNumber;
 
     private int currentPlayerIndex;
         private boolean gameStarted;
 
         public Game(List<Player> players, List<Property> properties) {
+            this.Date = Date.from(Instant.now());
+            TurnNumber=1;
             this.players = players;
             this.properties = properties;
             currentPlayerIndex = 0;
@@ -23,6 +27,7 @@ public class Game implements Cloneable {
         public Game() {
             this.players = new ArrayList<>();
             this.properties = new ArrayList<>();
+            this.Date = Date.from(Instant.now());
         }
         @Override
         public Game clone() {
@@ -39,6 +44,8 @@ public class Game implements Cloneable {
             Game clonedGame = new Game(clonedPlayers, clonedProperties);
             clonedGame.setCurrentPlayerIndex(this.currentPlayerIndex);
             clonedGame.setGameStarted(this.gameStarted);
+            clonedGame.Date=this.Date;
+            clonedGame.TurnNumber= TurnNumber;
 
             return clonedGame;
         }
@@ -54,7 +61,7 @@ public class Game implements Cloneable {
             terminaPartita();
         }
         currentPlayerIndex = (currentPlayerIndex + 1) % players.size();
-
+        TurnNumber+=1;
 
         if(players.get(currentPlayerIndex).isBankrupt()) endTurn(players);
 
@@ -114,13 +121,11 @@ public class Game implements Cloneable {
     {
 
         boolean flag = false;
-        for ( Property prop:
-                properties)
+        for ( Property prop: properties)
         {
-            if (prop.getTipo().equals("monument")) {
-                if (prop.getGruppo().equals(Group) && prop.getGiocatore().equals(player))
-                    flag = true;
-                else flag = false;
+            if (prop.getTipo().equals("monument") && prop.getGiocatore()!=null) {
+                if (prop.getGruppo().equals(Group) && prop.getGiocatore().equals(player)) flag = true;
+                else return false;
             }
         }
         return  flag;
@@ -168,8 +173,19 @@ public class Game implements Cloneable {
         return players;
     }
 
+    public int NumberOfPlayers()
+    {
+        return players.size();
+    }
 
 
+    public java.util.Date getDate() {
+        return Date;
+    }
+
+    public int getTurnNumber() {
+        return TurnNumber;
+    }
 }
 
 

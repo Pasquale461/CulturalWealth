@@ -75,12 +75,8 @@ public class GameActivity extends AppCompatActivity {
     private TextView playerScoreTextView;
     private TextView playerScoreTextView2;
     private TextView playerScoreTextView3;
-    private TextView pprimo ;
-    private TextView psecondo;
-    private TextView pterzo;
-    private TextView nprimo ;
-    private TextView nsecondo ;
-    private TextView nterzo ;
+    String GameId;
+
     Game game;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,6 +87,7 @@ public class GameActivity extends AppCompatActivity {
         Intent intent = getIntent();
         int money = intent.getIntExtra("money", 1500);
         int icon = intent.getIntExtra("puddle", 0);
+        GameId = intent.getStringExtra("GameId");
         playerNameTextView = findViewById(R.id.name1);
         playerScoreTextView = findViewById(R.id.money1);
         playerScoreTextView2 = findViewById(R.id.money2);
@@ -195,22 +192,30 @@ public class GameActivity extends AppCompatActivity {
 
         //Instanza oggetto partita
         /**to delete nese ka load bej load perndryshe bej loj te re*/
-        if(false){
+        if(GameId!=null){
 
             FirebaseFirestore db = FirebaseFirestore.getInstance();
             //controllo guest, guest non dovrebbe neanche arrivare a questo punto. Possibilità di carica partita gia bloccate dal bottone
             db.collection("Users")
                     .document(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                    .collection("Games")
+                    .collection("Games").document(GameId)
                     .get()
                     .addOnSuccessListener(querySnapshot -> {
                         // Elabora gli oggetti recuperati
-                        for (QueryDocumentSnapshot documentSnapshot : querySnapshot) {
-                            // Converto il documento in un oggetto della tua classe MyObject
-                            game = documentSnapshot.toObject(Game.class);
+
+                            game = querySnapshot.toObject(Game.class);
+                        for (Property property: game.getProperties())
+                        {
+
+                            if (property.getGiocatore() != null) {
+                               property.setGiocatore(game.getPlayers().get(property.getGiocatore().getIcon()));
+
+                            }
+
+                        }
                             game.iniziaPartita();
                             gioco();
-                        }
+
 
                     })
                     .addOnFailureListener(e -> {
@@ -328,12 +333,7 @@ public class GameActivity extends AppCompatActivity {
                 primo = game.getCurrentPlayerIndex();
 
                 //popup classifica
-                pprimo = findViewById(R.id.firstpoints);
-                psecondo = findViewById(R.id.secondpoints);
-                pterzo = findViewById(R.id.thirdpoints);
-                nprimo = findViewById(R.id.firstname);
-                nsecondo = findViewById(R.id.secondname);
-                nterzo = findViewById(R.id.thirdname);
+
                 int punteggioprimo = players.get(primo).getScore();
                 int punteggiosecondo = players.get(secondo).getScore();
                 int punteggioterzo = players.get(terzo).getScore();
@@ -342,6 +342,7 @@ public class GameActivity extends AppCompatActivity {
                 String nometerzo = players.get(terzo).getName();
 
                 Intent i = new Intent(GameActivity.this, endgame_popup.class);
+                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 i.putExtra("punteggioprimo", punteggioprimo);
                 i.putExtra("punteggiosecondo", punteggiosecondo);
                 i.putExtra("punteggioterzo", punteggioterzo);
@@ -649,16 +650,40 @@ public class GameActivity extends AppCompatActivity {
             // Funzione Per salvare la partita
             Game GameToSave = game.clone();
             if(!Home.Guest) {
-                db.collection("Users")
-                        .document(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                        .collection("Games")
-                        .add(GameToSave)
-                        .addOnSuccessListener(documentReference -> {
-                            finish();
-                        })
-                        .addOnFailureListener(e -> {
-                            //Errore: L'aggiunta dell'oggetto non è riuscita
-                        });
+                if (GameId!=null)
+                {
+                    db.collection("Users")
+                            .document(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                            .collection("Games").document(GameId)
+                            .set(game)
+                            .addOnSuccessListener(documentReference -> {
+
+                                Intent i = new Intent(GameActivity.this, Home.class );
+                                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                startActivity(i);
+                                finish();
+                            })
+                            .addOnFailureListener(e -> {
+                                //Errore: L'aggiunta dell'oggetto non è riuscita
+                            });
+                }
+                else
+                {
+                    db.collection("Users")
+                            .document(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                            .collection("Games")
+                            .add(game)
+                            .addOnSuccessListener(documentReference -> {
+
+                                Intent i = new Intent(GameActivity.this, Home.class );
+                                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                startActivity(i);
+                                finish();
+                            })
+                            .addOnFailureListener(e -> {
+                                //Errore: L'aggiunta dell'oggetto non è riuscita
+                            });
+                }
             }else{
                 Toast.makeText(this, "Guest cant save a game",Toast.LENGTH_SHORT).show();
 
