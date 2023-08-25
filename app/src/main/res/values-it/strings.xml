@@ -14,7 +14,10 @@
     <string name="monuments">Monumenti</string>
     <string name="paintings">Quadri</string>
     <string name="characters">Personaggi</string>
-
+    <string name="loaded">Patrimoni non ancora presenti</string>
+    <string name="noMonu">Monumenti non ancora presenti</string>
+    <string name="noPaint">Quadri non ancora presenti</string>
+    <string name="noChar">Personaggi non ancora presenti</string>
     <!-- Settings -->
     <string name="log_out">Disconnetti</string>
     <string name="settings">Impostazioni</string>
@@ -55,4 +58,9 @@
     <string name="exit">Esci</string>
     <string name="esci">Vuoi uscire dal gioco?</string>
     <string name="save">Esci&amp;Save</string>
+
+    <string name="inizia_turno">Inizia Turno</string>
+    <string name="fine_turno">Fine Turno</string>
+    <string name="compra">Compra</string>
+    <string name="info">Info</string>
 </resources>

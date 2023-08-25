@@ -54,7 +54,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         public void onBindViewHolder(MyViewHolder holder, final int position) {
 
 
-
             holder.haritageTitle.setText(mData.get(position).getTitle());
 
             File file;
@@ -138,7 +137,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
         public static class MyViewHolder extends RecyclerView.ViewHolder {
 
-            TextView haritageTitle;
+            TextView haritageTitle, loading;
             CardView cardView ;
             ImageView img, type;
 

@@ -389,8 +389,8 @@ public class GameActivity extends AppCompatActivity {
 
                 }
             } else {
-                players.get(1).setBankrupt();
-                players.get(0).setBankrupt();
+                //players.get(1).setBankrupt();
+                //players.get(0).setBankrupt();
                 rollDice.setEnabled(false);
                 GifDrawable Gif1 = rollDice(numeri[0]);
                 GifDrawable Gif2 = rollDice(numeri[1]);
@@ -525,7 +525,7 @@ public class GameActivity extends AppCompatActivity {
             ConstraintLayout Player = findViewById(R.id.players);
             for (int i = 0; i < players.size(); i++) {
                 Player.getChildAt(i).setOnClickListener(null);
-                Player.getChildAt(i).setBackgroundResource(R.drawable.rounded_corners);
+                Player.getChildAt(i).setBackgroundResource(R.drawable.rounded);
             }
             endturn.setVisibility(View.INVISIBLE);
             info.setVisibility(View.INVISIBLE);

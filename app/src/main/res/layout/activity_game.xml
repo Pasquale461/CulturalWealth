@@ -8,6 +8,7 @@
     android:background="@drawable/sfondo_serio"
     tools:context=".Gameplay.GameActivity">
 
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/relativeLayout"
         android:layout_width="match_parent"
@@ -982,10 +983,9 @@
                         android:layout_height="80dp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@+id/exa_30"
-                        app:layout_constraintHorizontal_bias="0.373"
                         app:layout_constraintStart_toEndOf="@+id/exa_10"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintVertical_bias="0.498" />
+                        app:layout_constraintVertical_bias="0.45" />
 
                     <pl.droidsonroids.gif.GifImageView
                         android:id="@+id/dice1"
@@ -1126,8 +1126,9 @@
             android:layout_width="80dp"
             android:layout_height="67dp"
             android:layout_marginTop="25dp"
-            android:background="@android:color/holo_green_dark"
-            android:text="Inizia turno"
+            android:background="@drawable/rounded_corners"
+            android:backgroundTint="@android:color/holo_green_dark"
+            android:text="@string/inizia_turno"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/players"
             app:layout_constraintTop_toBottomOf="@+id/players" />
@@ -1136,8 +1137,9 @@
             android:id="@+id/endTurn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+
             android:backgroundTint="?attr/colorError"
-            android:text="fine turno"
+            android:text="@string/fine_turno"
             app:layout_constraintEnd_toEndOf="@+id/dado"
             app:layout_constraintStart_toStartOf="@+id/dado"
             app:layout_constraintTop_toBottomOf="@+id/dado" />
@@ -1148,7 +1150,7 @@
             android:layout_height="47dp"
             android:layout_marginBottom="4dp"
             android:backgroundTint="@color/new_orleans"
-            android:text="info"
+            android:text="@string/info"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="@+id/players"
             app:layout_constraintTop_toBottomOf="@+id/endTurn" />
@@ -1160,7 +1162,7 @@
             android:layout_marginEnd="4dp"
             android:layout_marginBottom="4dp"
             android:backgroundTint="@color/ming"
-            android:text="Compra"
+            android:text="@string/compra"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/Info"
@@ -1178,8 +1180,9 @@
                 android:id="@+id/me"
                 android:layout_width="151dp"
                 android:layout_height="45dp"
-                android:alpha="1"
-                android:background="@drawable/rounded_corners"
+                android:background="@drawable/rounded"
+
+                android:alpha="0.92"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
@@ -1187,7 +1190,8 @@
                     android:id="@+id/name1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="TextView"
+                    android:text=""
+                    android:textColor="@color/pink_rose"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -1197,15 +1201,16 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="24dp"
-                    android:text="TextView"
+                    android:text=""
+                    android:textColor="@color/pink_rose"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/name1" />
 
                 <ImageView
                     android:id="@+id/imageView12"
-                    android:layout_width="18dp"
-                    android:layout_height="17dp"
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/money1"
@@ -1219,8 +1224,8 @@
                 android:layout_width="151dp"
                 android:layout_height="45dp"
                 android:layout_marginTop="8dp"
-                android:alpha="1"
-                android:background="@drawable/rounded_corners"
+                android:background="@drawable/rounded"
+                android:alpha="0.92"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/me">
 
@@ -1228,7 +1233,8 @@
                     android:id="@+id/name2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="TextView"
+                    android:text=""
+                    android:textColor="@color/pink_rose"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -1238,18 +1244,18 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="24dp"
-                    android:text="TextView"
+                    android:text=""
+                    android:textColor="@color/pink_rose"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/name2" />
 
                 <ImageView
                     android:id="@+id/imageView14"
-                    android:layout_width="24dp"
+                    android:layout_width="22dp"
                     android:layout_height="22dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.542"
                     app:layout_constraintStart_toEndOf="@+id/money2"
                     app:layout_constraintTop_toBottomOf="@+id/name2"
                     app:srcCompat="@drawable/_1" />
@@ -1261,8 +1267,8 @@
                 android:layout_width="151dp"
                 android:layout_height="45dp"
                 android:layout_marginTop="8dp"
-                android:alpha="1"
-                android:background="@drawable/rounded_corners"
+                android:background="@drawable/rounded"
+                android:alpha="0.92"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/infoplayer2">
 
@@ -1270,7 +1276,8 @@
                     android:id="@+id/name33"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="TextView"
+                    android:text=""
+                    android:textColor="@color/pink_rose"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -1280,15 +1287,16 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="24dp"
-                    android:text="TextView"
+                    android:text=""
+                    android:textColor="@color/pink_rose"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/name33" />
 
                 <ImageView
                     android:id="@+id/imageView15"
-                    android:layout_width="23dp"
-                    android:layout_height="24dp"
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/money3"

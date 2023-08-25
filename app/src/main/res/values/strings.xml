@@ -14,6 +14,10 @@
     <string name="monuments">Monuments</string>
     <string name="paintings">Paintings</string>
     <string name="characters">Characters</string>
+    <string name="loaded">There is no heritage yet</string>
+    <string name="noMonu">There is no monument yet</string>
+    <string name="noPaint">There is no painting yet</string>
+    <string name="noChar">There is no character yet</string>
 
     <!-- Settings -->
     <string name="log_out">Log Out</string>
@@ -55,6 +59,11 @@
     <string name="exit">Exit</string>
     <string name="esci">Do you want to exit the game?</string>
     <string name="save">Exit&amp;Save</string>
+
+    <string name="inizia_turno">Roll\nDice</string>
+    <string name="fine_turno">End Turn</string>
+    <string name="info">info</string>
+    <string name="compra">Buy</string>
 
 
 </resources>

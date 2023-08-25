@@ -65,7 +65,7 @@ public class RecyclerAchievementsAdapter extends RecyclerView.Adapter<RecyclerAc
         }
 
         holder.TargetPoint.setText(mData.get(position).getTargetPoint());
-        holder.Relic.setText(mData.get(position).getRelic()); //TODO aggiustare il titolo degli obiettivi/vecchio ragionamento nome relic - path
+        //holder.Relic.setText(mData.get(position).getRelic()); //TODO aggiustare il titolo degli obiettivi/vecchio ragionamento nome relic - path
         holder.img.setImageBitmap(bitmap);
     }
 

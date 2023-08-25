@@ -5,6 +5,8 @@
 
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_marginStart="100dp"
+    android:layout_marginEnd="100dp"
     android:layout_gravity="center"
     android:background="#00AA6565"
     android:backgroundTint="#00FFFFFF">
@@ -12,8 +14,6 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginStart="100dp"
-        android:layout_marginEnd="100dp"
         android:background="@drawable/rounded_corners"
         android:backgroundTint="#00FFFFFF"
         android:foregroundGravity="center"
