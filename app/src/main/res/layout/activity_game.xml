@@ -23,7 +23,7 @@
         app:layout_constraintVertical_bias="1.0">
 
         <HorizontalScrollView
-            android:id="@+id/horizontalScrollView"
+            android:id="@+id/horizontalScrollViewZoom"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:background="?android:attr/autofilledHighlight"
@@ -31,7 +31,7 @@
             android:scrollbars="none"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/players"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/btnBack"
             app:layout_constraintTop_toTopOf="parent">
 
             <ScrollView
@@ -43,7 +43,7 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/Icons"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="match_parent">
 
 
                     <ImageView
@@ -996,19 +996,6 @@
                         app:layout_constraintEnd_toEndOf="@+id/dice2"
                         app:layout_constraintTop_toTopOf="@+id/dice2" />
 
-                    <ImageButton
-                        android:id="@+id/btnBack"
-                        android:layout_width="45dp"
-                        android:layout_height="35dp"
-                        android:layout_marginStart="6dp"
-                        android:layout_marginTop="10dp"
-                        android:background="@drawable/defaultbtn"
-                        android:backgroundTint="@color/pink_rose"
-                        android:contentDescription="@string/back"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:srcCompat="?attr/homeAsUpIndicator" />
-
                     <ImageView
                         android:id="@+id/imageView25"
                         android:layout_width="34dp"
@@ -1120,6 +1107,17 @@
             </ScrollView>
 
         </HorizontalScrollView>
+
+        <ImageButton
+            android:id="@+id/btnBack"
+            android:layout_width="45dp"
+            android:layout_height="35dp"
+            android:background="@drawable/defaultbtn"
+            android:backgroundTint="@color/pink_rose"
+            android:contentDescription="@string/back"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="?attr/homeAsUpIndicator" />
 
         <Button
             android:id="@+id/dado"

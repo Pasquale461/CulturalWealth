@@ -436,7 +436,7 @@ public class Home extends AppCompatActivity {
     public void setPicPoint(){
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("Users")
-                .document(!Guest?FirebaseAuth.getInstance().getUid():"Guest")
+                .document(!Guest||FirebaseAuth.getInstance().getUid()!=null?FirebaseAuth.getInstance().getUid():"Guest")
                 .get()
                 .addOnSuccessListener(DocumentSnapshot -> {
                     ProfilePic = findViewById(R.id.ProfilePic);

@@ -10,11 +10,15 @@ import android.animation.ObjectAnimator;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Path;
+import android.graphics.Point;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.DisplayMetrics;
+import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.ContextThemeWrapper;
+import android.view.Display;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -25,6 +29,7 @@ import android.view.WindowManager;
 import android.view.animation.ScaleAnimation;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.HorizontalScrollView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -80,12 +85,13 @@ public class GameActivity extends AppCompatActivity {
     private TextView playerScoreTextView;
     private TextView playerScoreTextView2;
     private TextView playerScoreTextView3;
+    private final int Basedisplay = 2255040;
     String GameId;
     Game game;
 
 
     private static final String TAG = "MainActivity";
-    private float mScale = 1f;
+
     private ScaleGestureDetector mScaleGestureDetector;
     GestureDetector gestureDetector;
 
@@ -104,38 +110,33 @@ public class GameActivity extends AppCompatActivity {
         playerScoreTextView2 = findViewById(R.id.money2);
         playerScoreTextView3 = findViewById(R.id.money3);
 
+        Display display = getWindowManager().getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        Log.d("Display" ," w: "+displayMetrics.widthPixels+" h: " +displayMetrics.heightPixels+ "t: "+displayMetrics.widthPixels * displayMetrics.heightPixels );
+        int Thisthisplay = displayMetrics.widthPixels * displayMetrics.heightPixels;;
+        float mScale = Thisthisplay/(Basedisplay);
+        if (Thisthisplay>Basedisplay)mScale = 0.6f;
+        else mScale = 1f;
+        HorizontalScrollView layout = (HorizontalScrollView) findViewById(R.id.horizontalScrollViewZoom);
+        int[] location = new int[2];
+        layout.getLocationOnScreen(location);
 
+        int x = location[0]; // coordinata x rispetto allo schermo
+        int y = location[1];
+        // Calcola il centro dello schermo
+        int screenWidth = size.x;
+        int screenHeight = size.y;
+        int centerX = screenWidth / 2;
+        int centerY = screenHeight / 2;
+        ScaleAnimation scaleAnimation = new ScaleAnimation(1f / 1 , 1f / mScale, 1f / 1, 1f / mScale, x, y+centerY);
+        ConstraintLayout layoutm = (ConstraintLayout) findViewById(R.id.Icons);
+        scaleAnimation.setDuration(0);
+        scaleAnimation.setFillAfter(true);
+        layoutm.startAnimation(scaleAnimation);
 
-
-        gestureDetector = new GestureDetector(this, new GestureListener());
-        mScaleGestureDetector = new ScaleGestureDetector(this, new ScaleGestureDetector.SimpleOnScaleGestureListener() {
-            @Override
-            public boolean onScale(ScaleGestureDetector detector) {
-
-                // firstly we will get the scale factor
-                float scale = 1 - detector.getScaleFactor();
-                float prevScale = mScale;
-                mScale += scale;
-
-                // we can maximise our focus to 10f only
-                if (mScale > 10f)
-                    mScale = 10f;
-
-                ScaleAnimation scaleAnimation = new ScaleAnimation(1f / prevScale, 1f / mScale, 1f / prevScale, 1f / mScale, detector.getFocusX(), detector.getFocusY());
-
-                // duration of animation will be 0.It will
-                // not change by self after that
-                scaleAnimation.setDuration(0);
-                scaleAnimation.setFillAfter(true);
-
-                // initialising the scrollview
-                ScrollView layout = (ScrollView) findViewById(R.id.scrollViewZoom);
-
-                // we are setting it as animation
-                layout.startAnimation(scaleAnimation);
-                return true;
-            }
-        });
 
 
 
@@ -297,29 +298,8 @@ public class GameActivity extends AppCompatActivity {
     }
 
 
-    @Override
-    public boolean dispatchTouchEvent(MotionEvent event) {
-        super.dispatchTouchEvent(event);
 
-        // special types of touch screen events such as pinch ,
-        // double tap, scrolls , long presses and flinch,
-        // onTouch event is called if found any of these
-        mScaleGestureDetector.onTouchEvent(event);
-        gestureDetector.onTouchEvent(event);
-        return gestureDetector.onTouchEvent(event);
-    }
 
-    class GestureListener extends GestureDetector.SimpleOnGestureListener {
-        @Override
-        public boolean onDown(MotionEvent e) {
-            return true;
-        }
-
-        @Override
-        public boolean onDoubleTap(MotionEvent e) {
-            return true;
-        }
-    }
 
 
     public void gioco(){
