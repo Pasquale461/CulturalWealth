@@ -15,15 +15,20 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.SparseBooleanArray;
 import android.view.ContextThemeWrapper;
+import android.view.GestureDetector;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
+import android.view.ScaleGestureDetector;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.WindowManager;
+import android.view.animation.ScaleAnimation;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -76,8 +81,14 @@ public class GameActivity extends AppCompatActivity {
     private TextView playerScoreTextView2;
     private TextView playerScoreTextView3;
     String GameId;
-
     Game game;
+
+
+    private static final String TAG = "MainActivity";
+    private float mScale = 1f;
+    private ScaleGestureDetector mScaleGestureDetector;
+    GestureDetector gestureDetector;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -92,6 +103,42 @@ public class GameActivity extends AppCompatActivity {
         playerScoreTextView = findViewById(R.id.money1);
         playerScoreTextView2 = findViewById(R.id.money2);
         playerScoreTextView3 = findViewById(R.id.money3);
+
+
+
+
+        gestureDetector = new GestureDetector(this, new GestureListener());
+        mScaleGestureDetector = new ScaleGestureDetector(this, new ScaleGestureDetector.SimpleOnScaleGestureListener() {
+            @Override
+            public boolean onScale(ScaleGestureDetector detector) {
+
+                // firstly we will get the scale factor
+                float scale = 1 - detector.getScaleFactor();
+                float prevScale = mScale;
+                mScale += scale;
+
+                // we can maximise our focus to 10f only
+                if (mScale > 10f)
+                    mScale = 10f;
+
+                ScaleAnimation scaleAnimation = new ScaleAnimation(1f / prevScale, 1f / mScale, 1f / prevScale, 1f / mScale, detector.getFocusX(), detector.getFocusY());
+
+                // duration of animation will be 0.It will
+                // not change by self after that
+                scaleAnimation.setDuration(0);
+                scaleAnimation.setFillAfter(true);
+
+                // initialising the scrollview
+                ScrollView layout = (ScrollView) findViewById(R.id.scrollViewZoom);
+
+                // we are setting it as animation
+                layout.startAnimation(scaleAnimation);
+                return true;
+            }
+        });
+
+
+
 
 
 
@@ -248,6 +295,33 @@ public class GameActivity extends AppCompatActivity {
         }
 
     }
+
+
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent event) {
+        super.dispatchTouchEvent(event);
+
+        // special types of touch screen events such as pinch ,
+        // double tap, scrolls , long presses and flinch,
+        // onTouch event is called if found any of these
+        mScaleGestureDetector.onTouchEvent(event);
+        gestureDetector.onTouchEvent(event);
+        return gestureDetector.onTouchEvent(event);
+    }
+
+    class GestureListener extends GestureDetector.SimpleOnGestureListener {
+        @Override
+        public boolean onDown(MotionEvent e) {
+            return true;
+        }
+
+        @Override
+        public boolean onDoubleTap(MotionEvent e) {
+            return true;
+        }
+    }
+
+
     public void gioco(){
 
         Button endturn = findViewById(R.id.endTurn);

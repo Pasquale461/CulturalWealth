@@ -3,13 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/rounded_corners_fragment"
+    android:background="@color/Periwinkie"
     tools:context=".Goals.FragmentMissions">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/MissionsRecycler"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="10dp"/>
+        android:layout_height="match_parent" />
 
 </FrameLayout>

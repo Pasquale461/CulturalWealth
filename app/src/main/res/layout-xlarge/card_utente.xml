@@ -3,13 +3,14 @@
 
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/card_utente"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:visibility="visible"
+    android:layout_marginBottom="10dp"
     app:cardBackgroundColor="#00FFFFFF"
-    app:cardCornerRadius="0dp"
+    android:background="@drawable/rounded"
+    app:cardCornerRadius="25dp"
     app:cardElevation="0dp">
 
 
@@ -23,14 +24,13 @@
 
         <TextView
             android:id="@+id/user_name1"
-            android:layout_width="wrap_content"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:text="User Name"
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.201"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/position"
+            app:layout_constraintHorizontal_bias="0.09"
+            app:layout_constraintStart_toEndOf="@+id/cardView2"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.53" />
 
@@ -38,10 +38,9 @@
             android:id="@+id/position"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="TextView"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.938"
+            app:layout_constraintHorizontal_bias="0.94"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.508" />
@@ -50,21 +49,23 @@
             android:id="@+id/user_score"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="1000"
+            android:layout_marginEnd="32dp"
             android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.3"
+            app:layout_constraintEnd_toStartOf="@+id/position"
             app:layout_constraintStart_toEndOf="@+id/user_name1"
             app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.cardview.widget.CardView
+            android:id="@+id/cardView2"
             android:layout_width="40dp"
             android:layout_height="40dp"
+            android:layout_marginVertical="2dp"
             app:cardCornerRadius="15dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/user_name1"
-            app:layout_constraintHorizontal_bias="0.57"
+
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.05"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
@@ -73,15 +74,11 @@
                 android:id="@+id/user_icon1"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:scaleType="fitEnd"
-                android:src="@drawable/galileo_galilei" />
+                android:contentDescription="@string/Avatar"
+                android:scaleType="fitEnd" />
 
         </androidx.cardview.widget.CardView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="50dp" />
 
 </androidx.cardview.widget.CardView>
