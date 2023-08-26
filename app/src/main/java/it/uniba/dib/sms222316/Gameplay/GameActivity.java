@@ -391,7 +391,7 @@ public class GameActivity extends AppCompatActivity {
                 }
             } else {
                 //players.get(1).setBankrupt();
-                //players.get(0).setBankrupt();
+                //players.get(2).setBankrupt();
                 rollDice.setEnabled(false);
                 GifDrawable Gif1 = rollDice(numeri[0]);
                 GifDrawable Gif2 = rollDice(numeri[1]);
@@ -648,7 +648,7 @@ public class GameActivity extends AppCompatActivity {
             FirebaseFirestore db = FirebaseFirestore.getInstance();
 
             // Funzione Per salvare la partita
-            Game GameToSave = game.clone();
+            //Game GameToSave = game.clone(); Ideato un modo per clonare l'oggetto per non avere conflitti, da pensare se serve integrarlo
             if(!Home.Guest) {
                 if (GameId!=null)
                 {

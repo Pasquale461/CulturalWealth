@@ -169,63 +169,62 @@ public class Home extends AppCompatActivity {
             Map Achievements = new HashMap<>();
             CollectionReference achievementsCollection = db.collection("Achievements");
 
-            achievementsCollection.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                @Override
-                public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                    if (task.isSuccessful()) {
-                        for (QueryDocumentSnapshot document : task.getResult()) {
-                            Achievements.put(document.getId(), 0);
-                        }
-                        Us.put("Achievements" , Achievements);
-                        Us.put("email", Accountstring);
-                        Us.put("points", 0);
-                        Us.put("nome",usrtext.getText().toString());
-                        Us.put("friend_code",getRandomHexString(5));
-                        //Us.put("Posseduti",posseduti);
-                        DocumentReference Defaultpg;
-
-                        Defaultpg = db.collection("Heritage").document("Cleopatra");
-                        List<DocumentReference> referenceArray = new ArrayList<>();
-                        referenceArray.add(Defaultpg);
-                        Us.put("Posseduti",referenceArray);
-                        db.collection("Users").document(FirebaseAuth.getInstance().getCurrentUser().getUid()).set(Us) //NULL POINTER
-
-                                .addOnSuccessListener(aVoid -> {
-                                    //aggiunto
-                                    showToast(Home.this, "aggiunto");
-
-
-
-                                    DocumentReference parentDocRef = db.document("Users/"+FirebaseAuth.getInstance().getCurrentUser().getUid());
-
-
-                                    DocumentReference GamesCollectionRef = parentDocRef.collection("Games").document("creation");
-                                    Map M = new HashMap<>();
-                                    M.put("a", 1);
-                                    GamesCollectionRef.set(M);
-                                    M.clear();
-                                    //Map M = new HashMap<>();
-                                    DocumentReference colRef = db.collection("Missions").document("Gioca Una Partita");
-                                    //colRef.document("Gioca Una Partita");
-                                    M.put("Base",  colRef );
-                                    M.put("Progress", 0);
-                                    DocumentReference missionsCollectionRef = parentDocRef.collection("DailyMissions").document("M1");
-                                    missionsCollectionRef.set(M);
-
-
-
-                                    findusername();
-
-                                })
-                                .addOnFailureListener(e ->
-                                        showToast(Home.this, "non aggiunto"));
-                        popupDialog.dismiss();
-
-                        // Ora puoi procedere con qualsiasi altra operazione che richiede i dati degli Achievements
-                    } else {
-                        // Gestisci eventuali errori qui
-                        Log.w("TAG", "Error getting documents.", task.getException());
+            achievementsCollection.get().addOnCompleteListener(task -> {
+                if (task.isSuccessful()) {
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        Achievements.put(document.getId(), 0);
                     }
+
+                    DocumentReference Defaultpg;
+                    Defaultpg = db.collection("Heritage").document("Cleopatra");
+                    Us.put("Achievements" , Achievements);
+                    Us.put("email", Accountstring);
+                    Us.put("Profilepic", Defaultpg);
+                    Us.put("points", 0);
+                    Us.put("nome",usrtext.getText().toString());
+                    Us.put("friend_code",getRandomHexString(5));
+                    //Us.put("Posseduti",posseduti);
+
+
+                    List<DocumentReference> referenceArray = new ArrayList<>();
+                    referenceArray.add(Defaultpg);
+                    Us.put("Posseduti",referenceArray);
+                    db.collection("Users").document(FirebaseAuth.getInstance().getCurrentUser().getUid()).set(Us) //NULL POINTER
+
+                            .addOnSuccessListener(aVoid -> {
+                                //aggiunto
+                                showToast(Home.this, "aggiunto");
+
+
+
+                                DocumentReference parentDocRef = db.document("Users/"+FirebaseAuth.getInstance().getCurrentUser().getUid());
+
+
+                                DocumentReference GamesCollectionRef = parentDocRef.collection("Games").document("creation");
+                                Map M = new HashMap<>();
+                                M.put("a", 1);
+                                GamesCollectionRef.set(M);
+                                M.clear();
+                                //Map M = new HashMap<>();
+                                DocumentReference colRef = db.collection("Missions").document("Gioca Una Partita");
+                                //colRef.document("Gioca Una Partita");
+                                M.put("Base",  colRef );
+                                M.put("Progress", 0);
+                                DocumentReference missionsCollectionRef = parentDocRef.collection("DailyMissions").document("M1");
+                                missionsCollectionRef.set(M);
+
+                                //HomeUiUpdate
+                                setPicPoint();
+                                findusername();
+                            })
+                            .addOnFailureListener(e ->
+                                    showToast(Home.this, "non aggiunto"));
+                    popupDialog.dismiss();
+
+                    // Ora puoi procedere con qualsiasi altra operazione che richiede i dati degli Achievements
+                } else {
+                    // Gestisci eventuali errori qui
+                    Log.w("TAG", "Error getting documents.", task.getException());
                 }
             });
 
@@ -260,38 +259,14 @@ public class Home extends AppCompatActivity {
                     .get()
                     .addOnSuccessListener(DocumentSnapshot -> {
                             if(!DocumentSnapshot.exists())   popupDialog.show();
+                            else setPicPoint();
                     })
                     .addOnFailureListener(e -> showToast(Home.this, "errore db"));
         }
+        else setPicPoint();
 
-        db.collection("Users")
-                .document(!Guest?FirebaseAuth.getInstance().getUid():"Guest")
-                .get()
-                .addOnSuccessListener(DocumentSnapshot -> {
-                    ProfilePic = findViewById(R.id.ProfilePic);
-                    TextView point = findViewById(R.id.points);
-                    point.setText(DocumentSnapshot.get("points").toString());
-                    DocumentReference immagine = (DocumentReference) DocumentSnapshot.get("Profilepic");
-                    if(immagine != null)
-                    immagine.get().addOnSuccessListener(Document -> {
 
-                        File Monuments;
-                        if(Document.exists()){
-                            Monuments = new File(this.getFilesDir() ,"CulturalWealth/ProfilesPictures/" + Document.get("Image"));
 
-                        }else{
-                            Monuments = new File(this.getFilesDir() ,"CulturalWealth/ProfilesPictures/" + "Cleopatra.png");
-                        }
-                        Bitmap bitmapMonuments = BitmapFactory.decodeFile(Monuments.getAbsolutePath());
-                        ProfilePic.setImageBitmap(bitmapMonuments);
-                    });
-                    else{
-                        File Monuments = new File(this.getFilesDir() ,"CulturalWealth/ProfilesPictures/" + "Cleopatra.png");
-                        Bitmap bitmapMonuments = BitmapFactory.decodeFile(Monuments.getAbsolutePath());
-                        ProfilePic.setImageBitmap(bitmapMonuments);
-                    }
-                })
-                .addOnFailureListener(e -> showToast(Home.this, "errore db"));
 
         //creo instanza popupsettings
         Settings = findViewById(R.id.settings);
@@ -306,6 +281,7 @@ public class Home extends AppCompatActivity {
             popupSettings.dismiss();
 
         });
+
 
         //Cambio lingua in inglese
         englishButton = popupSettings.findViewById(R.id.lingua_en);
@@ -328,15 +304,12 @@ public class Home extends AppCompatActivity {
             GoogleSignInClient googleSignInClient = GoogleSignIn.getClient(this, gso);
 
             googleSignInClient.revokeAccess().addOnCompleteListener(this,
-                    new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            // Callback after access is revoked
-                            if (task.isSuccessful()) {
-                                // Successfully revoked access to Google API
-                            } else {
-                                // Handle error
-                            }
+                    task -> {
+                        // Callback after access is revoked
+                        if (task.isSuccessful()) {
+                            // Successfully revoked access to Google API
+                        } else {
+                            // Handle error
                         }
                     });
             FirebaseAuth.getInstance().signOut();
@@ -387,8 +360,6 @@ public class Home extends AppCompatActivity {
         play.setOnClickListener(v -> {
             PopupPlay playpopup = new PopupPlay(Home.this);
             playpopup.show();
-            Intent i1 = new Intent(Home.this, GameActivity.class);
-            //startActivity(i);
         });
     }
 
@@ -423,7 +394,7 @@ public class Home extends AppCompatActivity {
 
     private void findusername()
     {
-FirebaseAuth fb = FirebaseAuth.getInstance();
+        FirebaseAuth fb = FirebaseAuth.getInstance();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("Users")
                 .document(!Guest?fb.getUid():"Guest")
@@ -460,6 +431,38 @@ FirebaseAuth fb = FirebaseAuth.getInstance();
             i.putExtra("Owned", Owned);
             startActivity(i);
         }
+    }
+
+    public void setPicPoint(){
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("Users")
+                .document(!Guest?FirebaseAuth.getInstance().getUid():"Guest")
+                .get()
+                .addOnSuccessListener(DocumentSnapshot -> {
+                    ProfilePic = findViewById(R.id.ProfilePic);
+                    TextView point = findViewById(R.id.points);
+                    point.setText(DocumentSnapshot.get("points").toString());
+                    DocumentReference immagine = (DocumentReference) DocumentSnapshot.get("Profilepic");
+                    if(immagine != null)
+                        immagine.get().addOnSuccessListener(Document -> {
+
+                            File Monuments;
+                            if(Document.exists()){
+                                Monuments = new File(this.getFilesDir() ,"CulturalWealth/ProfilesPictures/" + Document.get("Image"));
+
+                            }else{
+                                Monuments = new File(this.getFilesDir() ,"CulturalWealth/ProfilesPictures/" + "Cleopatra.png");
+                            }
+                            Bitmap bitmapMonuments = BitmapFactory.decodeFile(Monuments.getAbsolutePath());
+                            ProfilePic.setImageBitmap(bitmapMonuments);
+                        });
+                    else{
+                        File Monuments = new File(this.getFilesDir() ,"CulturalWealth/ProfilesPictures/" + "Cleopatra.png");
+                        Bitmap bitmapMonuments = BitmapFactory.decodeFile(Monuments.getAbsolutePath());
+                        ProfilePic.setImageBitmap(bitmapMonuments);
+                    }
+                })
+                .addOnFailureListener(e -> showToast(Home.this, "errore db"));
     }
 
     @Override
