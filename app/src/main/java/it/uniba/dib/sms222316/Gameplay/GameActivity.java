@@ -100,7 +100,7 @@ public class GameActivity extends AppCompatActivity {
         int Thisthisplay = displayMetrics.widthPixels * displayMetrics.heightPixels;
         int basedisplay = 2255040;
         float mScale = Thisthisplay/(basedisplay);
-        if (Thisthisplay> basedisplay)mScale = 0.6f;
+        if (Thisthisplay> basedisplay+500000)mScale = 0.6f;
         else mScale = 1f;
         HorizontalScrollView layout = (HorizontalScrollView) findViewById(R.id.horizontalScrollViewZoom);
         int[] location = new int[2];
