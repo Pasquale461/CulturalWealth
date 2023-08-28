@@ -50,6 +50,8 @@
                 android:layout_height="47dp"
                 android:layout_marginBottom="16dp"
                 android:text=""
+                android:padding="10dp"
+                android:gravity="center"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
@@ -69,6 +71,7 @@
                 android:id="@+id/imagecard"
                 android:layout_width="210dp"
                 android:layout_height="210dp"
+                android:padding="15dp"
                 app:layout_constraintBottom_toTopOf="@+id/smalldescription"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -79,13 +82,13 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-
         <!-- Front Layout Goes Here -->
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="210dp"
             android:layout_height="300dp"
-            android:background="@drawable/rounded">
+            android:background="@drawable/rounded"
+            android:padding="10dp">
 
             <TextView
                 android:id="@+id/rentonepaint"

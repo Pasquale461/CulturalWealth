@@ -16,6 +16,7 @@ import android.os.Bundle;
 import android.os.StrictMode;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.ContextThemeWrapper;
 import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
@@ -73,7 +74,7 @@ public class Home extends AppCompatActivity {
     private static final int TIME_INTERVALL = 2000;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Guest = FirebaseAuth.getInstance().getCurrentUser().isAnonymous();
+        Guest =FirebaseAuth.getInstance().getCurrentUser().isAnonymous();
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         super.onCreate(savedInstanceState);
@@ -436,7 +437,7 @@ public class Home extends AppCompatActivity {
     public void setPicPoint(){
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("Users")
-                .document(!Guest||FirebaseAuth.getInstance().getUid()!=null?FirebaseAuth.getInstance().getUid():"Guest")
+                .document(!Guest?FirebaseAuth.getInstance().getUid():"Guest")
                 .get()
                 .addOnSuccessListener(DocumentSnapshot -> {
                     ProfilePic = findViewById(R.id.ProfilePic);

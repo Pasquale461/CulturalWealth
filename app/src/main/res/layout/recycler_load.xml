@@ -4,7 +4,7 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/Save"
-    app:cardBackgroundColor="@color/Periwinkie"
+    app:cardBackgroundColor="@color/ming"
     app:cardCornerRadius="20dp">
     <LinearLayout
 
@@ -21,7 +21,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Numero di giocatori: 4"
-            android:textColor="@color/pink_rose"
+            android:textColor="@color/new_orleans"
             android:textSize="18sp"
             android:gravity="center" />
 
@@ -35,7 +35,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:text="Data di creazione: 2023-08-24"
-            android:textColor="@color/Air_Force_blue"
+            android:textColor="@color/Cocoa_brown"
             android:textSize="14sp"
             android:gravity="center"/>
 
@@ -45,7 +45,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:text="Numero di turni: 10"
-            android:textColor="@color/Air_Force_blue"
+            android:textColor="@color/Cocoa_brown"
             android:textSize="14sp"
             android:gravity="center"/>
 

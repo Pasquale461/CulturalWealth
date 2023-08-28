@@ -12,13 +12,15 @@
         <item name="android:windowNoTitle">true</item>
     </style>
 
-    <style name="CustomAlertDialogStyle" parent="Theme.AppCompat.Dialog.Alert">
+    <style name="CustomAlertDialogStyle" parent="Theme.AppCompat.Dialog">
         <!-- Customize dialog attributes here -->
         <item name="android:background">@drawable/allertbg</item>
         <item name="cornerRadius">20dp</item>
         <item name="colorAccent">@color/pink_rose</item>
         <!-- Add more attributes as needed -->
     </style>
-
-
+    <style name="CustomDialogStyle" parent="Theme.AppCompat.Light.DialogWhenLarge">
+        <!-- Customize dialog attributes here -->
+        <!-- Add more attributes as needed -->
+    </style>
 </resources>

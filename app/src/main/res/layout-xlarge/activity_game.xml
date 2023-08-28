@@ -1103,6 +1103,31 @@
                     app:layout_constraintTop_toBottomOf="@+id/exa_29"
                     app:srcCompat="@drawable/wagon" />
 
+
+                <ImageView
+                    android:id="@+id/acquaimm"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:contentDescription="Acqua"
+                    android:background="@drawable/rounded_border"
+                    app:layout_constraintStart_toStartOf="@+id/exa_28"
+                    app:layout_constraintTop_toTopOf="@+id/exa_28"
+                    app:layout_constraintBottom_toBottomOf="@+id/exa_28"
+                    app:layout_constraintEnd_toEndOf="@+id/exa_28"
+                    app:srcCompat="@drawable/acqua"/>
+
+                <ImageView
+                    android:id="@+id/elettroimm"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:contentDescription="Elettro"
+                    android:background="@drawable/rounded_border"
+                    app:layout_constraintStart_toStartOf="@+id/exa_12"
+                    app:layout_constraintTop_toTopOf="@+id/exa_12"
+                    app:layout_constraintBottom_toBottomOf="@+id/exa_12"
+                    app:layout_constraintEnd_toEndOf="@+id/exa_12"
+                    app:srcCompat="@drawable/elettro"/>
+
             </androidx.constraintlayout.widget.ConstraintLayout>
 
 
@@ -1127,9 +1152,10 @@
             android:background="@drawable/defaultbtn"
             android:backgroundTint="@color/pink_rose"
             android:contentDescription="@string/back"
-            app:srcCompat="?attr/homeAsUpIndicator"
-            tools:layout_editor_absoluteX="6dp"
-            tools:layout_editor_absoluteY="10dp" />
+            android:layout_marginTop="10dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="?attr/homeAsUpIndicator" />
 
         <Button
             android:id="@+id/endTurn"

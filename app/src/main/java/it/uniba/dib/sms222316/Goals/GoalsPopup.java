@@ -19,7 +19,7 @@ public class GoalsPopup extends Dialog {
     ViewPagerFragmentAdapter adapter;
     public GoalsPopup(Context context) {
         super(context);
-
+        context.setTheme(R.style.CustomDialogStyle);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
         setContentView(R.layout.goals_popup);

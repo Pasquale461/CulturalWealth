@@ -354,10 +354,10 @@ public class GameActivity extends AppCompatActivity {
                 if (!isViewCreated) {
 
                     for (int i = 0; i < position.length; i++) {
-                        casella[position[i]].getLocationInWindow(coordinate);
+                        //casella[position[i]].getLocationInWindow(coordinate);
 
-                        pedina[i].setX(coordinate[0]);
-                        pedina[i].setY(coordinate[1]);
+                        pedina[i].setX(casella[position[i]].getX());
+                        pedina[i].setY( casella[position[i]].getY());
                     }
 
                     isViewCreated = true;
