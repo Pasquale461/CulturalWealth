@@ -17,7 +17,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:text="Offer"
+            android:text="@string/offer"
             android:textColor="@color/pink_rose"
             android:textSize="40sp"/>
 
@@ -35,7 +35,6 @@
             android:layout_height="match_parent"
             android:layout_below="@+id/title"
             android:layout_alignParentStart="true"
-            android:layout_alignParentLeft="true"
             android:layout_toStartOf="@+id/space">
 
             <ListView

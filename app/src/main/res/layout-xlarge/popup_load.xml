@@ -22,7 +22,7 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:textColor="@color/pink_rose"
-        android:text="Saves"
+        android:text="@string/saves"
         android:textSize="34sp"
         android:textStyle="bold" />
 

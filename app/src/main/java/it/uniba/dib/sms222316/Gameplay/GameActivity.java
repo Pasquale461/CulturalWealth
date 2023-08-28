@@ -431,10 +431,11 @@ public class GameActivity extends AppCompatActivity {
                         }
                         @Override
                         public void onAnimationEnd(@NonNull Animator animation) {
-                            info.setVisibility(View.VISIBLE);
+
                             endturn.setVisibility(View.VISIBLE);
                             Optional<Property> currentProperty = properties.stream().filter(l -> l.getPosizione() == position[currentPlayer]).findFirst();
                             if (currentProperty.isPresent()) {
+                                info.setVisibility(View.VISIBLE);
                                 if (currentProperty.get().isAvaible())
                                     buy.setVisibility(View.VISIBLE);
                                 else {

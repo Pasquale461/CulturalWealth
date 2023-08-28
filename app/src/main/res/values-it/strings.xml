@@ -63,4 +63,14 @@
     <string name="fine_turno">Fine Turno</string>
     <string name="compra">Compra</string>
     <string name="info">Info</string>
+    <string name="rank_of_the_match">Classifica Partita</string>
+    <string name="new_game">Nuova Partita</string>
+    <string name="load_game">Carica Partita</string>
+    <string name="guest_rules">Connettendoti come ospite in un gioco potresti perdere alcuni dei seguenti benefici:   -Accesso a contenuti esclusivi  -Salvataggio del progresso di gioco  -Funzionalità online come il matchmaking con amici e le classifiche  -Meno pubblicità  -Opzioni di personalizzazione limitate.</string>
+    <string name="flip">gita</string>
+    <string name="number_of_players">Numero Giocatori</string>
+    <string name="start_balance">Saldo Iniziale</string>
+    <string name="chose_puddles">Scegli Pedina</string>
+    <string name="saves">Salvataggi</string>
+    <string name="offer">Proposta</string>
 </resources>

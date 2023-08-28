@@ -90,8 +90,8 @@
                     android:hint="@string/mail"
                     android:inputType="textEmailAddress"
                     android:minHeight="48dp"
-                    android:textColor="@color/grey"
-                    android:textColorHint="@color/grey"
+                    android:textColor="@color/pink_rose"
+                    android:textColorHint="@color/new_orleans"
                     app:layout_constraintBottom_toTopOf="@+id/passwordlogintext"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -108,7 +108,8 @@
                     android:importantForAutofill="no"
                     android:inputType="textPassword"
                     android:minHeight="48dp"
-                    android:textColorHint="@color/grey"
+                    android:textColor="@color/pink_rose"
+                    android:textColorHint="@color/new_orleans"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -148,13 +149,8 @@
                         android:layout_width="248dp"
                         android:layout_height="169dp"
                         android:layout_marginTop="30dp"
-                        android:text="Connettendoti come ospite in un gioco potresti perdere alcuni dei seguenti benefici:\n\n
--Accesso a contenuti esclusivi\n
--Salvataggio del progresso di gioco\n
--Funzionalità online come il matchmaking con amici e le classifiche\n
--Meno pubblicità\n
--Opzioni di personalizzazione limitate."
-                        android:textColor="@color/grey"
+                        android:text="@string/guest_rules"
+                        android:textColor="@color/pink_rose"
                         app:layout_constraintBottom_toTopOf="@+id/Guest"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.487"
