@@ -5,28 +5,24 @@ import static it.uniba.dib.sms222316.Utility.showToast;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.util.Patterns;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+
+import java.util.Objects;
 
 public class Login extends AppCompatActivity {
 
@@ -48,12 +44,7 @@ public class Login extends AppCompatActivity {
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
         setContentView(R.layout.activity_login);
         anonymousLoginButton = findViewById(R.id.Guest);
-        anonymousLoginButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                signInAnonymously();
-            }
-        });
+        anonymousLoginButton.setOnClickListener(v -> signInAnonymously());
 
 
 
@@ -110,19 +101,16 @@ public class Login extends AppCompatActivity {
 
 
         firebaseAuth.signInAnonymously()
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            Log.d("AnonymousLogin", "signInAnonymously:success");
+                .addOnCompleteListener(this, task -> {
+                    if (task.isSuccessful()) {
+                        Log.d("AnonymousLogin", "signInAnonymously:success");
 
-                            Intent intent = new Intent(Login.this,Home.class);
-                            intent.putExtra("Guest" , true);
-                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
-                            startActivity(intent);
-                        } else {
-                            Log.w("AnonymousLogin", "signInAnonymously:failure", task.getException());
-                        }
+                        Intent intent = new Intent(Login.this,Home.class);
+                        intent.putExtra("Guest" , true);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(intent);
+                    } else {
+                        Log.w("AnonymousLogin", "signInAnonymously:failure", task.getException());
                     }
                 });
     }
@@ -132,13 +120,13 @@ public class Login extends AppCompatActivity {
     {
         String mail = emailEditText.getText().toString();
         String pass = passwordEditText.getText().toString();
-        boolean isValid = validateData(mail, pass);
+        boolean isValid = validateData(pass);
         if(!isValid)return;
         loginAccountInFirebase(mail, pass);
     }
 
     //
-    boolean validateData(String Email , String Password_local){
+    boolean validateData(String Password_local){
 
         if(Password_local.length()<6)
         {
@@ -160,7 +148,7 @@ public class Login extends AppCompatActivity {
             }
             else
             {
-                showToast(Login.this, task.getException().getLocalizedMessage());//controllo dell'errore
+                showToast(Login.this, Objects.requireNonNull(task.getException()).getLocalizedMessage());//controllo dell'errore
             }
 
         });
@@ -209,7 +197,7 @@ public class Login extends AppCompatActivity {
                         // Sign in success, update UI with the signed-in user's information
                          HomeActivity();
                          user = firebaseAuth.getCurrentUser();
-                         updateUI(user);
+                         updateUI();
 
                     } else {
                         // If sign in fails, display a message to the user.
@@ -220,7 +208,6 @@ public class Login extends AppCompatActivity {
                 });
     }
 
-
     private void HomeActivity()
     {
         Intent intent = new Intent(Login.this, Home.class);
@@ -228,17 +215,12 @@ public class Login extends AppCompatActivity {
         finish();
     }
 
-    private void updateUI(FirebaseUser user)
+    private void updateUI()
     {
         Intent intent = new Intent(Login.this,Home.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
     }
-
-
-
-
-
 }
 
 

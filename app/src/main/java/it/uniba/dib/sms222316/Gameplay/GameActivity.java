@@ -4,7 +4,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
-
 import android.animation.Animator;
 import android.animation.ObjectAnimator;
 import android.content.Intent;
@@ -19,10 +18,9 @@ import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.ContextThemeWrapper;
 import android.view.Display;
-import android.view.GestureDetector;
+
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
-import android.view.ScaleGestureDetector;
+
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.WindowManager;
@@ -33,32 +31,21 @@ import android.widget.HorizontalScrollView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.auth.api.signin.GoogleSignIn;
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.google.android.gms.tasks.Task;
-import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import it.uniba.dib.sms222316.Caselle;
 import it.uniba.dib.sms222316.Home;
 import it.uniba.dib.sms222316.PopupField;
 import it.uniba.dib.sms222316.R;
-
 import it.uniba.dib.sms222316.endgame_popup;
 import pl.droidsonroids.gif.GifDrawable;
 import pl.droidsonroids.gif.GifImageView;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -66,34 +53,28 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
-import java.util.concurrent.CompletableFuture;
+
 import java.util.stream.Collectors;
 
 public class GameActivity extends AppCompatActivity {
 
-    int start=0;
     int terzo = 0;
     int secondo = 0;
     int primo = 0;
     Caselle caselle = new Caselle();
     ImageView[] casella;
     boolean isViewCreated = false;
-    private TextView playerNameTextView;
-    private TextView playerNameTextView2;
-    private TextView playerNameTextView3;
     private TextView playerScoreTextView;
     private TextView playerScoreTextView2;
     private TextView playerScoreTextView3;
-    private final int Basedisplay = 2255040;
     String GameId;
     Game game;
 
 
-    private static final String TAG = "MainActivity";
 
-    private ScaleGestureDetector mScaleGestureDetector;
-    GestureDetector gestureDetector;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,7 +86,7 @@ public class GameActivity extends AppCompatActivity {
         int money = intent.getIntExtra("money", 1500);
         int icon = intent.getIntExtra("puddle", 0);
         GameId = intent.getStringExtra("GameId");
-        playerNameTextView = findViewById(R.id.name1);
+        TextView playerNameTextView = findViewById(R.id.name1);
         playerScoreTextView = findViewById(R.id.money1);
         playerScoreTextView2 = findViewById(R.id.money2);
         playerScoreTextView3 = findViewById(R.id.money3);
@@ -116,9 +97,10 @@ public class GameActivity extends AppCompatActivity {
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         Log.d("Display" ," w: "+displayMetrics.widthPixels+" h: " +displayMetrics.heightPixels+ "t: "+displayMetrics.widthPixels * displayMetrics.heightPixels );
-        int Thisthisplay = displayMetrics.widthPixels * displayMetrics.heightPixels;;
-        float mScale = Thisthisplay/(Basedisplay);
-        if (Thisthisplay>Basedisplay)mScale = 0.6f;
+        int Thisthisplay = displayMetrics.widthPixels * displayMetrics.heightPixels;
+        int basedisplay = 2255040;
+        float mScale = Thisthisplay/(basedisplay);
+        if (Thisthisplay> basedisplay)mScale = 0.6f;
         else mScale = 1f;
         HorizontalScrollView layout = (HorizontalScrollView) findViewById(R.id.horizontalScrollViewZoom);
         int[] location = new int[2];
@@ -129,31 +111,26 @@ public class GameActivity extends AppCompatActivity {
         // Calcola il centro dello schermo
         int screenWidth = size.x;
         int screenHeight = size.y;
-        int centerX = screenWidth / 2;
+        //int centerX = screenWidth / 2;
         int centerY = screenHeight / 2;
-        ScaleAnimation scaleAnimation = new ScaleAnimation(1f / 1 , 1f / mScale, 1f / 1, 1f / mScale, x, y+centerY);
+        ScaleAnimation scaleAnimation = new ScaleAnimation(1f , 1f / mScale, 1f, 1f / mScale, x, y+centerY);
         ConstraintLayout layoutm = (ConstraintLayout) findViewById(R.id.Icons);
         scaleAnimation.setDuration(0);
         scaleAnimation.setFillAfter(true);
         layoutm.startAnimation(scaleAnimation);
 
-
-
-
-
-
-
-
         casella = caselle.setCasella(this);
 
         //Creazione lista Giocatori
         List<Player> players = new ArrayList<>();
-        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
+
 
         String  currentId = FirebaseAuth.getInstance().getCurrentUser().getUid();
         playerNameTextView = findViewById(R.id.name1);findusername(!Home.Guest?currentId:"Guest" , playerNameTextView);
-        playerNameTextView2 = findViewById(R.id.name2);playerNameTextView2.setText("Guest 2");
-        playerNameTextView3 = findViewById(R.id.name33);playerNameTextView3.setText("Guest 3");
+        TextView playerNameTextView2 = findViewById(R.id.name2);
+        playerNameTextView2.setText("Guest 2");
+        TextView playerNameTextView3 = findViewById(R.id.name33);
+        playerNameTextView3.setText("Guest 3");
         players.add(new Player("Giocatore 1",0, money));
         players.add(new Player("Giocatore 2", 1, money));
         players.add(new Player("Giocatore 3", 2, money));
@@ -234,12 +211,7 @@ public class GameActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-
-
-
-
         //Instanza oggetto partita
-        /**to delete nese ka load bej load perndryshe bej loj te re*/
         if(GameId!=null){
 
             FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -271,24 +243,6 @@ public class GameActivity extends AppCompatActivity {
                     });
 
 
-/*            loadData().thenApplyAsync(dataSnapShot->{
-                Log.d("Taging",dataSnapShot.toString());
-
-
-
-
-
-
-
-
-
-                updateUI();
-                return null;
-            });
-
-            game.iniziaPartita();
-            updateUI();*/
-
         }else{
             game = new Game(players , properties);
             game.iniziaPartita();
@@ -296,11 +250,6 @@ public class GameActivity extends AppCompatActivity {
         }
 
     }
-
-
-
-
-
 
     public void gioco(){
 
@@ -312,7 +261,7 @@ public class GameActivity extends AppCompatActivity {
         info.setVisibility(View.INVISIBLE);
         buy.setVisibility(View.INVISIBLE);
 
-        int coordinate[] = new int[2];
+
         List<Player> players = game.getPlayers();
         List<Property> properties = game.getProperties();
 
@@ -327,7 +276,7 @@ public class GameActivity extends AppCompatActivity {
         pedina[1] = findViewById(R.id.pedina2);
         pedina[2] = findViewById(R.id.pedina3);
 
-        /**To do check added on testing*/
+
         for (int i = 0; i < players.size(); i++) position[i] = players.get(i).getPosition();
 
 
@@ -372,8 +321,6 @@ public class GameActivity extends AppCompatActivity {
         rollDice.setOnClickListener(v -> {
 
             //Lancio dei dadi
-
-
             if (game.getCurrentPlayer().getMoney() <= 0) {
                 players.get(game.getCurrentPlayerIndex()).setBankrupt();
                 updateUI(players);
@@ -381,13 +328,11 @@ public class GameActivity extends AppCompatActivity {
                 else secondo = game.getCurrentPlayerIndex();
 
             }
-
             int[] numeri = game.dadi();
             if (!game.isGameStarted()) {
                 primo = game.getCurrentPlayerIndex();
 
                 //popup classifica
-
                 int punteggioprimo = players.get(primo).getScore();
                 int punteggiosecondo = players.get(secondo).getScore();
                 int punteggioterzo = players.get(terzo).getScore();
@@ -404,8 +349,6 @@ public class GameActivity extends AppCompatActivity {
                 i.putExtra("nomesecondo", nomesecondo);
                 i.putExtra("nometerzo", nometerzo);
                 startActivity(i);
-
-
             }
             if (game.getCurrentPlayer().isPrison()) {
                 int turno = game.getCurrentPlayer().getTurnPrison();
@@ -426,11 +369,7 @@ public class GameActivity extends AppCompatActivity {
                 if (numeri[0] == numeri[1]) {
                     game.getCurrentPlayer().setPrison(false);
                     game.getCurrentPlayer().setTurnPrison(0);
-                    new Handler().postDelayed(() -> {
-                        rollDice.callOnClick();
-                    }, 4500);
-
-
+                    new Handler().postDelayed(() -> rollDice.callOnClick(), 4500);
                 } else {
                     if (turno > 2) {
                         game.getCurrentPlayer().setPrison(false);
@@ -439,9 +378,7 @@ public class GameActivity extends AppCompatActivity {
                     } else {
                         game.getCurrentPlayer().setTurnPrison(game.getCurrentPlayer().getTurnPrison() + 1);
                         endturn.setVisibility(View.VISIBLE);
-
                     }
-
                 }
             } else {
                 //players.get(1).setBankrupt();
@@ -483,8 +420,6 @@ public class GameActivity extends AppCompatActivity {
                 if (position[currentPlayer] == 4 || position[currentPlayer] == 17 || position[currentPlayer] == 22 || position[currentPlayer] == 36  ) {
                     game.getCurrentPlayer().addMoney(100);
                 }
-
-
                 new Handler().postDelayed(() -> {
                     ObjectAnimator animator = ObjectAnimator.ofFloat(pedina[currentPlayer], pedina[currentPlayer].X, pedina[currentPlayer].Y, path);
                     animator.setDuration(2000);
@@ -494,7 +429,6 @@ public class GameActivity extends AppCompatActivity {
                         public void onAnimationStart(@NonNull Animator animation) {
 
                         }
-
                         @Override
                         public void onAnimationEnd(@NonNull Animator animation) {
                             info.setVisibility(View.VISIBLE);
@@ -517,10 +451,8 @@ public class GameActivity extends AppCompatActivity {
                         public void onAnimationCancel(@NonNull Animator animation) {
 
                         }
-
                         @Override
                         public void onAnimationRepeat(@NonNull Animator animation) {
-
                         }
                     };
                     animator.addListener(animatorListener);
@@ -547,7 +479,6 @@ public class GameActivity extends AppCompatActivity {
                             updateUI(prop.getPosizione(), prop.getGiocatore().getIcon());
                         }
                     }
-
                 }
             });
             updateUI(players);
@@ -571,8 +502,6 @@ public class GameActivity extends AppCompatActivity {
                     rl.setBackgroundResource(R.drawable.currentplayer_focus);
                 }
             }
-
-
             players.get(currentPlayer).setPosition(position[currentPlayer]);
         });
         endturn.setOnClickListener(v -> {
@@ -590,7 +519,6 @@ public class GameActivity extends AppCompatActivity {
 
         });
     }
-
     public void TradeProposal(int offerer, int recipient){
 
         AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(this, R.style.CustomAlertDialogStyle));
@@ -615,11 +543,8 @@ public class GameActivity extends AppCompatActivity {
         }).collect(Collectors.toList());
 
 
-        ArrayAdapter<String> adapter1 = new ArrayAdapter<>(this, android.R.layout.simple_list_item_multiple_choice, items1.stream().map(l -> l.getNome()).collect(Collectors.toList()));
-        ArrayAdapter<String> adapter2 = new ArrayAdapter<>(this, android.R.layout.simple_list_item_multiple_choice, items2.stream().map(l -> l.getNome()).collect(Collectors.toList()));
-
-
-
+        ArrayAdapter<String> adapter1 = new ArrayAdapter<>(this, android.R.layout.simple_list_item_multiple_choice, items1.stream().map(Property::getNome).collect(Collectors.toList()));
+        ArrayAdapter<String> adapter2 = new ArrayAdapter<>(this, android.R.layout.simple_list_item_multiple_choice, items2.stream().map(Property::getNome).collect(Collectors.toList()));
         listView1.setAdapter(adapter1);
         listView2.setAdapter(adapter2);
 
@@ -644,9 +569,7 @@ public class GameActivity extends AppCompatActivity {
             else Toast.makeText(this, "Serve almeno una proprietà per giocatore",Toast.LENGTH_SHORT).show();
         });
 
-        builder.setNegativeButton("Annulla", (dialog, which) -> {
-            dialog.dismiss();
-        });
+        builder.setNegativeButton("Annulla", (dialog, which) -> dialog.dismiss());
 
         AlertDialog dialog = builder.create();
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
@@ -665,8 +588,8 @@ public class GameActivity extends AppCompatActivity {
 
 
 
-        ArrayAdapter<String> adapter1 = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, OfferedProperty.stream().map(l -> l.getNome()).collect(Collectors.toList()));
-        ArrayAdapter<String> adapter2 = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, RequestedProperty.stream().map(l -> l.getNome()).collect(Collectors.toList()));
+        ArrayAdapter<String> adapter1 = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, OfferedProperty.stream().map(Property::getNome).collect(Collectors.toList()));
+        ArrayAdapter<String> adapter2 = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, RequestedProperty.stream().map(Property::getNome).collect(Collectors.toList()));
 
 
         listView1.setAdapter(adapter1);
@@ -682,12 +605,10 @@ public class GameActivity extends AppCompatActivity {
             updateUI();
         });
 
-        builder.setNegativeButton("Refuse", (dialog, which) -> {
-            dialog.dismiss();
-        });
+        builder.setNegativeButton("Refuse", (dialog, which) -> dialog.dismiss());
 
         AlertDialog dialog = builder.create();
-        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
         dialog.show();
     }
     public void Exit(){
@@ -707,7 +628,7 @@ public class GameActivity extends AppCompatActivity {
                 if (GameId!=null)
                 {
                     db.collection("Users")
-                            .document(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                            .document(Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid())
                             .collection("Games").document(GameId)
                             .set(game)
                             .addOnSuccessListener(documentReference -> {
@@ -724,7 +645,7 @@ public class GameActivity extends AppCompatActivity {
                 else
                 {
                     db.collection("Users")
-                            .document(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                            .document(Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid())
                             .collection("Games")
                             .add(game)
                             .addOnSuccessListener(documentReference -> {
@@ -744,12 +665,10 @@ public class GameActivity extends AppCompatActivity {
             }
         });
 
-        builder.setNegativeButton(R.string.exit, (dialog, which) -> {
-            finish();
-        });
+        builder.setNegativeButton(R.string.exit, (dialog, which) -> finish());
 
         AlertDialog dialog = builder.create();
-        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
         dialog.show();
     }
     private void updateUI(){
@@ -763,7 +682,6 @@ public class GameActivity extends AppCompatActivity {
             else    ImagePlayer = getResources().getIdentifier("_-1", "drawable", getPackageName());
             icona.setImageResource(ImagePlayer);
         }
-
     }
     private void updateUI(int Position, int playerIcon){
         ConstraintLayout BloccoIcone = findViewById(R.id.Icons);
@@ -779,28 +697,21 @@ public class GameActivity extends AppCompatActivity {
         int money2 = players.get(1).getMoney();
         int money3 = players.get(2).getMoney();
 
-
-
         if (players.get(0).isBankrupt())playerScoreTextView.setText("BANCAROTTA");else playerScoreTextView.setText(money1+ "$");
         if (players.get(1).isBankrupt())playerScoreTextView2.setText("BANCAROTTA");else playerScoreTextView2.setText(money2+ "$");
         if (players.get(2).isBankrupt())playerScoreTextView3.setText("BANCAROTTA");else playerScoreTextView3.setText(money3+ "$");
     return currentPlayer;
     }
-
     private void findusername(String DocId , TextView v)
     {
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("Users").document(DocId)
                 .get()
-                .addOnSuccessListener(queryDocumentSnapshots -> {
-                        v.setText(queryDocumentSnapshots.getString("nome"));
-                });
+                .addOnSuccessListener(queryDocumentSnapshots -> v.setText(queryDocumentSnapshots.getString("nome")));
 
 
     }
-
-
 
     private GifDrawable rollDice(int number){
         int gifResourceId = 0;
@@ -812,7 +723,7 @@ public class GameActivity extends AppCompatActivity {
             case 5: gifResourceId = R.drawable.dado5;break;
             case 6: gifResourceId = R.drawable.dado6;break;
         }
-        GifDrawable Gif = null;
+        GifDrawable Gif;
         try {
             Gif = new GifDrawable(getResources(), gifResourceId);
         } catch (IOException e) {

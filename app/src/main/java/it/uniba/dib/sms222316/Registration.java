@@ -1,8 +1,6 @@
 package it.uniba.dib.sms222316;
 
-import static it.uniba.dib.sms222316.Utility.showToast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -14,17 +12,9 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Objects;
 
 
 public class Registration extends AppCompatActivity {
@@ -53,10 +43,9 @@ public class Registration extends AppCompatActivity {
         Log.d("current" ,"entra");
         String mail = Mail.getText().toString();
         String pass = Password.getText().toString();
-        String user = Username.getText().toString();
         boolean isValid = validateData(mail, pass);
         if(!isValid)return;
-        createAccountInFirebase(mail, pass, user);
+        createAccountInFirebase(mail, pass);
         Log.d("current" ,"uscito");
         //showToast(Registration.this, "Successo");
         startActivity(new Intent(Registration.this, Login.class));
@@ -64,34 +53,18 @@ public class Registration extends AppCompatActivity {
 
 
 
-    void createAccountInFirebase(String Email , String Password_local, String name)
+    void createAccountInFirebase(String Email , String Password_local)
     {
         changeInProgress(true);
         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
         firebaseAuth.createUserWithEmailAndPassword(Email,Password_local).addOnCompleteListener(
                 task -> {
                     if(task.isSuccessful()){
-                        //acc is done
 
-                        //firebaseAuth.getCurrentUser().sendEmailVerification();
-
-                        //firebaseAuth.signOut();
-                        /*
-                        String UID = firebaseAuth.getCurrentUser().getUid();
-                        Log.e("a", "entrato");
-                        Map<String, Object> Users = new HashMap<>();
-                        Users.put("UID", UID);
-                        Users.put("email", Email);
-                        Users.put("nome", name);
-
-                        showToast(Registration.this, "Successo nome");
-                        FirebaseFirestore.getInstance().collection("Users").document(UID)
-                                .set(Users).addOnSuccessListener(unused -> showToast(Registration.this, "Successo"))
-                                .addOnFailureListener(e -> showToast(Registration.this, "Fallito"));*/
                         Toast.makeText(Registration.this,"Account creato correttamente",Toast.LENGTH_SHORT).show();
                     }else{
                         //fail
-                        Toast.makeText(Registration.this,task.getException().getLocalizedMessage(),Toast.LENGTH_SHORT).show();
+                        Toast.makeText(Registration.this, Objects.requireNonNull(task.getException()).getLocalizedMessage(),Toast.LENGTH_SHORT).show();
                     }
                 }
         );

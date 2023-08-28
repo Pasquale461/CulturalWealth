@@ -35,11 +35,6 @@
             app:layout_constraintTop_toTopOf="parent">
 
 
-            android:id="@+id/scrollViewZoom"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/Icons"
                 android:layout_width="match_parent"
@@ -513,6 +508,7 @@
                     app:layout_constraintEnd_toEndOf="@+id/exa_0"
                     app:layout_constraintHorizontal_bias="0.9"
                     app:layout_constraintStart_toStartOf="@+id/exa_0"
+                    android:contentDescription="@string/app_name"
                     app:layout_constraintTop_toTopOf="@+id/exa_0"
                     app:layout_constraintVertical_bias="0.9" />
 
@@ -524,6 +520,7 @@
                     app:layout_constraintEnd_toEndOf="@+id/exa_1"
                     app:layout_constraintHorizontal_bias="0.9"
                     app:layout_constraintStart_toStartOf="@+id/exa_1"
+                    android:contentDescription="@string/app_name"
                     app:layout_constraintTop_toTopOf="@+id/exa_1"
                     app:layout_constraintVertical_bias="0.9" />
 
@@ -534,6 +531,7 @@
                     app:layout_constraintBottom_toBottomOf="@+id/exa_2"
                     app:layout_constraintEnd_toEndOf="@+id/exa_2"
                     app:layout_constraintHorizontal_bias="0.9"
+                    android:contentDescription="@string/app_name"
                     app:layout_constraintStart_toStartOf="@+id/exa_2"
                     app:layout_constraintTop_toTopOf="@+id/exa_2"
                     app:layout_constraintVertical_bias="0.9" />
@@ -546,6 +544,7 @@
                     app:layout_constraintEnd_toEndOf="@+id/exa_3"
                     app:layout_constraintHorizontal_bias="0.9"
                     app:layout_constraintStart_toStartOf="@+id/exa_3"
+                    android:contentDescription="@string/app_name"
                     app:layout_constraintTop_toTopOf="@+id/exa_3"
                     app:layout_constraintVertical_bias="0.9" />
 
@@ -558,7 +557,8 @@
                     app:layout_constraintHorizontal_bias="0.9"
                     app:layout_constraintStart_toStartOf="@+id/exa_4"
                     app:layout_constraintTop_toTopOf="@+id/exa_4"
-                    app:layout_constraintVertical_bias="0.9" />
+                    app:layout_constraintVertical_bias="0.9"
+                    android:contentDescription="@string/app_name" />
 
                 <ImageView
                     android:id="@+id/Ico_5"
@@ -567,6 +567,7 @@
                     app:layout_constraintBottom_toBottomOf="@+id/exa_5"
                     app:layout_constraintEnd_toEndOf="@+id/exa_5"
                     app:layout_constraintHorizontal_bias="0.9"
+                    android:contentDescription="@string/app_name"
                     app:layout_constraintStart_toStartOf="@+id/exa_5"
                     app:layout_constraintTop_toTopOf="@+id/exa_5"
                     app:layout_constraintVertical_bias="0.9" />
@@ -578,6 +579,7 @@
                     app:layout_constraintBottom_toBottomOf="@+id/exa_6"
                     app:layout_constraintEnd_toEndOf="@+id/exa_6"
                     app:layout_constraintHorizontal_bias="0.9"
+                    android:contentDescription="@string/app_name"
                     app:layout_constraintStart_toStartOf="@+id/exa_6"
                     app:layout_constraintTop_toTopOf="@+id/exa_6"
                     app:layout_constraintVertical_bias="0.9" />
@@ -589,6 +591,7 @@
                     app:layout_constraintBottom_toBottomOf="@+id/exa_7"
                     app:layout_constraintEnd_toEndOf="@+id/exa_7"
                     app:layout_constraintHorizontal_bias="0.9"
+                    android:contentDescription="@string/app_name"
                     app:layout_constraintStart_toStartOf="@+id/exa_7"
                     app:layout_constraintTop_toTopOf="@+id/exa_7"
                     app:layout_constraintVertical_bias="0.9" />
@@ -602,6 +605,7 @@
                     app:layout_constraintHorizontal_bias="0.9"
                     app:layout_constraintStart_toStartOf="@+id/exa_8"
                     app:layout_constraintTop_toTopOf="@+id/exa_8"
+                    android:contentDescription="@string/app_name"
                     app:layout_constraintVertical_bias="0.9" />
 
                 <ImageView
@@ -613,6 +617,7 @@
                     app:layout_constraintHorizontal_bias="0.9"
                     app:layout_constraintStart_toStartOf="@+id/exa_9"
                     app:layout_constraintTop_toTopOf="@+id/exa_9"
+                    android:contentDescription="@string/app_name"
                     app:layout_constraintVertical_bias="0.9" />
 
                 <ImageView
@@ -623,6 +628,7 @@
                     app:layout_constraintEnd_toEndOf="@+id/exa_10"
                     app:layout_constraintHorizontal_bias="0.9"
                     app:layout_constraintStart_toStartOf="@+id/exa_10"
+                    android:contentDescription="@string/app_name"
                     app:layout_constraintTop_toTopOf="@+id/exa_10"
                     app:layout_constraintVertical_bias="0.9" />
 
@@ -633,6 +639,7 @@
                     app:layout_constraintBottom_toBottomOf="@+id/exa_11"
                     app:layout_constraintEnd_toEndOf="@+id/exa_11"
                     app:layout_constraintHorizontal_bias="0.9"
+                    android:contentDescription="@string/app_name"
                     app:layout_constraintStart_toStartOf="@+id/exa_11"
                     app:layout_constraintTop_toTopOf="@+id/exa_11"
                     app:layout_constraintVertical_bias="0.9" />
@@ -645,6 +652,7 @@
                     app:layout_constraintEnd_toEndOf="@+id/exa_12"
                     app:layout_constraintHorizontal_bias="0.9"
                     app:layout_constraintStart_toStartOf="@+id/exa_12"
+                    android:contentDescription="@string/app_name"
                     app:layout_constraintTop_toTopOf="@+id/exa_12"
                     app:layout_constraintVertical_bias="0.9" />
 
@@ -657,6 +665,7 @@
                     app:layout_constraintHorizontal_bias="0.9"
                     app:layout_constraintStart_toStartOf="@+id/exa_13"
                     app:layout_constraintTop_toTopOf="@+id/exa_13"
+                    android:contentDescription="@string/app_name"
                     app:layout_constraintVertical_bias="0.9" />
 
                 <ImageView
@@ -668,6 +677,7 @@
                     app:layout_constraintHorizontal_bias="0.9"
                     app:layout_constraintStart_toStartOf="@+id/exa_14"
                     app:layout_constraintTop_toTopOf="@+id/exa_14"
+                    android:contentDescription="@string/app_name"
                     app:layout_constraintVertical_bias="0.9" />
 
                 <ImageView
@@ -679,6 +689,7 @@
                     app:layout_constraintHorizontal_bias="0.9"
                     app:layout_constraintStart_toStartOf="@+id/exa_15"
                     app:layout_constraintTop_toTopOf="@+id/exa_15"
+                    android:contentDescription="@string/app_name"
                     app:layout_constraintVertical_bias="0.9" />
 
                 <ImageView
@@ -689,6 +700,7 @@
                     app:layout_constraintEnd_toEndOf="@+id/exa_16"
                     app:layout_constraintHorizontal_bias="0.9"
                     app:layout_constraintStart_toStartOf="@+id/exa_16"
+                    android:contentDescription="@string/app_name"
                     app:layout_constraintTop_toTopOf="@+id/exa_16"
                     app:layout_constraintVertical_bias="0.9" />
 
@@ -700,6 +712,7 @@
                     app:layout_constraintEnd_toEndOf="@+id/exa_17"
                     app:layout_constraintHorizontal_bias="0.9"
                     app:layout_constraintStart_toStartOf="@+id/exa_17"
+                    android:contentDescription="@string/app_name"
                     app:layout_constraintTop_toTopOf="@+id/exa_17"
                     app:layout_constraintVertical_bias="0.9" />
 
@@ -712,6 +725,7 @@
                     app:layout_constraintHorizontal_bias="0.9"
                     app:layout_constraintStart_toStartOf="@+id/exa_18"
                     app:layout_constraintTop_toTopOf="@+id/exa_18"
+                    android:contentDescription="@string/app_name"
                     app:layout_constraintVertical_bias="0.9" />
 
                 <ImageView
@@ -723,6 +737,7 @@
                     app:layout_constraintHorizontal_bias="0.9"
                     app:layout_constraintStart_toStartOf="@+id/exa_19"
                     app:layout_constraintTop_toTopOf="@+id/exa_19"
+                    android:contentDescription="@string/app_name"
                     app:layout_constraintVertical_bias="0.9" />
 
                 <ImageView
@@ -734,6 +749,7 @@
                     app:layout_constraintHorizontal_bias="0.9"
                     app:layout_constraintStart_toStartOf="@+id/exa_20"
                     app:layout_constraintTop_toTopOf="@+id/exa_20"
+                    android:contentDescription="@string/app_name"
                     app:layout_constraintVertical_bias="0.9" />
 
                 <ImageView
@@ -744,6 +760,7 @@
                     app:layout_constraintEnd_toEndOf="@+id/exa_21"
                     app:layout_constraintHorizontal_bias="0.9"
                     app:layout_constraintStart_toStartOf="@+id/exa_21"
+                    android:contentDescription="@string/app_name"
                     app:layout_constraintTop_toTopOf="@+id/exa_21"
                     app:layout_constraintVertical_bias="0.9" />
 
@@ -755,6 +772,7 @@
                     app:layout_constraintEnd_toEndOf="@+id/exa_22"
                     app:layout_constraintHorizontal_bias="0.9"
                     app:layout_constraintStart_toStartOf="@+id/exa_22"
+                    android:contentDescription="@string/app_name"
                     app:layout_constraintTop_toTopOf="@+id/exa_22"
                     app:layout_constraintVertical_bias="0.9" />
 
@@ -766,6 +784,7 @@
                     app:layout_constraintEnd_toEndOf="@+id/exa_23"
                     app:layout_constraintHorizontal_bias="0.9"
                     app:layout_constraintStart_toStartOf="@+id/exa_23"
+                    android:contentDescription="@string/app_name"
                     app:layout_constraintTop_toTopOf="@+id/exa_23"
                     app:layout_constraintVertical_bias="0.9" />
 
@@ -776,6 +795,7 @@
                     app:layout_constraintBottom_toBottomOf="@+id/exa_24"
                     app:layout_constraintEnd_toEndOf="@+id/exa_24"
                     app:layout_constraintHorizontal_bias="0.9"
+                    android:contentDescription="@string/app_name"
                     app:layout_constraintStart_toStartOf="@+id/exa_24"
                     app:layout_constraintTop_toTopOf="@+id/exa_24"
                     app:layout_constraintVertical_bias="0.9" />
@@ -787,6 +807,7 @@
                     app:layout_constraintBottom_toBottomOf="@+id/exa_25"
                     app:layout_constraintEnd_toEndOf="@+id/exa_25"
                     app:layout_constraintHorizontal_bias="0.9"
+                    android:contentDescription="@string/app_name"
                     app:layout_constraintStart_toStartOf="@+id/exa_25"
                     app:layout_constraintTop_toTopOf="@+id/exa_25"
                     app:layout_constraintVertical_bias="0.9" />
@@ -796,6 +817,7 @@
                     android:layout_width="15dp"
                     android:layout_height="15dp"
                     app:layout_constraintBottom_toBottomOf="@+id/exa_26"
+                    android:contentDescription="@string/app_name"
                     app:layout_constraintEnd_toEndOf="@+id/exa_26"
                     app:layout_constraintHorizontal_bias="0.9"
                     app:layout_constraintStart_toStartOf="@+id/exa_26"
@@ -808,6 +830,7 @@
                     android:layout_height="15dp"
                     app:layout_constraintBottom_toBottomOf="@+id/exa_27"
                     app:layout_constraintEnd_toEndOf="@+id/exa_27"
+                    android:contentDescription="@string/app_name"
                     app:layout_constraintHorizontal_bias="0.9"
                     app:layout_constraintStart_toStartOf="@+id/exa_27"
                     app:layout_constraintTop_toTopOf="@+id/exa_27"
@@ -820,6 +843,7 @@
                     app:layout_constraintBottom_toBottomOf="@+id/exa_28"
                     app:layout_constraintEnd_toEndOf="@+id/exa_28"
                     app:layout_constraintHorizontal_bias="0.9"
+                    android:contentDescription="@string/app_name"
                     app:layout_constraintStart_toStartOf="@+id/exa_28"
                     app:layout_constraintTop_toTopOf="@+id/exa_28"
                     app:layout_constraintVertical_bias="0.9" />
@@ -832,6 +856,7 @@
                     app:layout_constraintEnd_toEndOf="@+id/exa_29"
                     app:layout_constraintHorizontal_bias="0.9"
                     app:layout_constraintStart_toStartOf="@+id/exa_29"
+                    android:contentDescription="@string/app_name"
                     app:layout_constraintTop_toTopOf="@+id/exa_29"
                     app:layout_constraintVertical_bias="0.9" />
 
@@ -844,6 +869,7 @@
                     app:layout_constraintHorizontal_bias="0.9"
                     app:layout_constraintStart_toStartOf="@+id/exa_30"
                     app:layout_constraintTop_toTopOf="@+id/exa_30"
+                    android:contentDescription="@string/app_name"
                     app:layout_constraintVertical_bias="0.9" />
 
                 <ImageView
@@ -853,6 +879,7 @@
                     app:layout_constraintBottom_toBottomOf="@+id/exa_31"
                     app:layout_constraintEnd_toEndOf="@+id/exa_31"
                     app:layout_constraintHorizontal_bias="0.9"
+                    android:contentDescription="@string/app_name"
                     app:layout_constraintStart_toStartOf="@+id/exa_31"
                     app:layout_constraintTop_toTopOf="@+id/exa_31"
                     app:layout_constraintVertical_bias="0.9" />
@@ -865,6 +892,7 @@
                     app:layout_constraintEnd_toEndOf="@+id/exa_32"
                     app:layout_constraintHorizontal_bias="0.9"
                     app:layout_constraintStart_toStartOf="@+id/exa_32"
+                    android:contentDescription="@string/app_name"
                     app:layout_constraintTop_toTopOf="@+id/exa_32"
                     app:layout_constraintVertical_bias="0.9" />
 
@@ -876,6 +904,7 @@
                     app:layout_constraintEnd_toEndOf="@+id/exa_33"
                     app:layout_constraintHorizontal_bias="0.9"
                     app:layout_constraintStart_toStartOf="@+id/exa_33"
+                    android:contentDescription="@string/app_name"
                     app:layout_constraintTop_toTopOf="@+id/exa_33"
                     app:layout_constraintVertical_bias="0.9" />
 
@@ -888,6 +917,7 @@
                     app:layout_constraintHorizontal_bias="0.9"
                     app:layout_constraintStart_toStartOf="@+id/exa_34"
                     app:layout_constraintTop_toTopOf="@+id/exa_34"
+                    android:contentDescription="@string/app_name"
                     app:layout_constraintVertical_bias="0.9" />
 
                 <ImageView
@@ -897,6 +927,7 @@
                     app:layout_constraintBottom_toBottomOf="@+id/exa_35"
                     app:layout_constraintEnd_toEndOf="@+id/exa_35"
                     app:layout_constraintHorizontal_bias="0.9"
+                    android:contentDescription="@string/app_name"
                     app:layout_constraintStart_toStartOf="@+id/exa_35"
                     app:layout_constraintTop_toTopOf="@+id/exa_35"
                     app:layout_constraintVertical_bias="0.9" />
@@ -909,6 +940,7 @@
                     app:layout_constraintEnd_toEndOf="@+id/exa_36"
                     app:layout_constraintHorizontal_bias="0.9"
                     app:layout_constraintStart_toStartOf="@+id/exa_36"
+                    android:contentDescription="@string/app_name"
                     app:layout_constraintTop_toTopOf="@+id/exa_36"
                     app:layout_constraintVertical_bias="0.9" />
 
@@ -920,6 +952,7 @@
                     app:layout_constraintEnd_toEndOf="@+id/exa_37"
                     app:layout_constraintHorizontal_bias="0.9"
                     app:layout_constraintStart_toStartOf="@+id/exa_37"
+                    android:contentDescription="@string/app_name"
                     app:layout_constraintTop_toTopOf="@+id/exa_37"
                     app:layout_constraintVertical_bias="0.9" />
 
@@ -930,6 +963,7 @@
                     app:layout_constraintBottom_toBottomOf="@+id/exa_38"
                     app:layout_constraintEnd_toEndOf="@+id/exa_38"
                     app:layout_constraintHorizontal_bias="0.9"
+                    android:contentDescription="@string/app_name"
                     app:layout_constraintStart_toStartOf="@+id/exa_38"
                     app:layout_constraintTop_toTopOf="@+id/exa_38"
                     app:layout_constraintVertical_bias="0.9" />
@@ -941,6 +975,7 @@
                     app:layout_constraintBottom_toBottomOf="@+id/exa_39"
                     app:layout_constraintEnd_toEndOf="@+id/exa_39"
                     app:layout_constraintHorizontal_bias="0.9"
+                    android:contentDescription="@string/app_name"
                     app:layout_constraintStart_toStartOf="@+id/exa_39"
                     app:layout_constraintTop_toTopOf="@+id/exa_39"
                     app:layout_constraintVertical_bias="0.9" />
@@ -953,6 +988,7 @@
                     android:layout_marginStart="308dp"
                     android:layout_marginTop="352dp"
                     app:layout_constraintStart_toStartOf="parent"
+                    android:contentDescription="@string/app_name"
                     app:layout_constraintTop_toTopOf="parent"
                     app:srcCompat="@drawable/abstract_painting_ic_national_culture_paris_svgrepo_com" />
 
@@ -963,6 +999,7 @@
                     android:layout_marginStart="284dp"
                     android:layout_marginTop="356dp"
                     app:layout_constraintStart_toStartOf="parent"
+                    android:contentDescription="@string/app_name"
                     app:layout_constraintTop_toTopOf="parent"
                     app:srcCompat="@drawable/moai_svgrepo_com" />
 
@@ -974,6 +1011,7 @@
                     android:layout_marginStart="280dp"
                     android:layout_marginTop="328dp"
                     app:layout_constraintStart_toStartOf="parent"
+                    android:contentDescription="@string/app_name"
                     app:layout_constraintTop_toTopOf="parent"
                     app:srcCompat="@drawable/culture_japan_japanese_svgrepo_com" />
 
@@ -1001,6 +1039,7 @@
                     android:layout_width="34dp"
                     android:layout_height="27dp"
                     app:layout_constraintBottom_toBottomOf="@+id/exa_2"
+                    android:contentDescription="@string/app_name"
                     app:layout_constraintEnd_toEndOf="@+id/exa_2"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toEndOf="@+id/Ico_3"
@@ -1013,6 +1052,7 @@
                     android:layout_height="25dp"
                     app:layout_constraintBottom_toBottomOf="@+id/exa_4"
                     app:layout_constraintEnd_toEndOf="@+id/exa_4"
+                    android:contentDescription="@string/app_name"
                     app:layout_constraintHorizontal_bias="0.35"
                     app:layout_constraintStart_toEndOf="@+id/Ico_5"
                     app:layout_constraintTop_toTopOf="@+id/exa_4"
@@ -1024,6 +1064,7 @@
                     android:layout_height="0dp"
                     app:layout_constraintBottom_toTopOf="@+id/exa_9"
                     app:layout_constraintEnd_toEndOf="@+id/exa_10"
+                    android:contentDescription="@string/app_name"
                     app:layout_constraintStart_toStartOf="@+id/exa_10"
                     app:layout_constraintTop_toBottomOf="@+id/exa_11"
                     app:srcCompat="@drawable/exile" />
@@ -1033,6 +1074,7 @@
                     android:layout_width="25dp"
                     android:layout_height="25dp"
                     app:layout_constraintBottom_toBottomOf="@+id/exa_17"
+                    android:contentDescription="@string/app_name"
                     app:layout_constraintEnd_toEndOf="@+id/exa_17"
                     app:layout_constraintStart_toStartOf="@+id/exa_17"
                     app:layout_constraintTop_toTopOf="@+id/exa_17"
@@ -1044,6 +1086,7 @@
                     android:layout_height="35dp"
                     app:layout_constraintBottom_toBottomOf="@+id/exa_20"
                     app:layout_constraintEnd_toStartOf="@+id/exa_21"
+                    android:contentDescription="@string/app_name"
                     app:layout_constraintHorizontal_bias="0.6"
                     app:layout_constraintStart_toEndOf="@+id/exa_19"
                     app:layout_constraintTop_toTopOf="@+id/exa_20"
@@ -1056,6 +1099,7 @@
                     app:layout_constraintBottom_toBottomOf="@+id/exa_22"
                     app:layout_constraintEnd_toEndOf="@+id/exa_22"
                     app:layout_constraintHorizontal_bias="0.67"
+                    android:contentDescription="@string/app_name"
                     app:layout_constraintStart_toStartOf="@+id/exa_22"
                     app:layout_constraintTop_toTopOf="@+id/exa_22"
                     app:srcCompat="@drawable/bag" />
@@ -1068,6 +1112,7 @@
                     app:layout_constraintEnd_toEndOf="@+id/exa_33"
                     app:layout_constraintHorizontal_bias="0.6"
                     app:layout_constraintStart_toStartOf="@+id/exa_33"
+                    android:contentDescription="@string/app_name"
                     app:layout_constraintTop_toTopOf="@+id/exa_33"
                     app:layout_constraintVertical_bias="0.63"
                     app:srcCompat="@drawable/money_loss" />
@@ -1077,6 +1122,7 @@
                     android:layout_width="25dp"
                     android:layout_height="25dp"
                     app:layout_constraintBottom_toBottomOf="@+id/exa_36"
+                    android:contentDescription="@string/app_name"
                     app:layout_constraintEnd_toEndOf="@+id/exa_36"
                     app:layout_constraintStart_toStartOf="@+id/exa_36"
                     app:layout_constraintTop_toTopOf="@+id/exa_36"
@@ -1087,6 +1133,7 @@
                     android:layout_width="25dp"
                     android:layout_height="25dp"
                     app:layout_constraintBottom_toBottomOf="@+id/exa_38"
+                    android:contentDescription="@string/app_name"
                     app:layout_constraintEnd_toEndOf="@+id/exa_38"
                     app:layout_constraintHorizontal_bias="0.58"
                     app:layout_constraintStart_toStartOf="@+id/exa_38"
@@ -1099,6 +1146,7 @@
                     android:layout_height="35dp"
                     app:layout_constraintBottom_toTopOf="@+id/exa_31"
                     app:layout_constraintEnd_toEndOf="parent"
+                    android:contentDescription="@string/app_name"
                     app:layout_constraintStart_toStartOf="@+id/exa_30"
                     app:layout_constraintTop_toBottomOf="@+id/exa_29"
                     app:srcCompat="@drawable/wagon" />
@@ -1237,6 +1285,7 @@
                     android:layout_height="22dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
+                    android:contentDescription="@string/app_name"
                     app:layout_constraintStart_toEndOf="@+id/money1"
                     app:layout_constraintTop_toBottomOf="@+id/name1"
                     app:srcCompat="@drawable/_0" />
@@ -1280,6 +1329,7 @@
                     android:layout_height="22dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
+                    android:contentDescription="@string/app_name"
                     app:layout_constraintStart_toEndOf="@+id/money2"
                     app:layout_constraintTop_toBottomOf="@+id/name2"
                     app:srcCompat="@drawable/_1" />
@@ -1322,6 +1372,7 @@
                     android:layout_width="22dp"
                     android:layout_height="22dp"
                     app:layout_constraintBottom_toBottomOf="parent"
+                    android:contentDescription="@string/app_name"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/money3"
                     app:layout_constraintTop_toBottomOf="@+id/name33"
